@@ -11,7 +11,6 @@ use built-in [Graphviz](https://www.graphviz.org) dot file generator to export d
     <img alt="Alt Text" src="docs/iris.dot.jpg?raw=true" />
 </p>
 
-
 results from [iris.dot](docs/graph.dot) and [this](test/data/iris.csv) dataset.
 
 ## Requirements
