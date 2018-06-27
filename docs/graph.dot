@@ -1,0 +1,18 @@
+digraph {
+   "Is  petal_width >= 1.0?" -> "Is  petal_width >= 1.8?"[label="True"];
+   "Is  petal_width >= 1.0?" -> "Iris-setosa: 100.000000% "[label="False"];
+   "Is  petal_width >= 1.8?" -> "Is petal_length >= 4.9?"[label="True"];
+   "Is  petal_width >= 1.8?" -> "Is petal_length >= 5.0?"[label="False"];
+   "Is petal_length >= 4.9?" -> "Iris-virginica: 100.000000% "[label="True"];
+   "Is petal_length >= 4.9?" -> "Is sepal_width >= 3.2?"[label="False"];
+   "Is sepal_width >= 3.2?" -> "Iris-versicolor: 100.000000% "[label="True"];
+   "Is sepal_width >= 3.2?" -> "Iris-virginica: 100.000000% "[label="False"];
+   "Is petal_length >= 5.0?" -> "Is  petal_width >= 1.6?"[label="True"];
+   "Is petal_length >= 5.0?" -> "Is  petal_width >= 1.7?"[label="False"];
+   "Is  petal_width >= 1.6?" -> "Is petal_length >= 5.8?"[label="True"];
+   "Is  petal_width >= 1.6?" -> "Iris-virginica: 100.000000% "[label="False"];
+   "Is petal_length >= 5.8?" -> "Iris-virginica: 100.000000% "[label="True"];
+   "Is petal_length >= 5.8?" -> "Iris-versicolor: 100.000000% "[label="False"];
+   "Is  petal_width >= 1.7?" -> "Iris-virginica: 100.000000% "[label="True"];
+   "Is  petal_width >= 1.7?" -> "Iris-versicolor: 100.000000% "[label="False"];
+}

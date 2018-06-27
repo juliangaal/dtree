@@ -1,0 +1,16 @@
+consistency,color,diameter,decision
+Hard,Green,3,Apple
+Hard,Yellow,4,Apple
+Medium,Red,2,Grape
+Medium,Red,1,Grape
+Medium,Yellow,3,Lemon
+Hard,Green,2.3,Lime
+Medium,Red,4,Pepper
+Medium,Green,4,Pepper
+Medium,Green,6,Pepper
+Hard,Pink,1,Radish
+Medium,Yellow,1,Grape
+Medium,Red,4,Pepper
+Medium,Red,0.8,Grape
+Medium,Green,3.7,Apple
+Soft,Purple,4.9,Eggplant
