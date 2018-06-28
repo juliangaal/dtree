@@ -8,7 +8,7 @@ find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
-include_directories(include test/include)
+include_directories(include)
 
 set(FILES
         src/DataReader.cpp
@@ -18,15 +18,8 @@ set(FILES
         src/Node.cpp
         include/Helper.hpp
         src/Calculations.cpp
-        src/TreeTest.cpp src/GraphGenerator.cpp include/GraphGenerator.hpp)
-
-set(TEST_FILES
-        test/src/Tests.cpp
-        test/src/RunTest.cpp
-        ${FILES})
+        src/TreeTest.cpp
+        src/GraphGenerator.cpp)
 
 add_executable(${PROJECT_NAME} test/main.cpp ${FILES})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
-
-add_executable(${PROJECT_NAME}_TEST ${TEST_FILES})
-target_link_libraries(${PROJECT_NAME}_TEST ${Boost_LIBRARIES} Threads::Threads)

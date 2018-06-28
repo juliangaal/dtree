@@ -10,8 +10,8 @@
 
 Tests::Tests() {
   Dataset d;
-  d.train.filename = "../test/data/fruit.csv";
-  d.test.filename = "../test/data/fruit_test.csv";
+  d.train.filename = "../data/fruit.csv";
+  d.test.filename = "../data/fruit_test.csv";
 
   DecisionTree dt(d);
   testTree(dt.testingData(), dt.root_());
