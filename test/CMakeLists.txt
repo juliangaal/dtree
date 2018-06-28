@@ -26,5 +26,5 @@ set(TEST_FILES
         src/RunTest.cpp
         ${FILES})
 
-add_executable(${PROJECT_NAME}_TEST ${TEST_FILES})
-target_link_libraries(${PROJECT_NAME}_TEST ${Boost_LIBRARIES} Threads::Threads)
+add_executable(${PROJECT_NAME} ${TEST_FILES})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)

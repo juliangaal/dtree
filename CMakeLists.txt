@@ -18,7 +18,8 @@ set(FILES
         src/Node.cpp
         include/Helper.hpp
         src/Calculations.cpp
-        src/TreeTest.cpp src/GraphGenerator.cpp)
+        src/TreeTest.cpp
+        src/GraphGenerator.cpp)
 
 add_executable(${PROJECT_NAME} test/main.cpp ${FILES})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
