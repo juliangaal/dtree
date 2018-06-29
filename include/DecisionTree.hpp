@@ -9,6 +9,7 @@
 #include "Node.hpp"
 #include "Calculations.hpp"
 #include "DataReader.hpp"
+#include "GraphGenerator.hpp"
 #include "TreeTest.hpp"
 
 class DecisionTree {
@@ -18,7 +19,7 @@ class DecisionTree {
 
   void print() const;
   void test() const;
-  void generateGraph(const string filepath="../graph.dot") const;
+  void generateGraph(const string filepath) const;
 
   inline Data trainingData() { return dr.trainingData(); }
   inline Data testingData() { return dr.testingData(); }

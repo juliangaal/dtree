@@ -22,9 +22,6 @@ class GraphGenerator {
   void generate(shared_ptr<Node> root, const string& filepath);
   void traverseTree(shared_ptr<Node> node, ofstream &file);
 
-  string label(const string& label) const;
-  string node(const string& question) const;
-  string result(unordered_map<string, int> data) const;
 };
 
 #endif //DEC_ISIONTREE_GRAPHGENERATOR_HPP
