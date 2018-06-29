@@ -19,7 +19,8 @@ set(FILES
         ../include/Helper.hpp
         ../src/Calculations.cpp
         ../src/TreeTest.cpp
-        ../src/GraphGenerator.cpp)
+        ../src/GraphGenerator.cpp
+        ../src/GraphElements.cpp)
 
 set(TEST_FILES
         src/Tests.cpp

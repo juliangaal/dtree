@@ -2,7 +2,6 @@
 // Created by Julian on 24.06.18.
 //
 
-#include <GraphGenerator.hpp>
 #include "DecisionTree.hpp"
 
 DecisionTree::DecisionTree(Dataset& d) : dr(d), root(Node()) {

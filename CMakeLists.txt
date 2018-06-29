@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 project(Dec++isionTree)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -W -Weffc++")
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -W -Weffc++ -Werror")
 
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
@@ -19,7 +19,8 @@ set(FILES
         include/Helper.hpp
         src/Calculations.cpp
         src/TreeTest.cpp
-        src/GraphGenerator.cpp)
+        src/GraphGenerator.cpp
+        src/GraphElements.cpp)
 
 add_executable(${PROJECT_NAME} test/main.cpp ${FILES})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
