@@ -40,8 +40,8 @@ void DecisionTree::print(shared_ptr<Node> root, string spacing) const {
   print(root->false_branch_, spacing + "   ");
 }
 
-void DecisionTree::generateGraph(const string filepath) const {
-  GraphGenerator g(root, dr.labels_(), filepath);
+void DecisionTree::generateGraph(const string filepath, const GraphType type) const {
+  GraphGenerator g(root, dr.labels_(), type, filepath);
 }
 
 void DecisionTree::test() const {

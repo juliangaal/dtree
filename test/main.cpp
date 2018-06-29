@@ -8,6 +8,6 @@ int main() {
   DecisionTree dt(d);
   dt.print();
   dt.test();
-  dt.generateGraph("../graph.dot");
+  dt.generateGraph("../graph.dot", VERBOSE);
   return 0;
 }

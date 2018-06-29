@@ -19,7 +19,7 @@ class DecisionTree {
 
   void print() const;
   void test() const;
-  void generateGraph(const string filepath) const;
+  void generateGraph(const string filepath, const GraphType type=SIMPLE) const;
 
   inline Data trainingData() { return dr.trainingData(); }
   inline Data testingData() { return dr.testingData(); }
