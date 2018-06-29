@@ -15,9 +15,10 @@ using std::make_shared;
 class Node {
  public:
   Node();
-  Node(Leaf l);
-  Node(Node& true_branch, Node& false_branch, Question question);
+  Node(double gain, Leaf l);
+  Node(double gain, Node& true_branch, Node& false_branch, Question question);
   virtual ~Node() = default;
+  double gain;
   shared_ptr<Node> true_branch_;
   shared_ptr<Node> false_branch_;
   Question question_;

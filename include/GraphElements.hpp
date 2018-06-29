@@ -23,6 +23,14 @@ string node(const string &question);
 
 string result(const unordered_map<string, int>& data);
 
-}
+namespace verbose {
+
+string box(const string &label, const double& gain);
+
+string node(const string &question, const double& gain);
+
+string result(const unordered_map<string, int>& data);
+} // namespace verbose
+} // namespace GraphElement
 
 #endif //DEC_ISIONTREE_GRAPHELEMENTS_HPP

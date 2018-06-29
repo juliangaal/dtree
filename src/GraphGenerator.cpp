@@ -83,20 +83,20 @@ void GraphGenerator::parseVerboseTree(shared_ptr<Node> node, ofstream &file) {
     return;
   }
 
-  file << spacing << GraphElement::box(node->question_.toString(labels)) << connector;
+  file << spacing << GraphElement::verbose::box(node->question_.toString(labels), node->gain) << connector;
 
   if (bool is_leaf = node->true_branch_->leaf_ != nullptr; is_leaf) {
     file << GraphElement::result(node->true_branch_->leaf_->predictions_) << GraphElement::label("True");
   } else {
-    file << GraphElement::node(node->true_branch_->question_.toString(labels)) << GraphElement::label("True");
+    file << GraphElement::verbose::node(node->true_branch_->question_.toString(labels), node->gain) << GraphElement::label("True");
   }
 
-  file << spacing << GraphElement::node(node->question_.toString(labels)) << connector;
+  file << spacing << GraphElement::verbose::node(node->question_.toString(labels), node->gain) << connector;
 
   if (bool is_leaf = node->false_branch_->leaf_ != nullptr; is_leaf) {
     file << GraphElement::result(node->false_branch_->leaf_->predictions_) << GraphElement::label("False");
   } else {
-    file << GraphElement::node(node->false_branch_->question_.toString(labels)) << GraphElement::label("False");
+    file << GraphElement::verbose::node(node->false_branch_->question_.toString(labels), node->gain) << GraphElement::label("False");
   }
 
   parseTree(node->true_branch_, file);

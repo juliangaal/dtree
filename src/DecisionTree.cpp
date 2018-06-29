@@ -11,14 +11,14 @@ DecisionTree::DecisionTree(Dataset& d) : dr(d), root(Node()) {
 Node DecisionTree::buildTree(Data& rows) {
   auto [gain, question] = Calculations::find_best_split(rows);
   if (gain == 0.0) {
-    return Node(Leaf(Calculations::classCounts(rows)));
+    return Node(gain, Leaf(Calculations::classCounts(rows)));
   }
 
   auto [true_rows, false_rows] = Calculations::partition(rows, question);
   auto true_branch = buildTree(true_rows);
   auto false_branch = buildTree(false_rows);
 
-  return Node(true_branch, false_branch, question);
+  return Node(gain, true_branch, false_branch, question);
 }
 
 void DecisionTree::print() const {
