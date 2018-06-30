@@ -52,7 +52,6 @@ class DataReader
   void swapResultData(VecS &line, const VecS &labels);
   void correctLabels();
   void correctMissingValues(const Data &data, VecS &vec);
-
 };
 
 #endif //TREE_CSVREADER_HPP

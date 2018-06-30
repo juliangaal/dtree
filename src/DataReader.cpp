@@ -10,7 +10,6 @@ DataReader::DataReader(const Dataset& dataset, string delim) :
     training_labels({}),
     testing_labels({}),
     missing_labels(false) {
-
   std::thread readTestingData([this,&dataset]() {
     return processFile(dataset.train.filename, training_data, training_labels);
   });
@@ -33,7 +32,6 @@ DataReader::DataReader(const Dataset& dataset, string delim) :
 
   if (testing_data.empty())
     throw std::runtime_error("Can't open file: " + dataset.test.filename);
-
 }
 
 void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
@@ -52,7 +50,6 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
       continue;
 
     split(vec, line, boost::is_any_of(delimeter));
-
     if (line_counter == first_line) {
       if (hasEmptyStrings(vec)) {
         missing_labels = true;
@@ -71,10 +68,8 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
         data.emplace_back(move(vec));
       }
     }
-
     ++line_counter;
   }
-
   file.close();
 }
 
@@ -85,7 +80,6 @@ bool DataReader::hasEmptyStrings(const vector<string> &strings) const {
 bool DataReader::isCommentLine(const string &line) const {
   if (auto n = line.find("#"); n != std::string::npos)
     return true;
-
   return false;
 }
 
