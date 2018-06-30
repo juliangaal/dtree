@@ -16,7 +16,7 @@ Medium,Yellow,2.7,Apple
 Hard,Green,2,Apple
 Hard,Yellow,4,Apple
 Medium,Red,1,Grape
-Medium,Red,1,Grape
+,Red,,Grape
 Medium,Red,2,Grape
 Medium,Red,1,Grape
 Medium,Red,1.4,Grape

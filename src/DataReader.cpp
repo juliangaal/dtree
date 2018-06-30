@@ -63,7 +63,7 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
       labels = move(vec);
     } else {
       if (hasEmptyStrings(vec))
-        correctMissingValues(vec);
+        correctMissingValues(data, vec);
 
       if (result_label.empty()) {
         data.emplace_back(move(vec));
@@ -109,6 +109,9 @@ void DataReader::correctLabels() {
     std::iter_swap(result, end(training_labels)-1);
 }
 
-void DataReader::correctMissingValues(VecS &vec) {
-
+void DataReader::correctMissingValues(const Data& data, VecS &vec) {
+  const auto& last_line = *(end(data)-1);
+  vec.clear();
+  // TODO: replace with stl::copy_if version
+  std::copy(begin(last_line), end(last_line), std::back_inserter(vec));
 }
