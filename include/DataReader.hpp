@@ -26,14 +26,16 @@ using VecS = vector<string>;
 class DataReader
 {
  private:
-  string delimeter;
-
   bool hasEmptyStrings(const VecS& strings) const;
   bool isCommentLine(const string& line) const;
 
+  const string result_label;
+  const string delimeter;
   Data training_data;
   Data testing_data;
-  VecS labels;
+  VecS training_labels;
+  VecS testing_labels;
+  bool missing_labels;
 
  public:
   DataReader() = delete;
@@ -41,12 +43,15 @@ class DataReader
 
   inline Data& trainingData() { return training_data; }
   inline const Data& testingData() const { return testing_data; }
-  inline const VecS& labels_() const { return labels; }
+  inline const VecS& labels_() const { return training_labels; }
   /**
    * Parses through csv file line by line and
    * @return the data in vector of vector of strings
    */
-  void processFile(const string& strings, Data& data);
+  void processFile(const string& strings, Data& data, VecS &labels);
+  void swapResultData(VecS &line, const VecS &labels);
+  void correctLabels();
+  void correctMissingValues(const Data &data, VecS &vec);
 };
 
 #endif //TREE_CSVREADER_HPP
