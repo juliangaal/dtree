@@ -20,6 +20,7 @@ struct Test {
 struct Dataset {
   Train train;
   Test test;
+  string result_label;
 };
 
 #endif //DEC__ISIONTREE_DATASET_HPP
