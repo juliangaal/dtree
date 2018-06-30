@@ -2,7 +2,6 @@
 // Created by Julian on 13.06.18.
 //
 #include <thread>
-#include <ogr_feature.h>
 #include "DataReader.hpp"
 
 DataReader::DataReader(const Dataset& dataset, string delim) :
