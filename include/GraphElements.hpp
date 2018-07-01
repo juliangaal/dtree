@@ -8,6 +8,7 @@
 #include <string>
 #include <unordered_map>
 
+using branch = bool;
 using std::string;
 using std::unordered_map;
 
@@ -17,11 +18,9 @@ string label(const string &label);
 
 string box(const string &label);
 
-string leaf(const unordered_map<string, int>& data);
-
 string node(const string &question);
 
-string result(const unordered_map<string, int>& data);
+string result(const unordered_map<string, int> &data, branch b);
 
 }
 

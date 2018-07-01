@@ -207,7 +207,7 @@ bool Tests::fileExists(const string &filename) const {
 }
 
 bool Tests::lineNumsMatch(const string& filename) const {
-  constexpr long wanted_line_count = 34;
+  constexpr long wanted_line_count = 67;
   ifstream infile(filename);
   if (!infile.good()) {
     std::cout << "File " << filename << " doesn't exist\n";

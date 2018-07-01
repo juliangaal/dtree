@@ -18,20 +18,35 @@ string GraphElement::box(const string &label) {
   return box + node(label);
 }
 
-string GraphElement::leaf(const unordered_map<string, int>& data) {
-  return result(data) + " [style=filled, color=\"1 0.8 1\"];\n";
-}
-
-string GraphElement::result(const unordered_map<string, int>& data) {
+string GraphElement::result(const unordered_map<string, int> &data, branch branch) {
+  static int id = 0;
   string result = "\"";
   double sum = Helper::tree::mapValueSum(data);
   size_t map_size = data.size();
   size_t counter = 1;
 
+  string classification{};
   for (const auto& [k, v]: data) {
-    result += k + ": " + std::to_string(v / sum * 100) + "% ";
+    classification += k + ": " + std::to_string(static_cast<int>(v / sum * 100)) + "% ";
     if (counter++ < map_size)
-      result += "\\n ";
+      classification += "\\n ";
   }
-  return result += "\"";
+  result += classification;
+
+  string values = "\\nvalues: ";
+  for (const auto& [k, v]: data) {
+    values += std::to_string(v) + " ";
+  }
+
+  result += values;
+
+  string result_id = "\\nid: " + std::to_string(id++);
+  result += result_id;
+
+  string result_box = "   " + result + "\" [shape=box];\n";
+  string label = "\"" + (branch == true ? GraphElement::label("True") : GraphElement::label("False"));
+  result += label;
+
+  result += result_box;
+  return result;
 }
