@@ -20,7 +20,7 @@ string GraphElement::box(const string &label) {
 
 string GraphElement::result(const unordered_map<string, int> &data, branch branch) {
   static int id = 0;
-  string result = "\"";// + std::to_string(id++) + "\\nvalues: ";
+  string result = "\"";
   double sum = Helper::tree::mapValueSum(data);
   size_t map_size = data.size();
   size_t counter = 1;
@@ -34,8 +34,7 @@ string GraphElement::result(const unordered_map<string, int> &data, branch branc
   result += classification;
 
   string values = "\\nvalues: ";
-  for (const auto&
-  [k, v]: data) {
+  for (const auto& [k, v]: data) {
     values += std::to_string(v) + " ";
   }
 
