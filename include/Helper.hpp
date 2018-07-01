@@ -40,21 +40,6 @@ template <typename T>
 int mapValueSum(unordered_map<T, int> counts) {
   return std::accumulate(counts.begin(), counts.end(), 0, iterators::AddMapValue());
 }
-
-//bool isNumeric(std::string value) {
-//  double parsed_number = 0.0;
-//
-//  if (bool empty = value.empty(); !empty) {
-//    try {
-//      parsed_number = std::stod(value);
-//      return true;
-//    } catch (const std::exception &e) {
-//      return false;
-//    }
-//  }
-//  return false;
-//}
-
 }
 
 namespace Helper::print {
@@ -79,8 +64,6 @@ void print_map(const unordered_map<K, V> &counter) {
   }
   std::cout << "}" << "\n";
 }
-
 }
-
 
 #endif //DEC__ISIONTREE_HELPER_HPP

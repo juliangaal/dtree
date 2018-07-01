@@ -23,15 +23,28 @@ string GraphElement::leaf(const unordered_map<string, int>& data) {
 }
 
 string GraphElement::result(const unordered_map<string, int>& data) {
-  string result = "\"";
+  static int id = 0;
+  string result = "\"";// + std::to_string(id++) + "\\nvalues: ";
   double sum = Helper::tree::mapValueSum(data);
   size_t map_size = data.size();
   size_t counter = 1;
 
+  result += "\\n";
+
   for (const auto& [k, v]: data) {
-    result += k + ": " + std::to_string(v / sum * 100) + "% ";
+    result += k + ": " + std::to_string(static_cast<int>(v / sum * 100)) + "% ";
     if (counter++ < map_size)
       result += "\\n ";
   }
+
+  result += "\\nvalues: ";
+
+  for (const auto&
+  [k, v]: data) {
+    result += std::to_string(v) + " ";
+  }
+
+  result += "\\nid: " + std::to_string(id++);
+
   return result += "\"";
 }
