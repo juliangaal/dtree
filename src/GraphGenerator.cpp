@@ -42,7 +42,6 @@ void GraphGenerator::traverseTree(shared_ptr<Node> node, ofstream &file) {
     return;
   }
 
-//  file << spacing << GraphElement::node(node->question_.toString(labels))
   file << spacing << GraphElement::box(node->question_.toString(labels)) << connector;
 
   if (bool is_leaf = node->true_branch_->leaf_ != nullptr; is_leaf) {
