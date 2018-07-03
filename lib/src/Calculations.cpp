@@ -1,12 +1,10 @@
 //
 // Created by Julian on 24.06.18.
 //
-
-#include "Calculations.hpp"
-#include "Helper.hpp"
 #include <cmath>
 #include <algorithm>
-#include <iterator>
+#include "Calculations.hpp"
+#include "Helper.hpp"
 
 tuple<Data, Data> Calculations::partition(Data& data, const Question& q) {
   Data true_rows;

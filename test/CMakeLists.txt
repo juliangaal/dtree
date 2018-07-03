@@ -1,31 +1,15 @@
-cmake_minimum_required(VERSION 3.9)
-project(Dec++isionTreeTest)
+cmake_minimum_required(VERSION 3.1)
+project(Test)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -W -Weffc++")
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -W -Weffc++ -Werror")
 
-find_package(Boost REQUIRED)
+find_package(DecisionTree REQUIRED)
 find_package(Threads REQUIRED)
+find_package(Boost REQUIRED)
 
-include_directories(${Boost_INCLUDE_DIR})
-include_directories(../include include)
+add_executable(ImportTest import_test.cpp)
+target_link_libraries(ImportTest DecisionTree Threads::Threads ${Boost_LIBRARIES})
 
-set(FILES
-        ../src/DataReader.cpp
-        ../src/DecisionTree.cpp
-        ../src/Question.cpp
-        ../src/Leaf.cpp
-        ../src/Node.cpp
-        ../include/Helper.hpp
-        ../src/Calculations.cpp
-        ../src/TreeTest.cpp
-        ../src/GraphGenerator.cpp
-        ../src/GraphElements.cpp)
-
-set(TEST_FILES
-        src/Tests.cpp
-        src/RunTest.cpp
-        ${FILES})
-
-add_executable(${PROJECT_NAME} ${TEST_FILES})
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
+add_executable(Test src/RunTest.cpp src/Tests.cpp)
+target_link_libraries(Test DecisionTree Threads::Threads ${Boost_LIBRARIES})
