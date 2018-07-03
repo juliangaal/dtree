@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <string>
 #include <vector>
 #include "GraphElements.hpp"
 #include "GraphGenerator.hpp"

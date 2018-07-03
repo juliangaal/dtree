@@ -4,9 +4,6 @@
 
 #include "Calculations.hpp"
 #include "Helper.hpp"
-#include <cmath>
-#include <algorithm>
-#include <iterator>
 
 tuple<Data, Data> Calculations::partition(Data& data, const Question& q) {
   Data true_rows;
