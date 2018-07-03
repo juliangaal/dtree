@@ -1,7 +1,8 @@
 //
 // Created by Julian on 24.06.18.
 //
-
+#include <cmath>
+#include <algorithm>
 #include "Calculations.hpp"
 #include "Helper.hpp"
 
