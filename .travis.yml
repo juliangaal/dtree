@@ -53,7 +53,8 @@ script:
     - mkdir build && cd build
     - cmake ..
     - make -j10
+    - sudo make install
     - cd ../test/ && mkdir build && cd build
     - cmake ..
     - make -j10
-    - ./Dec++isionTreeTest
+    - ./ImportTest
