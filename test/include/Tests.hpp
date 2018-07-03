@@ -5,8 +5,7 @@
 #ifndef DEC_ISIONTREE_TEST_HPP
 #define DEC_ISIONTREE_TEST_HPP
 
-#include "Node.hpp"
-#include "DecisionTree.hpp"
+#include <DecisionTree/DecisionTree.hpp>
 #include <fstream>
 #include <algorithm>
 

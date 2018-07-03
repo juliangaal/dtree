@@ -2,8 +2,7 @@
 // Created by Julian on 26.06.18.
 //
 
-#include "Tests.hpp"
-#include "TreeTest.hpp"
+#include "../include/Tests.hpp"
 #include <cassert>
 #include <algorithm>
 #include <iterator>
