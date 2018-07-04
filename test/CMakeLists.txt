@@ -16,4 +16,4 @@ add_executable(ImportTest import_test.cpp)
 target_link_libraries(ImportTest DecisionTree Threads::Threads ${Boost_LIBRARIES})
 
 add_executable(Test src/RunTest.cpp src/Tests.cpp)
-target_link_libraries(Test DecisionTree::DecisionTree Threads::Threads ${Boost_LIBRARIES})
+target_link_libraries(Test DecisionTree Threads::Threads ${Boost_LIBRARIES})
