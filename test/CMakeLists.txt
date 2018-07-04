@@ -4,11 +4,6 @@ project(Test)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -g -W -Weffc++ -Werror")
 
-find_package(StopWatch 0.1 REQUIRED)
-if(StopWatch_FOUND)
-    message("-- StopWatch version: ${StopWatch_VERSION}")
-endif()
-
 find_package(DecisionTree 0.1 REQUIRED)
 if(DecisionTree_FOUND)
     message("-- DecisionTree version: ${DecisionTree_VERSION}")
@@ -37,4 +32,4 @@ add_executable(Test src/RunTest.cpp src/Tests.cpp)
 target_link_libraries(Test DecisionTree Threads::Threads ${Boost_LIBRARIES})
 
 add_executable(RandomTest random_tester.cpp ${FILES})
-target_link_libraries(RandomTest Threads::Threads ${Boost_LIBRARIES} StopWatch)
+target_link_libraries(RandomTest Threads::Threads ${Boost_LIBRARIES})
