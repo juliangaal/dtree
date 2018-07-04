@@ -10,7 +10,6 @@ set(SOURCES
         src/Question.cpp
         src/Leaf.cpp
         src/Node.cpp
-#        include/Helper.hpp
         src/Calculations.cpp
         src/TreeTest.cpp
         src/GraphGenerator.cpp
@@ -29,7 +28,6 @@ set(HEADERS
         include/GraphGenerator.hpp
         include/GraphElements.hpp)
 
-#add_executable(${PROJECT_NAME} test/main.cpp ${FILES})
 add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
 
