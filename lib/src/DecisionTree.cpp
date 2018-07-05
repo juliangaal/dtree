@@ -4,8 +4,8 @@
 
 #include "DecisionTree.hpp"
 
-DecisionTree::DecisionTree(const Dataset& d) : dr(d), root(Node()) {
-  root = buildTree(dr.trainingData());
+DecisionTree::DecisionTree(const Dataset& d) : dr(d), root_(Node()) {
+  root_ = buildTree(dr.trainingData());
 }
 
 const Node DecisionTree::buildTree(const Data& rows) {
@@ -22,7 +22,7 @@ const Node DecisionTree::buildTree(const Data& rows) {
 }
 
 void DecisionTree::print() const {
-  print(make_shared<Node>(root));
+  print(make_shared<Node>(root_));
 }
 
 void DecisionTree::print(const shared_ptr<Node> root, string spacing) const {
@@ -31,7 +31,7 @@ void DecisionTree::print(const shared_ptr<Node> root, string spacing) const {
     std::cout << spacing + "Predict: "; Helper::print::print_map(leaf->predictions());
     return;
   }
-  std::cout << spacing << root->question().toString(dr.labels_()) << "\n";
+  std::cout << spacing << root->question().toString(dr.labels()) << "\n";
 
   std::cout << spacing << "--> True: " << "\n";
   print(root->trueBranch(), spacing + "   ");
@@ -41,9 +41,9 @@ void DecisionTree::print(const shared_ptr<Node> root, string spacing) const {
 }
 
 void DecisionTree::generateGraph(const string filepath) const {
-  GraphGenerator g(root, dr.labels_(), filepath);
+  GraphGenerator g(root_, dr.labels(), filepath);
 }
 
 void DecisionTree::test() const {
-  TreeTest t(dr.testingData(), dr.labels_(), root);
+  TreeTest t(dr.testingData(), dr.labels(), root_);
 }

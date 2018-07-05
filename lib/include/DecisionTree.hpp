@@ -21,12 +21,15 @@ class DecisionTree {
   void test() const;
   void generateGraph(const string filepath) const;
 
+  inline Data testingData() { return dr.testingData(); }
+  inline shared_ptr<Node> root() { return make_shared<Node>(root_); }
+
  private:
   DataReader dr;
   const Node buildTree(const Data& rows);
   void print(const shared_ptr<Node> root, string spacing="") const;
 
-  Node root;
+  Node root_;
 };
 
 #endif //DEC__ISIONTREE_DECISIONTREE_HPP
