@@ -8,7 +8,7 @@ TreeTest::TreeTest(const Data& testing_data, const VecS& labels, const Node &roo
   test(testing_data, labels, make_shared<Node>(root));
 }
 
-ClassCounter TreeTest::classify(const VecS& row, shared_ptr<Node> node) const {
+const ClassCounter TreeTest::classify(const VecS& row, shared_ptr<Node> node) const {
   if (bool is_leaf = node->leaf_ != nullptr; is_leaf) {
     const auto &leaf = node->leaf_;
     return leaf->predictions_;
@@ -30,7 +30,7 @@ void TreeTest::print_leaf(ClassCounter counts) const {
   Helper::print::print_map(scale);
 }
 
-ClassCounter TreeTest::testRow(const VecS& row, shared_ptr<Node> node) const {
+const ClassCounter TreeTest::testRow(const VecS& row, shared_ptr<Node> node) const {
   return classify(row, node);
 }
 
