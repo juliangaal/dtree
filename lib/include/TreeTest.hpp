@@ -19,9 +19,6 @@ class TreeTest {
   const ClassCounter testRow(const VecS& row, shared_ptr<Node> node) const;
 
  private:
-
-  const shared_ptr<Node> root_node;
-
   const ClassCounter classify(const VecS& row, shared_ptr<Node> node) const;
 
   void print_leaf(ClassCounter counts) const;
