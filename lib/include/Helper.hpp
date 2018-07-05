@@ -38,7 +38,7 @@ namespace Helper::tree {
 
 template <typename T>
 int mapValueSum(unordered_map<T, int> counts) {
-  return std::accumulate(counts.begin(), counts.end(), 0, iterators::AddMapValue());
+  return std::accumulate(begin(counts), end(counts), 0, iterators::AddMapValue());
 }
 }
 
@@ -49,7 +49,7 @@ void print_vector(const vector<T> &vec) {
     return;
 
   std::cout << "{ ";
-  std::copy(vec.begin(), vec.end(), std::ostream_iterator<string>(std::cout, " "));
+  std::copy(begin(vec), end(vec), std::ostream_iterator<T>(std::cout, " "));
   std::cout << "}\n";
 }
 

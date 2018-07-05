@@ -19,9 +19,12 @@ using ClassCounter = unordered_map<string, int>;
 class Leaf {//: public Node {
  public:
   Leaf() = delete;
-  Leaf(ClassCounter cc);// : predictions_(classCounts(rows)) {}
+  Leaf(const ClassCounter cc);// : predictions_(classCounts(rows)) {}
   virtual ~Leaf() = default;
-// private:
+
+  inline const ClassCounter predictions() const { return predictions_; }
+
+ private:
   const ClassCounter predictions_;
 };
 

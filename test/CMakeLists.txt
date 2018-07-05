@@ -12,7 +12,7 @@ endif()
 find_package(Threads REQUIRED)
 find_package(Boost REQUIRED)
 
-include_directories(../lib/include)
+include_directories(../lib/include ${Boost_INCLUDE_DIRS})
 
 set (FILES
         ../lib/src/DataReader.cpp

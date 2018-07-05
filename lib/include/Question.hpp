@@ -17,9 +17,9 @@ class Question {
   Question();
   Question(const int column, const string value);
 
-  bool match(VecS example) const;
-  bool isNumeric(std::string value) const;
-  string toString(const VecS& labels) const;
+  const bool match(VecS example) const;
+  const bool isNumeric(std::string value) const;
+  const string toString(const VecS& labels) const;
   int column_;
   string value_;
 };

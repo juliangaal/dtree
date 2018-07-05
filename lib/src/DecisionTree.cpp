@@ -4,17 +4,17 @@
 
 #include "DecisionTree.hpp"
 
-DecisionTree::DecisionTree(Dataset& d) : dr(d), root(Node()) {
-  root = buildTree(dr.trainingData());
+DecisionTree::DecisionTree(const Dataset& d) : dr(d), root_(Node()) {
+  root_ = buildTree(dr.trainingData());
 }
 
-Node DecisionTree::buildTree(Data& rows) {
+const Node DecisionTree::buildTree(const Data& rows) {
   auto [gain, question] = Calculations::find_best_split(rows);
   if (gain == 0.0) {
     return Node(Leaf(Calculations::classCounts(rows)));
   }
 
-  auto [true_rows, false_rows] = Calculations::partition(rows, question);
+  const auto [true_rows, false_rows] = Calculations::partition(rows, question);
   auto true_branch = buildTree(true_rows);
   auto false_branch = buildTree(false_rows);
 
@@ -22,28 +22,28 @@ Node DecisionTree::buildTree(Data& rows) {
 }
 
 void DecisionTree::print() const {
-  print(make_shared<Node>(root));
+  print(make_shared<Node>(root_));
 }
 
-void DecisionTree::print(shared_ptr<Node> root, string spacing) const {
-  if (bool is_leaf = root->leaf_ != nullptr; is_leaf) {
-    const auto &leaf = root->leaf_;
-    std::cout << spacing + "Predict: "; Helper::print::print_map(leaf->predictions_);
+void DecisionTree::print(const shared_ptr<Node> root, string spacing) const {
+  if (bool is_leaf = root->leaf() != nullptr; is_leaf) {
+    const auto &leaf = root->leaf();
+    std::cout << spacing + "Predict: "; Helper::print::print_map(leaf->predictions());
     return;
   }
-  std::cout << spacing << root->question_.toString(dr.labels_()) << "\n";
+  std::cout << spacing << root->question().toString(dr.labels()) << "\n";
 
   std::cout << spacing << "--> True: " << "\n";
-  print(root->true_branch_, spacing + "   ");
+  print(root->trueBranch(), spacing + "   ");
 
   std::cout << spacing << "--> False: " << "\n";
-  print(root->false_branch_, spacing + "   ");
+  print(root->falseBranch(), spacing + "   ");
 }
 
 void DecisionTree::generateGraph(const string filepath) const {
-  GraphGenerator g(root, dr.labels_(), filepath);
+  GraphGenerator g(root_, dr.labels(), filepath);
 }
 
 void DecisionTree::test() const {
-  TreeTest t(dr.testingData(), dr.labels_(), root);
+  TreeTest t(dr.testingData(), dr.labels(), root_);
 }

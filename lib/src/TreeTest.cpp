@@ -8,19 +8,19 @@ TreeTest::TreeTest(const Data& testing_data, const VecS& labels, const Node &roo
   test(testing_data, labels, make_shared<Node>(root));
 }
 
-ClassCounter TreeTest::classify(const VecS& row, shared_ptr<Node> node) {
-  if (bool is_leaf = node->leaf_ != nullptr; is_leaf) {
-    const auto &leaf = node->leaf_;
-    return leaf->predictions_;
+const ClassCounter TreeTest::classify(const VecS& row, shared_ptr<Node> node) const {
+  if (bool is_leaf = node->leaf() != nullptr; is_leaf) {
+    const auto &leaf = node->leaf();
+    return leaf->predictions();
   }
 
-  if (node->question_.match(row))
-    return classify(row, node->true_branch_);
+  if (node->question().match(row))
+    return classify(row, node->trueBranch());
   else
-    return classify(row, node->false_branch_);
+    return classify(row, node->falseBranch());
 }
 
-void TreeTest::print_leaf(ClassCounter counts) {
+void TreeTest::print_leaf(ClassCounter counts) const {
   const float total = static_cast<float>(Helper::tree::mapValueSum(counts)); //[](const size_t previous, const auto& p) { return previous+p.second; });
   ClassCounterScaled scale;
 
@@ -30,11 +30,11 @@ void TreeTest::print_leaf(ClassCounter counts) {
   Helper::print::print_map(scale);
 }
 
-ClassCounter TreeTest::testRow(const VecS& row, shared_ptr<Node> node) {
+const ClassCounter TreeTest::testRow(const VecS& row, shared_ptr<Node> node) const {
   return classify(row, node);
 }
 
-void TreeTest::test(const Data& testing_data, const VecS& labels, shared_ptr<Node> tree) {
+void TreeTest::test(const Data& testing_data, const VecS& labels, shared_ptr<Node> tree) const {
   for (const auto& row: testing_data) {
     static size_t last = row.size()-1;
     std::cout << "Actual: " << labels[last] << " - " << row[last] << "\tPrediction: "; print_leaf(classify(row, tree));

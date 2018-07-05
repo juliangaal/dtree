@@ -4,4 +4,4 @@
 
 #include "Leaf.hpp"
 
-Leaf::Leaf(ClassCounter pred) : predictions_(std::move(pred)) {}
+Leaf::Leaf(const ClassCounter pred) : predictions_(std::move(pred)) {}

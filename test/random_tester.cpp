@@ -2,8 +2,8 @@
 
 int main() {
   Dataset d;
-  d.train.filename = "../data/san_fran_vs_nyc.csv";
-  d.test.filename = "../data/san_fran_vs_nyc_test.csv";
+  d.train.filename = "../data/fruit.csv";
+  d.test.filename = "../data/fruit_test.csv";
 
   DecisionTree dt(d);
   dt.print();

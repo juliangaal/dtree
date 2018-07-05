@@ -16,17 +16,14 @@ class TreeTest {
   TreeTest(const Data& testing_data, const VecS& labels, const Node &root);
   ~TreeTest() = default;
 
-  ClassCounter testRow(const VecS& row, shared_ptr<Node> node);
+  const ClassCounter testRow(const VecS& row, shared_ptr<Node> node) const;
 
  private:
+  const ClassCounter classify(const VecS& row, shared_ptr<Node> node) const;
 
-  const shared_ptr<Node> root_node;
+  void print_leaf(ClassCounter counts) const;
 
-  ClassCounter classify(const VecS& row, shared_ptr<Node> node);
-
-  void print_leaf(ClassCounter counts);
-
-  void test(const Data& testing_data, const VecS& labels, shared_ptr<Node> tree);
+  void test(const Data& testing_data, const VecS& labels, shared_ptr<Node> tree) const;
 };
 
 #endif //DEC__ISIONTREE_TREETEST_HPP

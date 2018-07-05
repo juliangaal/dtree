@@ -13,7 +13,7 @@ Tests::Tests() {
   d.test.filename = "../data/fruit_test.csv";
 
   DecisionTree dt(d);
-  testTree(dt.testingData(), dt.root_());
+  testTree(dt.testingData(), dt.root());
   testGenerator(dt);
 }
 
