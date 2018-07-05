@@ -8,13 +8,13 @@ DecisionTree::DecisionTree(Dataset& d) : dr(d), root(Node()) {
   root = buildTree(dr.trainingData());
 }
 
-Node DecisionTree::buildTree(Data& rows) {
+Node DecisionTree::buildTree(const Data& rows) {
   auto [gain, question] = Calculations::find_best_split(rows);
   if (gain == 0.0) {
     return Node(Leaf(Calculations::classCounts(rows)));
   }
 
-  auto [true_rows, false_rows] = Calculations::partition(rows, question);
+  const auto [true_rows, false_rows] = Calculations::partition(rows, question);
   auto true_branch = buildTree(true_rows);
   auto false_branch = buildTree(false_rows);
 

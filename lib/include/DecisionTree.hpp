@@ -27,7 +27,7 @@ class DecisionTree {
 
  private:
   DataReader dr;
-  Node buildTree(Data& rows);
+  Node buildTree(const Data& rows);
   void print(shared_ptr<Node> root, string spacing="") const;
 
   Node root;

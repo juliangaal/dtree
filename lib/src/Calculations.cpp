@@ -6,7 +6,7 @@
 #include "Calculations.hpp"
 #include "Helper.hpp"
 
-tuple<Data, Data> Calculations::partition(Data& data, const Question& q) {
+tuple<const Data, const Data> Calculations::partition(const Data& data, const Question& q) {
   Data true_rows;
   Data false_rows;
 
@@ -16,10 +16,10 @@ tuple<Data, Data> Calculations::partition(Data& data, const Question& q) {
     else
       false_rows.push_back(row);
   }
-  return make_tuple(true_rows, false_rows);
+  return forward_as_tuple(true_rows, false_rows);
 }
 
-double Calculations::gini(const Data& data) {
+const double Calculations::gini(const Data& data) {
   const auto& counts = classCounts(data);
   double impurity = 1.0;
 
@@ -30,12 +30,12 @@ double Calculations::gini(const Data& data) {
   return impurity;
 }
 
-double Calculations::info_gain(const Data& left, const Data& right, double current_uncertainty) {
+const double Calculations::info_gain(const Data& left, const Data& right, double current_uncertainty) {
   const auto& p = static_cast<double>(left.size()) / (left.size() + right.size());
   return current_uncertainty - p * gini(left) - (1 - p) * gini(right);
 }
 
-tuple<double, Question> Calculations::find_best_split(Data& rows) {
+tuple<const double, const Question> Calculations::find_best_split(const Data& rows) {
   double best_gain = 0.0;  // keep track of the best information gain
   auto best_question = Question();  //keep train of the feature / value that produced it
   double current_uncertainty = gini(rows);
@@ -61,10 +61,10 @@ tuple<double, Question> Calculations::find_best_split(Data& rows) {
     }
   }
 
-  return make_tuple(best_gain, best_question);
+  return forward_as_tuple(best_gain, best_question);
 }
 
-VecS Calculations::uniqueValues(const Data& data, const size_t column) {
+const VecS Calculations::uniqueValues(const Data& data, const size_t column) {
   VecS unique_vals;
 
   ClassCounter counter;
@@ -77,7 +77,7 @@ VecS Calculations::uniqueValues(const Data& data, const size_t column) {
   return unique_vals;
 }
 
-ClassCounter Calculations::classCounts(const Data& data) {
+const ClassCounter Calculations::classCounts(const Data& data) {
   ClassCounter counter;
   for (const auto& rows: data) {
     const string decision = rows[rows.size()-1];

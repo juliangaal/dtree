@@ -13,6 +13,7 @@
 
 using std::tuple;
 using std::make_tuple;
+using std::forward_as_tuple;
 using std::vector;
 using std::string;
 using std::unordered_map;
@@ -21,17 +22,17 @@ using ClassCounter = unordered_map<string, int>;
 
 namespace Calculations {
 
-tuple<Data, Data> partition(Data &data, const Question &q);
+tuple<const Data, const Data> partition(const Data &data, const Question &q);
 
-double gini(const Data &data);
+const double gini(const Data &data);
 
-double info_gain(const Data &left, const Data &right, double current_uncertainty);
+const double info_gain(const Data &left, const Data &right, double current_uncertainty);
 
-tuple<double, Question> find_best_split(Data &rows);
+tuple<const double, const Question> find_best_split(const Data &rows);
 
-VecS uniqueValues(const Data &data, const size_t column);
+const VecS uniqueValues(const Data &data, const size_t column);
 
-ClassCounter classCounts(const Data &data);
+const ClassCounter classCounts(const Data &data);
 
 } // namespace Calculations
 
