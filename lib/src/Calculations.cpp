@@ -73,7 +73,7 @@ VecS Calculations::uniqueValues(const Data& data, const size_t column) {
     counter[decision] += 0;
   }
 
-  std::transform(counter.begin(), counter.end(), std::back_inserter(unique_vals), Helper::iterators::RetrieveKey());
+  std::transform(begin(counter), end(counter), std::back_inserter(unique_vals), Helper::iterators::RetrieveKey());
   return unique_vals;
 }
 
