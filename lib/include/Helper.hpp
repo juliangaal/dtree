@@ -49,7 +49,7 @@ void print_vector(const vector<T> &vec) {
     return;
 
   std::cout << "{ ";
-  std::copy(vec.begin(), vec.end(), std::ostream_iterator<string>(std::cout, " "));
+  std::copy(vec.begin(), vec.end(), std::ostream_iterator<T>(std::cout, " "));
   std::cout << "}\n";
 }
 
