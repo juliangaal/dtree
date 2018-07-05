@@ -2,7 +2,6 @@ find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
-include_directories(include)
 
 set(SOURCES
         src/DataReader.cpp
