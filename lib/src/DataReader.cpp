@@ -83,7 +83,7 @@ bool DataReader::isCommentLine(const string &line) const {
   return false;
 }
 
-void DataReader::swapResultData(VecS &line, const VecS &labels) {
+void DataReader::swapResultData(VecS &line, const VecS &labels) const{
   static const auto result = std::find(begin(labels), end(labels), result_label);
   if (result != end(labels)) {
     static const auto result_index = std::distance(begin(labels), result);
@@ -102,7 +102,7 @@ void DataReader::correctLabels() {
     std::iter_swap(result, end(training_labels)-1);
 }
 
-void DataReader::correctMissingValues(const Data& data, VecS &vec) {
+void DataReader::correctMissingValues(const Data& data, VecS &vec) const {
   const auto& last_line = *(end(data)-1);
   vec.clear();
   // TODO: replace with stl::copy_if version

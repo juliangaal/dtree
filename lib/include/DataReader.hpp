@@ -41,7 +41,7 @@ class DataReader
   DataReader() = delete;
   DataReader(const Dataset& dataset, string delm = ",");
 
-  inline Data& trainingData() { return training_data; }
+  inline const Data& trainingData() const { return training_data; }
   inline const Data& testingData() const { return testing_data; }
   inline const VecS& labels_() const { return training_labels; }
   /**
@@ -49,9 +49,9 @@ class DataReader
    * @return the data in vector of vector of strings
    */
   void processFile(const string& strings, Data& data, VecS &labels);
-  void swapResultData(VecS &line, const VecS &labels);
+  void swapResultData(VecS &line, const VecS &labels) const;
   void correctLabels();
-  void correctMissingValues(const Data &data, VecS &vec);
+  void correctMissingValues(const Data &data, VecS &vec) const;
 };
 
 #endif //TREE_CSVREADER_HPP

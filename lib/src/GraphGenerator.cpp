@@ -37,26 +37,26 @@ void GraphGenerator::traverseTree(shared_ptr<Node> node, ofstream &file) {
   if (node == nullptr)
     return;
 
-  if (bool is_leaf = node->leaf_ != nullptr; is_leaf) {
+  if (bool is_leaf = node->leaf() != nullptr; is_leaf) {
     return;
   }
 
-  file << spacing << GraphElement::box(node->question_.toString(labels)) << connector;
+  file << spacing << GraphElement::box(node->question().toString(labels)) << connector;
 
-  if (bool is_leaf = node->true_branch_->leaf_ != nullptr; is_leaf) {
-    file << GraphElement::result(node->true_branch_->leaf_->predictions_, true);
+  if (bool is_leaf = node->trueBranch()->leaf() != nullptr; is_leaf) {
+    file << GraphElement::result(node->trueBranch()->leaf()->predictions(), true);
   } else {
-    file << GraphElement::node(node->true_branch_->question_.toString(labels)) << GraphElement::label("True");
+    file << GraphElement::node(node->trueBranch()->question().toString(labels)) << GraphElement::label("True");
   }
 
-  file << spacing << GraphElement::node(node->question_.toString(labels)) << connector;
+  file << spacing << GraphElement::node(node->question().toString(labels)) << connector;
 
-  if (bool is_leaf = node->false_branch_->leaf_ != nullptr; is_leaf) {
-    file << GraphElement::result(node->false_branch_->leaf_->predictions_, false);
+  if (bool is_leaf = node->falseBranch()->leaf() != nullptr; is_leaf) {
+    file << GraphElement::result(node->falseBranch()->leaf()->predictions(), false);
   } else {
-    file << GraphElement::node(node->false_branch_->question_.toString(labels)) << GraphElement::label("False");
+    file << GraphElement::node(node->falseBranch()->question().toString(labels)) << GraphElement::label("False");
   }
 
-  traverseTree(node->true_branch_, file);
-  traverseTree(node->false_branch_, file);
+  traverseTree(node->trueBranch(), file);
+  traverseTree(node->falseBranch(), file);
 }

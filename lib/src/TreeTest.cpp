@@ -9,15 +9,15 @@ TreeTest::TreeTest(const Data& testing_data, const VecS& labels, const Node &roo
 }
 
 const ClassCounter TreeTest::classify(const VecS& row, shared_ptr<Node> node) const {
-  if (bool is_leaf = node->leaf_ != nullptr; is_leaf) {
-    const auto &leaf = node->leaf_;
-    return leaf->predictions_;
+  if (bool is_leaf = node->leaf() != nullptr; is_leaf) {
+    const auto &leaf = node->leaf();
+    return leaf->predictions();
   }
 
-  if (node->question_.match(row))
-    return classify(row, node->true_branch_);
+  if (node->question().match(row))
+    return classify(row, node->trueBranch());
   else
-    return classify(row, node->false_branch_);
+    return classify(row, node->falseBranch());
 }
 
 void TreeTest::print_leaf(ClassCounter counts) const {

@@ -15,20 +15,16 @@
 class DecisionTree {
  public:
   DecisionTree() = delete;
-  DecisionTree(Dataset& d);
+  DecisionTree(const Dataset& d);
 
   void print() const;
   void test() const;
   void generateGraph(const string filepath) const;
 
-  inline Data trainingData() { return dr.trainingData(); }
-  inline Data testingData() { return dr.testingData(); }
-  inline shared_ptr<Node> root_() { return make_shared<Node>(root); }
-
  private:
   DataReader dr;
-  Node buildTree(const Data& rows);
-  void print(shared_ptr<Node> root, string spacing="") const;
+  const Node buildTree(const Data& rows);
+  void print(const shared_ptr<Node> root, string spacing="") const;
 
   Node root;
 };
