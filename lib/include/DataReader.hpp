@@ -43,7 +43,7 @@ class DataReader
 
   inline const Data& trainingData() const { return training_data; }
   inline const Data& testingData() const { return testing_data; }
-  inline const VecS& labels_() const { return training_labels; }
+  inline const VecS& labels() const { return training_labels; }
   /**
    * Parses through csv file line by line and
    * @return the data in vector of vector of strings

@@ -17,7 +17,7 @@ class GraphGenerator {
   ~GraphGenerator() = default;
 
  private:
-  const vector<string> labels;
+  const vector<string> labels_;
 
   void generate(shared_ptr<Node> root, const string& filepath);
   void traverseTree(shared_ptr<Node> node, ofstream &file);

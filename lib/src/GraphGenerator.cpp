@@ -12,7 +12,7 @@ using std::string;
 using std::vector;
 
 GraphGenerator::GraphGenerator(const Node &root, const vector<string> labels, const string filepath) :
-  labels(labels) {
+  labels_(labels) {
   generate(make_shared<Node>(root), filepath);
 }
 
@@ -41,20 +41,20 @@ void GraphGenerator::traverseTree(shared_ptr<Node> node, ofstream &file) {
     return;
   }
 
-  file << spacing << GraphElement::box(node->question().toString(labels)) << connector;
+  file << spacing << GraphElement::box(node->question().toString(labels_)) << connector;
 
   if (bool is_leaf = node->trueBranch()->leaf() != nullptr; is_leaf) {
     file << GraphElement::result(node->trueBranch()->leaf()->predictions(), true);
   } else {
-    file << GraphElement::node(node->trueBranch()->question().toString(labels)) << GraphElement::label("True");
+    file << GraphElement::node(node->trueBranch()->question().toString(labels_)) << GraphElement::label("True");
   }
 
-  file << spacing << GraphElement::node(node->question().toString(labels)) << connector;
+  file << spacing << GraphElement::node(node->question().toString(labels_)) << connector;
 
   if (bool is_leaf = node->falseBranch()->leaf() != nullptr; is_leaf) {
     file << GraphElement::result(node->falseBranch()->leaf()->predictions(), false);
   } else {
-    file << GraphElement::node(node->falseBranch()->question().toString(labels)) << GraphElement::label("False");
+    file << GraphElement::node(node->falseBranch()->question().toString(labels_)) << GraphElement::label("False");
   }
 
   traverseTree(node->trueBranch(), file);
