@@ -58,6 +58,8 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
 
       labels = move(vec);
     } else {
+      trimWhiteSpaces(vec);
+
       if (hasEmptyStrings(vec))
         correctMissingValues(data, vec);
 
@@ -107,4 +109,9 @@ void DataReader::correctMissingValues(const Data& data, VecS &vec) const {
   vec.clear();
   // TODO: replace with stl::copy_if version
   std::copy(begin(last_line), end(last_line), std::back_inserter(vec));
+}
+
+void DataReader::trimWhiteSpaces(VecS &line) {
+  for (auto& val: line)
+    boost::trim(val);
 }

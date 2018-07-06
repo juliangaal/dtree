@@ -51,6 +51,7 @@ class DataReader
   void processFile(const string& strings, Data& data, VecS &labels);
   void swapResultData(VecS &line, const VecS &labels) const;
   void correctLabels();
+  void trimWhiteSpaces(VecS &line);
   void correctMissingValues(const Data &data, VecS &vec) const;
 };
 
