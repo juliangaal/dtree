@@ -8,6 +8,10 @@
 #include "Node.hpp"
 #include <fstream>
 
+class N {
+  std::unordered_map<string, shared_ptr<N>> nodes;
+};
+
 using std::ofstream;
 
 class GraphGenerator {

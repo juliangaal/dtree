@@ -15,7 +15,7 @@
 class DecisionTree {
  public:
   DecisionTree() = delete;
-  DecisionTree(const Dataset& d);
+  explicit DecisionTree(const Dataset& d);
 
   void print() const;
   void test() const;

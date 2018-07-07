@@ -15,7 +15,7 @@ using std::make_shared;
 class Node {
  public:
   Node();
-  Node(Leaf l);
+  explicit Node(Leaf l);
   Node(const Node& true_branch, const Node& false_branch, const Question &question);
   virtual ~Node() = default;
 
