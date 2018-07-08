@@ -12,6 +12,7 @@
 #include "Question.hpp"
 
 using std::tuple;
+using std::pair;
 using std::forward_as_tuple;
 using std::vector;
 using std::string;
