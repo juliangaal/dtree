@@ -69,10 +69,12 @@ const VecS Calculations::uniqueValues(const Data& data, const size_t column) {
 
   ClassCounter counter;
   for (const auto& rows: data) {
-    const string decision = rows[column];
-    auto [_, success] = counter.insert(pair<string, int>(decision, 0));
-      if (!success)
-        std::cerr << "Can't count [uniqueValues]: " << decision << "\n";
+    const string &decision = rows[column];
+    if (counter.find(decision) != end(counter)) {
+      counter.at(decision) += 0;
+    } else {
+      counter[decision] += 0;
+    }
   }
 
   std::transform(begin(counter), end(counter), std::back_inserter(unique_vals), Helper::iterators::RetrieveKey());
@@ -84,9 +86,7 @@ const ClassCounter Calculations::classCounts(const Data& data) {
   for (const auto& rows: data) {
     const string decision = rows[rows.size()-1];
     if (counter.find(decision) != end(counter)) {
-      auto [_, success] = counter.insert(pair<string, int>(decision, counter.at(decision)+1));
-      if (!success)
-        std::cout << "Can't count [classCounts]: " << decision << "\n";
+      counter.at(decision)++;
     } else {
       counter[decision] += 1;
     }
