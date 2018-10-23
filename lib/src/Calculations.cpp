@@ -6,6 +6,13 @@
 #include "Calculations.hpp"
 #include "Helper.hpp"
 
+using std::tuple;
+using std::pair;
+using std::forward_as_tuple;
+using std::vector;
+using std::string;
+using std::unordered_map;
+
 tuple<const Data, const Data> Calculations::partition(const Data& data, const Question& q) {
   Data true_rows;
   Data false_rows;
@@ -60,7 +67,6 @@ tuple<const double, const Question> Calculations::find_best_split(const Data& ro
       }
     }
   }
-
   return forward_as_tuple(best_gain, best_question);
 }
 
@@ -84,7 +90,7 @@ const VecS Calculations::uniqueValues(const Data& data, const size_t column) {
 const ClassCounter Calculations::classCounts(const Data& data) {
   ClassCounter counter;
   for (const auto& rows: data) {
-    const string decision = rows[rows.size()-1];
+    const string decision = *rbegin(rows);
     if (counter.find(decision) != end(counter)) {
       counter.at(decision)++;
     } else {

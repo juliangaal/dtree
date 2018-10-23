@@ -11,24 +11,18 @@
 #include <unordered_map>
 #include "Question.hpp"
 
-using std::tuple;
-using std::pair;
-using std::forward_as_tuple;
-using std::vector;
-using std::string;
-using std::unordered_map;
-using Data = vector<vector<string>>;
-using ClassCounter = unordered_map<string, int>;
+using Data = std::vector<std::vector<std::string>>;
+using ClassCounter = std::unordered_map<std::string, int>;
 
 namespace Calculations {
 
-tuple<const Data, const Data> partition(const Data &data, const Question &q);
+std::tuple<const Data, const Data> partition(const Data &data, const Question &q);
 
 const double gini(const Data &data);
 
 const double info_gain(const Data &left, const Data &right, double current_uncertainty);
 
-tuple<const double, const Question> find_best_split(const Data &rows);
+std::tuple<const double, const Question> find_best_split(const Data &rows);
 
 const VecS uniqueValues(const Data &data, const size_t column);
 
