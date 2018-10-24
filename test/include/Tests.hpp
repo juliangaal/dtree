@@ -6,10 +6,7 @@
 #define DEC_ISIONTREE_TEST_HPP
 
 #include <DecisionTree/DecisionTree.hpp>
-#include <fstream>
-#include <algorithm>
-
-using std::ifstream;
+#include <memory>
 
 class Tests {
  public:
@@ -17,10 +14,10 @@ class Tests {
   ~Tests() = default;
 
  private:
-  void testTree(const Data& testing_data, shared_ptr<Node> tree) const;
-  void testGenerator(DecisionTree& dtree, const string filename="test_graph.dot") const;
-  bool fileExists(const string& filename) const;
-  bool lineNumsMatch(const string& filename) const;
+  void testTree(const Data& testing_data, std::shared_ptr<Node> tree) const;
+  void testGenerator(DecisionTree& dtree, const std::string filename="test_graph.dot") const;
+  bool fileExists(const std::string& filename) const;
+  bool lineNumsMatch(const std::string& filename) const;
 };
 
 #endif //DEC_ISIONTREE_TEST_HPP

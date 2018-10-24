@@ -7,8 +7,8 @@
 #include <algorithm>
 #include <iterator>
 #include <tuple>
-
-using std::pair;
+#include <fstream>
+#include <memory>
 
 Tests::Tests() {
   Dataset d;
@@ -20,11 +20,11 @@ Tests::Tests() {
   testGenerator(dt);
 }
 
-void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
+void Tests::testTree(const Data& testing_data, std::shared_ptr<Node> tree) const {
   TreeTest tree_test;
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Apple", 8));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Apple", 8));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -36,7 +36,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Apple", 2));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Apple", 2));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -49,7 +49,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Grape", 14));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Grape", 14));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -61,7 +61,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Grape", 14));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Grape", 14));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -74,12 +74,12 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
   {
     ClassCounter prediction;
     {
-      auto[_, success] = prediction.insert(pair<string, int>("Apple", 1));
+      auto[_, success] = prediction.insert(std::pair<std::string, int>("Apple", 1));
       if (!success)
         std::cerr << "Can't build test example";
     }
     {
-      auto[_, success] = prediction.insert(pair<string, int>("Lemon", 4));
+      auto[_, success] = prediction.insert(std::pair<std::string, int>("Lemon", 4));
       if (!success)
         std::cerr << "Can't build test example";
     }
@@ -91,7 +91,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Lime", 4));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Lime", 4));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -103,7 +103,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Pepper", 11));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Pepper", 11));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -115,7 +115,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Pepper", 11));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Pepper", 11));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -127,7 +127,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Pepper", 11));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Pepper", 11));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -139,7 +139,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Radish", 5));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Radish", 5));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -151,7 +151,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Grape", 14));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Grape", 14));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -163,7 +163,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Pepper", 11));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Pepper", 11));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -175,7 +175,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Grape", 14));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Grape", 14));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -187,7 +187,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Pepper", 11));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Pepper", 11));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -199,7 +199,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
   {
     ClassCounter prediction;
-    auto [_, success] = prediction.insert(pair<string, int>("Eggplant", 6));
+    auto [_, success] = prediction.insert(std::pair<std::string, int>("Eggplant", 6));
     if (!success)
       std::cerr << "Can't build test example";
 
@@ -211,7 +211,7 @@ void Tests::testTree(const Data& testing_data, shared_ptr<Node> tree) const {
 
 }
 
-void Tests::testGenerator(DecisionTree& dtree, const string filename) const {
+void Tests::testGenerator(DecisionTree& dtree, const std::string filename) const {
   if (fileExists(filename))
     std::remove(filename.c_str());
 
@@ -221,16 +221,16 @@ void Tests::testGenerator(DecisionTree& dtree, const string filename) const {
   assert(lineNumsMatch(filename));
 }
 
-bool Tests::fileExists(const string &filename) const {
-  ifstream infile(filename);
+bool Tests::fileExists(const std::string &filename) const {
+  std::ifstream infile(filename);
   bool fileExists = infile.good();
   infile.close();
   return fileExists;
 }
 
-bool Tests::lineNumsMatch(const string& filename) const {
+bool Tests::lineNumsMatch(const std::string& filename) const {
   constexpr long wanted_line_count = 67;
-  ifstream infile(filename);
+  std::ifstream infile(filename);
   if (!infile.good()) {
     std::cout << "File " << filename << " doesn't exist\n";
     return false;

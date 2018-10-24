@@ -4,15 +4,11 @@
 #include <thread>
 #include "DataReader.hpp"
 
-using std::move;
-using std::vector;
-using std::string;
-using std::ifstream;
 using boost::algorithm::split;
 
-DataReader::DataReader(const Dataset& dataset, string delim) :
+DataReader::DataReader(const Dataset& dataset, std::string delim) :
     result_label(dataset.result_label),
-    delimeter(move(delim)),
+    delimeter(std::move(delim)),
     training_labels({}),
     testing_labels({}),
     missing_labels(false) {
@@ -40,17 +36,17 @@ DataReader::DataReader(const Dataset& dataset, string delim) :
     throw std::runtime_error("Can't open file: " + dataset.test.filename);
 }
 
-void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
-  ifstream file(filename);
+void DataReader::processFile(const std::string& filename, Data& data, VecS &labels) {
+  std::ifstream file(filename);
   if (!file)
     return;
 //  Data data;
-  string line;
+  std::string line;
   int line_counter = 1;
   static constexpr int first_line = 1;
 
   while (getline(file, line)) {
-    vector<string> vec;
+    std::vector<std::string> vec;
 
     if (isCommentLine(line))
       continue;
@@ -62,7 +58,7 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
         return;
       }
 
-      labels = move(vec);
+      labels = std::move(vec);
     } else {
       trimWhiteSpaces(vec);
 
@@ -70,10 +66,10 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
         correctMissingValues(data, vec);
 
       if (result_label.empty()) {
-        data.emplace_back(move(vec));
+        data.emplace_back(std::move(vec));
       } else {
         swapResultData(vec, labels);
-        data.emplace_back(move(vec));
+        data.emplace_back(std::move(vec));
       }
     }
     ++line_counter;
@@ -81,21 +77,21 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
   file.close();
 }
 
-bool DataReader::hasEmptyStrings(const vector<string> &strings) const {
-  return std::any_of(begin(strings), std::end(strings), [](const auto& v) { return v.empty(); } );
+bool DataReader::hasEmptyStrings(const std::vector<std::string> &strings) const {
+  return std::any_of(std::begin(strings), std::end(strings), [](const auto& v) { return v.empty(); } );
 }
 
-bool DataReader::isCommentLine(const string &line) const {
+bool DataReader::isCommentLine(const std::string &line) const {
   if (auto n = line.find("#"); n != std::string::npos)
     return true;
   return false;
 }
 
 void DataReader::swapResultData(VecS &line, const VecS &labels) const{
-  static const auto result = std::find(begin(labels), std::end(labels), result_label);
+  static const auto result = std::find(std::begin(labels), std::end(labels), result_label);
   if (result != std::end(labels)) {
-    static const auto result_index = std::distance(begin(labels), result);
-    std::iter_swap(begin(line)+result_index, std::end(line)-1);
+    static const auto result_index = std::distance(std::begin(labels), result);
+    std::iter_swap(std::begin(line)+result_index, std::end(line)-1);
   }
 }
 
@@ -105,7 +101,7 @@ void DataReader::correctLabels() {
     return;
   }
 
-  const auto result = std::find(begin(training_labels), std::end(training_labels), result_label);
+  const auto result = std::find(std::begin(training_labels), std::end(training_labels), result_label);
   if (result != std::end(training_labels))
     std::iter_swap(result, std::end(training_labels)-1);
 }
@@ -114,7 +110,7 @@ void DataReader::correctMissingValues(const Data& data, VecS &vec) const {
   const auto& last_line = *(end(data)-1);
   vec.clear();
   // TODO: replace with stl::copy_if version
-  std::copy(begin(last_line), std::end(last_line), std::back_inserter(vec));
+  std::copy(std::begin(last_line), std::end(last_line), std::back_inserter(vec));
 }
 
 void DataReader::trimWhiteSpaces(VecS &line) {
