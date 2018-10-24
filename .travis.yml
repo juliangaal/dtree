@@ -39,7 +39,6 @@ matrix:
             - llvm-toolchain-trusty-5.0
           packages:
             - clang-5.0
-            - clang++-5.0
             - libstdc++-7-dev
       env:
         - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-5.0 && CXX=clang++-5.0"
@@ -51,7 +50,6 @@ matrix:
             - llvm-toolchain-trusty-6.0
           packages:
             - clang-6.0
-            - clang++-6.0
             - libstdc++-7-dev
       env:
         - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-6.0 && CXX=clang++-6.0"
@@ -65,7 +63,7 @@ matrix:
             - clang-7
             - libstdc++-7-dev
       env:
-        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-7.0 && CXX=clang++-7.0"
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-7 && CXX=clang++-7"
     - os: osx
       osx_image: xcode9.3
       compiler: clang
