@@ -5,6 +5,9 @@
 #include "GraphElements.hpp"
 #include "Helper.hpp"
 
+using std::string;
+using std::unordered_map;
+
 string GraphElement::label(const string &label) {
   return "[label=\"" + label + "\"];\n";
 }

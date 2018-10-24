@@ -12,10 +12,7 @@
 #include <numeric>
 #include <iterator>
 
-using std::string;
-using std::vector;
-using std::unordered_map;
-using Data = vector<vector<string>>;
+using Data = std::vector<std::vector<std::string>>;
 
 namespace Helper::iterators {
 
@@ -37,24 +34,24 @@ struct AddMapValue {
 namespace Helper::tree {
 
 template <typename T>
-int mapValueSum(unordered_map<T, int> counts) {
-  return std::accumulate(begin(counts), end(counts), 0, iterators::AddMapValue());
+int mapValueSum(std::unordered_map<T, int> counts) {
+  return std::accumulate(begin(counts), std::end(counts), 0, iterators::AddMapValue());
 }
 }
 
 namespace Helper::print {
 template<typename T>
-void print_vector(const vector<T> &vec) {
+void print_vector(const std::vector<T> &vec) {
   if (vec.empty())
     return;
 
   std::cout << "{ ";
-  std::copy(begin(vec), end(vec), std::ostream_iterator<T>(std::cout, " "));
+  std::copy(begin(vec), std::end(vec), std::ostream_iterator<T>(std::cout, " "));
   std::cout << "}\n";
 }
 
 template<typename K, typename V>
-void print_map(const unordered_map<K, V> &counter) {
+void print_map(const std::unordered_map<K, V> &counter) {
   if (counter.empty())
     return;
 

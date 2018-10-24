@@ -4,6 +4,10 @@
 
 #include "DecisionTree.hpp"
 
+using std::make_shared;
+using std::shared_ptr;
+using std::string;
+
 DecisionTree::DecisionTree(const Dataset& d) : dr(d), root_(Node()) {
   root_ = buildTree(dr.trainingData());
 }

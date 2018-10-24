@@ -4,6 +4,8 @@
 
 #include "Node.hpp"
 
+using std::make_shared;
+
 Node::Node() : true_branch_(nullptr), false_branch_(nullptr), leaf_(nullptr) {}
 
 Node::Node(Leaf l) : leaf_(make_shared<Leaf>(l)) {}

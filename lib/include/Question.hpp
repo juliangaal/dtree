@@ -5,23 +5,21 @@
 #ifndef DEC__ISIONTREE_QUESTION_HPP
 #define DEC__ISIONTREE_QUESTION_HPP
 
-#include <string>
 #include <vector>
+#include <string>
 
-using std::string;
-using std::vector;
-using VecS = vector<string>;
+using VecS = std::vector<std::string>;
 
 class Question {
  public:
   Question();
-  Question(const int column, const string value);
+  Question(const int column, const std::string value);
 
   const bool match(VecS example) const;
   const bool isNumeric(std::string value) const;
-  const string toString(const VecS& labels) const;
+  const std::string toString(const VecS& labels) const;
   int column_;
-  string value_;
+  std::string value_;
 };
 
 #endif //DEC__ISIONTREE_QUESTION_HPP

@@ -8,7 +8,7 @@
 #include "Node.hpp"
 #include "Helper.hpp"
 
-using ClassCounterScaled = unordered_map<string, string>;
+using ClassCounterScaled = std::unordered_map<std::string, std::string>;
 
 class TreeTest {
  public:
@@ -16,14 +16,14 @@ class TreeTest {
   TreeTest(const Data& testing_data, const VecS& labels, const Node &root);
   ~TreeTest() = default;
 
-  const ClassCounter testRow(const VecS& row, shared_ptr<Node> node) const;
+  const ClassCounter testRow(const VecS& row, std::shared_ptr<Node> node) const;
 
  private:
-  const ClassCounter classify(const VecS& row, shared_ptr<Node> node) const;
+  const ClassCounter classify(const VecS& row, std::shared_ptr<Node> node) const;
 
   void print_leaf(ClassCounter counts) const;
 
-  void test(const Data& testing_data, const VecS& labels, shared_ptr<Node> tree) const;
+  void test(const Data& testing_data, const VecS& labels, std::shared_ptr<Node> tree) const;
 };
 
 #endif //DEC__ISIONTREE_TREETEST_HPP

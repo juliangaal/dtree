@@ -9,12 +9,8 @@
 #include <string>
 #include <unordered_map>
 
-using std::string;
-using std::vector;
-using std::unordered_map;
-
-using Data = vector<vector<string>>;
-using ClassCounter = unordered_map<string, int>;
+using Data = std::vector<std::vector<std::string>>;
+using ClassCounter = std::unordered_map<std::string, int>;
 
 class Leaf {//: public Node {
  public:

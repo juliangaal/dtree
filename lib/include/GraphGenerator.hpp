@@ -9,7 +9,7 @@
 #include <fstream>
 
 class N {
-  std::unordered_map<string, shared_ptr<N>> nodes;
+  std::unordered_map<std::string, std::shared_ptr<N>> nodes;
 };
 
 using std::ofstream;
@@ -17,14 +17,14 @@ using std::ofstream;
 class GraphGenerator {
  public:
   GraphGenerator() = delete;
-  GraphGenerator(const Node& root, const vector<string> labels, const string filepath="../graph.dot");
+  GraphGenerator(const Node& root, const std::vector<std::string> labels, const std::string filepath="../graph.dot");
   ~GraphGenerator() = default;
 
  private:
-  const vector<string> labels_;
+  const std::vector<std::string> labels_;
 
-  void generate(shared_ptr<Node> root, const string& filepath);
-  void traverseTree(shared_ptr<Node> node, ofstream &file);
+  void generate(std::shared_ptr<Node> root, const std::string& filepath);
+  void traverseTree(std::shared_ptr<Node> node, std::ofstream &file);
 
 };
 

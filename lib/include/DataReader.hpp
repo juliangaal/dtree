@@ -12,13 +12,8 @@
 #include "Dataset.hpp"
 #include "Helper.hpp"
 
-using std::move;
-using std::vector;
-using std::string;
-using std::ifstream;
-using boost::algorithm::split;
-using Data = vector<vector<string>>;
-using VecS = vector<string>;
+using Data = std::vector<std::vector<std::string>>;
+using VecS = std::vector<std::string>;
 /*
  * A class to read data from a csv file. Based on http://thispointer.com/how-to-read-data-from-a-csv-file-in-c/
  */
@@ -27,10 +22,10 @@ class DataReader
 {
  private:
   bool hasEmptyStrings(const VecS& strings) const;
-  bool isCommentLine(const string& line) const;
+  bool isCommentLine(const std::string& line) const;
 
-  const string result_label;
-  const string delimeter;
+  const std::string result_label;
+  const std::string delimeter;
   Data training_data;
   Data testing_data;
   VecS training_labels;
@@ -39,7 +34,7 @@ class DataReader
 
  public:
   DataReader() = delete;
-  DataReader(const Dataset& dataset, string delm = ",");
+  DataReader(const Dataset& dataset, std::string delm = ",");
 
   inline const Data& trainingData() const { return training_data; }
   inline const Data& testingData() const { return testing_data; }
@@ -48,7 +43,7 @@ class DataReader
    * Parses through csv file line by line and
    * @return the data in vector of vector of strings
    */
-  void processFile(const string& strings, Data& data, VecS &labels);
+  void processFile(const std::string& strings, Data& data, VecS &labels);
   void swapResultData(VecS &line, const VecS &labels) const;
   void correctLabels();
   void trimWhiteSpaces(VecS &line);

@@ -19,15 +19,15 @@ class DecisionTree {
 
   void print() const;
   void test() const;
-  void generateGraph(const string filepath) const;
+  void generateGraph(const std::string filepath) const;
 
   inline Data testingData() { return dr.testingData(); }
-  inline shared_ptr<Node> root() { return make_shared<Node>(root_); }
+  inline std::shared_ptr<Node> root() { return std::make_shared<Node>(root_); }
 
  private:
   DataReader dr;
   const Node buildTree(const Data& rows);
-  void print(const shared_ptr<Node> root, string spacing="") const;
+  void print(const std::shared_ptr<Node> root, std::string spacing="") const;
 
   Node root_;
 };

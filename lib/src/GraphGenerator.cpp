@@ -10,6 +10,8 @@
 
 using std::string;
 using std::vector;
+using std::make_shared;
+using std::shared_ptr;
 
 GraphGenerator::GraphGenerator(const Node &root, const vector<string> labels, const string filepath) :
   labels_(labels) {

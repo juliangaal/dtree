@@ -4,6 +4,9 @@
 
 #include "TreeTest.hpp"
 
+using std::make_shared;
+using std::shared_ptr;
+
 TreeTest::TreeTest(const Data& testing_data, const VecS& labels, const Node &root) {
   test(testing_data, labels, make_shared<Node>(root));
 }

@@ -9,18 +9,15 @@
 #include <unordered_map>
 
 using branch = bool;
-using std::string;
-using std::unordered_map;
-
 namespace GraphElement {
 
-string label(const string &label);
+std::string label(const std::string &label);
 
-string box(const string &label);
+std::string box(const std::string &label);
 
-string node(const string &question);
+std::string node(const std::string &question);
 
-string result(const unordered_map<string, int> &data, branch b);
+std::string result(const std::unordered_map<std::string, int> &data, branch b);
 
 }
 

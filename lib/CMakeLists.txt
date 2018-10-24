@@ -1,8 +1,6 @@
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 
-include_directories(${Boost_INCLUDE_DIR})
-
 set(SOURCES
         src/DataReader.cpp
         src/DecisionTree.cpp
@@ -28,9 +26,11 @@ set(HEADERS
         include/GraphElements.hpp)
 
 add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
+        ${Boost_INCLUDE_DIR}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>)
 

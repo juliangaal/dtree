@@ -4,6 +4,12 @@
 #include <thread>
 #include "DataReader.hpp"
 
+using std::move;
+using std::vector;
+using std::string;
+using std::ifstream;
+using boost::algorithm::split;
+
 DataReader::DataReader(const Dataset& dataset, string delim) :
     result_label(dataset.result_label),
     delimeter(move(delim)),
@@ -76,7 +82,7 @@ void DataReader::processFile(const string& filename, Data& data, VecS &labels) {
 }
 
 bool DataReader::hasEmptyStrings(const vector<string> &strings) const {
-  return std::any_of(begin(strings), end(strings), [](const auto& v) { return v.empty(); } );
+  return std::any_of(begin(strings), std::end(strings), [](const auto& v) { return v.empty(); } );
 }
 
 bool DataReader::isCommentLine(const string &line) const {
@@ -86,10 +92,10 @@ bool DataReader::isCommentLine(const string &line) const {
 }
 
 void DataReader::swapResultData(VecS &line, const VecS &labels) const{
-  static const auto result = std::find(begin(labels), end(labels), result_label);
-  if (result != end(labels)) {
+  static const auto result = std::find(begin(labels), std::end(labels), result_label);
+  if (result != std::end(labels)) {
     static const auto result_index = std::distance(begin(labels), result);
-    std::iter_swap(begin(line)+result_index, end(line)-1);
+    std::iter_swap(begin(line)+result_index, std::end(line)-1);
   }
 }
 
@@ -99,16 +105,16 @@ void DataReader::correctLabels() {
     return;
   }
 
-  const auto result = std::find(begin(training_labels), end(training_labels), result_label);
-  if (result != end(training_labels))
-    std::iter_swap(result, end(training_labels)-1);
+  const auto result = std::find(begin(training_labels), std::end(training_labels), result_label);
+  if (result != std::end(training_labels))
+    std::iter_swap(result, std::end(training_labels)-1);
 }
 
 void DataReader::correctMissingValues(const Data& data, VecS &vec) const {
   const auto& last_line = *(end(data)-1);
   vec.clear();
   // TODO: replace with stl::copy_if version
-  std::copy(begin(last_line), end(last_line), std::back_inserter(vec));
+  std::copy(begin(last_line), std::end(last_line), std::back_inserter(vec));
 }
 
 void DataReader::trimWhiteSpaces(VecS &line) {

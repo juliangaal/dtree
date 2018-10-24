@@ -7,20 +7,18 @@
 
 #include <string>
 
-using std::string;
-
 struct Train {
-  string filename;
+  std::string filename;
 };
 
 struct Test {
-  string filename;
+  std::string filename;
 };
 
 struct Dataset {
   Train train;
   Test test;
-  string result_label;
+  std::string result_label;
 };
 
 #endif //DEC__ISIONTREE_DATASET_HPP

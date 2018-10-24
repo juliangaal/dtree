@@ -5,6 +5,9 @@
 #include "Question.hpp"
 #include "Helper.hpp"
 
+using std::string;
+using std::vector;
+
 Question::Question() : column_(0), value_("") {}
 
 Question::Question(const int column, const string value) : column_(column), value_(value) {}
