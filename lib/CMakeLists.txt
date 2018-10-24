@@ -1,6 +1,8 @@
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 
+set(CLANG_DEFAULT_CXX_STDLIB "libc++")
+
 set(SOURCES
         src/DataReader.cpp
         src/DecisionTree.cpp
