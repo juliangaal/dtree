@@ -6,9 +6,9 @@
 
 using std::make_shared;
 
-Node::Node() : true_branch_(nullptr), false_branch_(nullptr), leaf_(nullptr) {}
+Node::Node() : true_branch_(nullptr), false_branch_(nullptr), question_({}), leaf_(nullptr) {}
 
-Node::Node(Leaf l) : leaf_(make_shared<Leaf>(l)) {}
+Node::Node(Leaf l) : true_branch_(nullptr), false_branch_(nullptr), question_({}), leaf_(make_shared<Leaf>(l)) {}
 
 Node::Node(const Node &true_branch, const Node &false_branch, const Question &question) :
     true_branch_(make_shared<Node>(true_branch)),

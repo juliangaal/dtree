@@ -24,15 +24,15 @@ set (FILES
 
 add_executable(ImportTest import_test.cpp)
 target_include_directories(ImportTest PUBLIC ../lib/include ${Boost_INCLUDE_DIRS})
-target_compile_options(ImportTest PRIVATE -Wall -Weffc++ -Wpedantic -Werror)
+target_compile_options(ImportTest PRIVATE -Wall -Weffc++ -Wpedantic)
 target_link_libraries(ImportTest DecisionTree Threads::Threads ${Boost_LIBRARIES})
 
 add_executable(Test src/RunTest.cpp src/Tests.cpp)
 target_include_directories(Test PUBLIC ../lib/include ${Boost_INCLUDE_DIRS})
-target_compile_options(Test PRIVATE -Wall -Weffc++ -Wpedantic -Werror)
+target_compile_options(Test PRIVATE -Wall -Weffc++ -Wpedantic)
 target_link_libraries(Test DecisionTree Threads::Threads ${Boost_LIBRARIES})
 
 add_executable(RandomTest random_tester.cpp ${FILES})
-target_compile_options(RandomTest PRIVATE -Wall -Weffc++ -Wpedantic -Werror)
+target_compile_options(RandomTest PRIVATE -Wall -Weffc++ -Wpedantic)
 target_include_directories(RandomTest PUBLIC ../lib/include ${Boost_INCLUDE_DIRS})
 target_link_libraries(RandomTest Threads::Threads ${Boost_LIBRARIES})

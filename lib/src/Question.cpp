@@ -28,15 +28,12 @@ const string Question::toString(const VecS& labels) const {
 }
 
 const bool Question::isNumeric(std::string value) const {
-  double parsed_number = 0.0;
-
   if (bool empty = value.empty(); !empty) {
     try {
-      parsed_number = std::stod(value);
-      return true;
+      std::stod(value);
     } catch (const std::exception &e) {
       return false;
     }
   }
-  return false;
+  return true;
 }

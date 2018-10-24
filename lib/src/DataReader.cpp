@@ -9,6 +9,8 @@ using boost::algorithm::split;
 DataReader::DataReader(const Dataset& dataset, std::string delim) :
     result_label(dataset.result_label),
     delimeter(std::move(delim)),
+    training_data({}),
+    testing_data({}),
     training_labels({}),
     testing_labels({}),
     missing_labels(false) {
