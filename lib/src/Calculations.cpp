@@ -3,6 +3,7 @@
 //
 #include <cmath>
 #include <algorithm>
+#include <omp.h>
 #include <iterator>
 #include "Calculations.hpp"
 #include "Helper.hpp"

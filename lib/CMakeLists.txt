@@ -2,6 +2,10 @@ find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
 find_package(OpenMP REQUIRED)
 
+# openmp on clang
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+
 set(CLANG_DEFAULT_CXX_STDLIB "libc++")
 
 set(SOURCES
