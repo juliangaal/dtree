@@ -1,5 +1,5 @@
 # DecisionTree
-# clang > 4 and gcc >= 7 is required
+# gcc >= 7 is required
 # Ubuntu 14.04
 sudo: required
 dist: trusty
@@ -31,45 +31,6 @@ matrix:
       env:
         - COMPILER=g++-8
         - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=gcc-8 && CXX=g++-8"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
-          packages:
-            - clang-5.0
-            - libstdc++-7-dev
-      env:
-        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-5.0 && CXX=clang++-5.0"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
-          packages:
-            - clang-6.0
-            - libstdc++-7-dev
-      env:
-        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-6.0 && CXX=clang++-6.0"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-trusty-7
-            - ubuntu-toolchain-r-test
-          packages:
-            - clang-7
-            - libstdc++-7-dev
-      env:
-        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-7 && CXX=clang++-7"
-    - os: osx
-      osx_image: xcode9.3
-      compiler: clang
-    - os: osx
-      osx_image: xcode9.4
-      compiler: clang
 
 before_install:
     - eval "${MATRIX_EVAL}"
