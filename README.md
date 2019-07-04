@@ -15,7 +15,7 @@ results from [iris.dot](docs/graph.dot) and [this](test/data/iris.csv) dataset.
 
 ## Requirements
 * Boost
-* gcc >= 7 || clang >= 5 || xcode >= 9.3
+* gcc >= 7
 
 ## TODO
 * handle missing data in files
