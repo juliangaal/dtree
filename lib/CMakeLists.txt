@@ -1,6 +1,6 @@
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
-find_package(OpenMP 5.0 REQUIRED)
+find_package(OpenMP REQUIRED)
 
 # for future clang support, clang seems to not like openmp
 # set(CLANG_DEFAULT_CXX_STDLIB "libc++")
