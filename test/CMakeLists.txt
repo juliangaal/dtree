@@ -10,6 +10,7 @@ endif()
 
 find_package(Threads REQUIRED)
 find_package(Boost REQUIRED)
+find_package(OpenMP REQUIRED)
 
 set (FILES
         ../lib/src/DataReader.cpp
@@ -35,4 +36,4 @@ target_link_libraries(Test DecisionTree Threads::Threads ${Boost_LIBRARIES})
 add_executable(RandomTest random_tester.cpp ${FILES})
 target_compile_options(RandomTest PRIVATE -Wall -Weffc++ -Wpedantic)
 target_include_directories(RandomTest PUBLIC ../lib/include ${Boost_INCLUDE_DIRS})
-target_link_libraries(RandomTest Threads::Threads ${Boost_LIBRARIES})
+target_link_libraries(RandomTest Threads::Threads ${Boost_LIBRARIES} OpenMP::OpenMP_CXX)

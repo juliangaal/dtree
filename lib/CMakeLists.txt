@@ -1,5 +1,6 @@
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
+find_package(OpenMP REQUIRED)
 
 set(CLANG_DEFAULT_CXX_STDLIB "libc++")
 
@@ -28,7 +29,7 @@ set(HEADERS
         include/GraphElements.hpp)
 
 add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads OpenMP::OpenMP_CXX)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Weffc++ -Wpedantic)
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${Boost_INCLUDE_DIR}
