@@ -1,20 +1,19 @@
 //
 // Created by Julian on 24.06.18.
 //
+#include <decision_tree/calculations.hpp>
+#include <decision_tree/helpers.hpp>
 #include <cmath>
 #include <algorithm>
 #include <omp.h>
-#include "Calculations.hpp"
-#include "Helper.hpp"
+
+using namespace decision_tree;
 
 using std::tuple;
-using std::pair;
-using std::forward_as_tuple;
-using std::vector;
 using std::string;
 using std::unordered_map;
 
-tuple<const Data, const Data> Calculations::partition(const Data &data, const Question &q) {
+tuple<const Data, const Data> calculations::partition(const Data &data, const Question &q) {
     Data true_rows;
     Data false_rows;
 
@@ -24,10 +23,10 @@ tuple<const Data, const Data> Calculations::partition(const Data &data, const Qu
         else
             false_rows.push_back(row);
     }
-    return forward_as_tuple(true_rows, false_rows);
+    return {true_rows, false_rows};
 }
 
-const double Calculations::gini(const Data &data) {
+const double calculations::gini(const Data &data) {
     const auto &counts = classCounts(data);
     double impurity = 1.0;
 
@@ -38,20 +37,20 @@ const double Calculations::gini(const Data &data) {
     return impurity;
 }
 
-const double Calculations::info_gain(const Data &left, const Data &right, double current_uncertainty) {
+const double calculations::info_gain(const Data &left, const Data &right, double current_uncertainty) {
     const auto &p = static_cast<double>(left.size()) / (left.size() + right.size());
     return current_uncertainty - p * gini(left) - (1 - p) * gini(right);
 }
 
-tuple<const double, const Question> Calculations::find_best_split(const Data &rows) {
+tuple<const double, const Question> calculations::find_best_split(const Data &rows) {
     double best_gain = 0.0;  // keep track of the best information gain
     auto best_question = Question();  //keep train of the feature / value that produced it
     double current_uncertainty = gini(rows);
     size_t n_features = rows[0].size() - 1;  //number of columns
 
-    #pragma omp parallel for num_threads(5)
+#pragma omp parallel for num_threads(5)
     for (size_t column = 0; column < n_features; column++) {
-        const auto &values = uniqueValues(rows, column);
+        const auto values = uniqueValues(rows, column);
 
         for (const auto &val: values) {
             const Question q(column, val);
@@ -63,7 +62,7 @@ tuple<const double, const Question> Calculations::find_best_split(const Data &ro
 
             const auto &gain = info_gain(true_rows, false_rows, current_uncertainty);
 
-            #pragma omp critical
+#pragma omp critical
             {
                 if (gain >= best_gain) {
                     best_gain = gain;
@@ -72,10 +71,10 @@ tuple<const double, const Question> Calculations::find_best_split(const Data &ro
             }
         }
     }
-    return forward_as_tuple(best_gain, best_question);
+    return {best_gain, best_question};
 }
 
-const VecS Calculations::uniqueValues(const Data &data, const size_t column) {
+const VecS calculations::uniqueValues(const Data &data, const size_t column) {
     VecS unique_vals;
 
     ClassCounter counter;
@@ -85,11 +84,11 @@ const VecS Calculations::uniqueValues(const Data &data, const size_t column) {
     }
 
     std::transform(begin(counter), std::end(counter), std::back_inserter(unique_vals),
-                   Helper::iterators::RetrieveKey());
+                   [](const auto &kv) { return kv.first; });
     return unique_vals;
 }
 
-const ClassCounter Calculations::classCounts(const Data &data) {
+const ClassCounter calculations::classCounts(const Data &data) {
     ClassCounter counter;
     for (const auto &rows: data) {
         const string decision = *std::rbegin(rows);

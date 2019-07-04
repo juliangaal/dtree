@@ -4,22 +4,10 @@
 sudo: required
 dist: trusty
 
-# Enable C++ support
 language: cpp
 
 matrix:
   include:
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - gcc-7
-            - g++-7
-      env: 
-        - COMPILER=g++-7
-        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=gcc-7 && CXX=g++-7"
     - os: linux
       addons:
         apt:
@@ -33,15 +21,10 @@ matrix:
         - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=gcc-8 && CXX=g++-8"
 
 before_install:
-    - eval "${MATRIX_EVAL}"
+  - eval "${MATRIX_EVAL}"
 
-# Build steps
 script:
-    - mkdir build && cd build
-    - cmake ..
-    - make -j10
-    - sudo make install
-    - cd ../test/ && mkdir build && cd build
-    - cmake ..
-    - make -j10
-    - ./ImportTest
+  - mkdir build && cd build
+  - cmake ..
+  - make -j10
+  - ctest --verbose
