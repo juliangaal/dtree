@@ -5,10 +5,10 @@
 #include <DecisionTree/DecisionTree.hpp>
 
 int main(void) {
-  Dataset d;
-  d.train.filename = "../data/play_tennis.csv";
-  d.test.filename = "../data/play_tennis_test.csv";
+    Dataset d;
+    d.train.filename = "../data/play_tennis.csv";
+    d.test.filename = "../data/play_tennis_test.csv";
 
-  DecisionTree dt(d);
-  return 0;
+    DecisionTree dt(d);
+    return 0;
 }

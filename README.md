@@ -14,8 +14,14 @@ use built-in [Graphviz](https://www.graphviz.org) dot file generator to export d
 results from [iris.dot](docs/graph.dot) and [this](test/data/iris.csv) dataset.
 
 ## Requirements
-* Boost
-* gcc >= 7 || clang >= 5 || xcode >= 9.3
+* Boost (algorithm header)
+* gcc >= 8
+* cmake >= 3.9
+* Catch (for testing)
 
 ## TODO
 * handle missing data in files
+* pruning? 
+* dataset struct restructuring?
+* `std::filesystem`
+* `enable_testing()` cmake
