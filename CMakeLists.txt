@@ -23,7 +23,18 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} OpenMP::OpenMP_CXX)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Weffc++ -Wpedantic)
 
-add_subdirectory(test)
+enable_testing()
+
+add_executable(dtree_test test/src/tests.cpp ${HEADERS})
+add_test(NAME dtree_test COMMAND dtree_test)
+target_include_directories(dtree_test PRIVATE ${Boost_INCLUDE_DIRS})
+target_compile_options(dtree_test PRIVATE -Wall -Weffc++ -Wpedantic)
+target_link_libraries(dtree_test DecisionTree)
+
+add_executable(quick_tester test/src/quick_tester.cpp)
+target_compile_options(quick_tester PRIVATE -Wall -Weffc++ -Wpedantic)
+target_include_directories(quick_tester PUBLIC ../include ${Boost_INCLUDE_DIRS})
+target_link_libraries(quick_tester OpenMP::OpenMP_CXX DecisionTree)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}Targets
