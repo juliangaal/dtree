@@ -1,6 +1,6 @@
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
-find_package(OpenMP 5.0 REQUIRED)
+find_package(OpenMP REQUIRED)
 
 # for future clang support, clang seems to not like openmp
 # set(CLANG_DEFAULT_CXX_STDLIB "libc++")
@@ -30,12 +30,12 @@ set(HEADERS
         include/GraphElements.hpp)
 
 add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} Threads::Threads OpenMP::OpenMP_CXX)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Weffc++ -Wpedantic)
 target_include_directories(${PROJECT_NAME} PUBLIC
-        ${Boost_INCLUDE_DIR}
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>)
+                           ${Boost_INCLUDE_DIRS}
+                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                           $<INSTALL_INTERFACE:include>)
+target_link_libraries(${PROJECT_NAME} Threads::Threads OpenMP::OpenMP_CXX)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Weffc++ -Wpedantic)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}Targets
