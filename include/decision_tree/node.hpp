@@ -19,14 +19,18 @@ public:
 
     explicit Node(const decision_tree::Data &data);
 
-    Node(const Node &true_branch, const Node &false_branch, const Question &question);
+    Node(std::unique_ptr<Node> true_branch, std::unique_ptr<Node> false_branch, const Question &question);
 
     ~Node() = default;
 
-public:
-    inline const std::shared_ptr<Node> trueBranch() const { return true_branch_; }
+    Node &operator=(Node &&n);
 
-    inline const std::shared_ptr<Node> falseBranch() const { return false_branch_; }
+    Node(Node&& n);
+
+public:
+    inline const std::unique_ptr<Node>& trueBranch() const { return true_branch_; }
+
+    inline const std::unique_ptr<Node>& falseBranch() const { return false_branch_; }
 
     inline const std::optional<Question> &question() const { return question_; }
 
@@ -35,8 +39,8 @@ public:
     inline bool predicts() const { return predictions_ != std::nullopt; }
 
 private:
-    std::shared_ptr<Node> true_branch_;
-    std::shared_ptr<Node> false_branch_;
+    std::unique_ptr<Node> true_branch_;
+    std::unique_ptr<Node> false_branch_;
     std::optional<Question> question_;
     std::optional<decision_tree::ClassCounter> predictions_;
 };
