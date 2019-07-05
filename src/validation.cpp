@@ -5,10 +5,8 @@
 #include <decision_tree/validation.hpp>
 
 using namespace decision_tree;
-using std::make_shared;
-using std::shared_ptr;
 
-ClassCounter validation::classify(const VecS &row, shared_ptr<Node> node) {
+ClassCounter validation::classify(const VecS &row, const std::unique_ptr<Node> &node) {
     if (node->predicts()) {
         return node->predictions().value();
     }
@@ -31,7 +29,7 @@ void validation::print_prediction(ClassCounter counts) {
 }
 
 
-void validation::validate(const Data &testing_data, const VecS &labels, shared_ptr<Node> tree) {
+void validation::validate(const Data &testing_data, const VecS &labels, const std::unique_ptr<Node> &tree) {
     for (const auto &row: testing_data) {
         static size_t last = row.size() - 1;
         std::cout << "Actual: " << labels[last] << " - " << row[last] << "\tPrediction: ";
@@ -39,6 +37,6 @@ void validation::validate(const Data &testing_data, const VecS &labels, shared_p
     }
 }
 
-ClassCounter validation::testRow(const VecS &row, std::shared_ptr<Node> node) {
+ClassCounter validation::testRow(const VecS &row, const std::unique_ptr<Node> &node) {
     return validation::classify(row, node);
 }

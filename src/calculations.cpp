@@ -48,7 +48,7 @@ tuple<const double, const Question> calculations::find_best_split(const Data &ro
     double current_uncertainty = gini(rows);
     size_t n_features = rows[0].size() - 1;  //number of columns
 
-#pragma omp parallel for num_threads(5)
+    #pragma omp parallel for num_threads(5)
     for (size_t column = 0; column < n_features; column++) {
         const auto values = uniqueValues(rows, column);
 
@@ -62,7 +62,7 @@ tuple<const double, const Question> calculations::find_best_split(const Data &ro
 
             const auto &gain = info_gain(true_rows, false_rows, current_uncertainty);
 
-#pragma omp critical
+            #pragma omp critical
             {
                 if (gain >= best_gain) {
                     best_gain = gain;
@@ -91,7 +91,7 @@ const VecS calculations::uniqueValues(const Data &data, const size_t column) {
 const ClassCounter calculations::classCounts(const Data &data) {
     ClassCounter counter;
     for (const auto &rows: data) {
-        const string decision = *std::rbegin(rows);
+        const string decision = rows.back();
         counter[decision] += 1;
     }
     return counter;
