@@ -21,24 +21,24 @@ public:
 
     explicit DecisionTree(const Dataset &d);
 
-    void print() const;
+    void print_tree() const;
 
     void test() const;
 
     void generateGraph(const std::string filepath) const;
 
-    inline decision_tree::Data testingData() { return dr.testingData(); }
+    inline const decision_tree::Data &testingData() { return dr.testingData(); }
 
-    inline std::shared_ptr<Node> root() { return std::make_shared<Node>(root_); }
+    inline const std::unique_ptr<Node> &root() { return root_; }
 
 private:
     decision_tree::DataReader dr;
 
-    const Node buildTree(const decision_tree::Data &rows);
+    std::unique_ptr<Node> buildTree(const decision_tree::Data &rows);
 
-    void print(const std::shared_ptr<Node> root, std::string spacing = "") const;
+    void print_node(const std::unique_ptr<Node> &root, std::string spacing = "") const;
 
-    Node root_;
+    std::unique_ptr<Node> root_;
 };
 
 } // namespace decision_tree

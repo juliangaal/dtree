@@ -15,6 +15,7 @@ DataReader::DataReader(const Dataset &dataset, std::string delim) :
         training_labels{},
         testing_labels{},
         missing_labels{false} {
+
     std::thread readTestingData([this, &dataset]() {
         return processFile(dataset.train.filename, training_data, training_labels);
     });
@@ -85,9 +86,7 @@ bool DataReader::hasEmptyStrings(const std::vector<std::string> &strings) const 
 }
 
 bool DataReader::isCommentLine(const std::string &line) const {
-    if (auto n = line.find("#"); n != std::string::npos)
-        return true;
-    return false;
+    return line.find('#') != std::string::npos;
 }
 
 void DataReader::swapResultData(VecS &line, const VecS &labels) const {

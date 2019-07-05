@@ -12,13 +12,13 @@ namespace decision_tree::validation {
 
 using ClassCounterScaled = std::unordered_map<std::string, std::string>;
 
-ClassCounter testRow(const VecS &row, std::shared_ptr<Node> node);
+ClassCounter testRow(const VecS &row, const std::unique_ptr<Node> &node);
 
-ClassCounter classify(const VecS &row, std::shared_ptr<Node> node);
+ClassCounter classify(const VecS &row, const std::unique_ptr<Node> &node);
 
 void print_prediction(ClassCounter counts);
 
-void validate(const Data &testing_data, const VecS &labels, std::shared_ptr<Node> tree);
+void validate(const Data &testing_data, const VecS &labels, const std::unique_ptr<Node> &tree);
 
 } // namespace validation
 

@@ -41,7 +41,7 @@ bool lineNumsMatch(const std::string &filename) {
     return ++line_count == wanted_line_count;
 }
 
-void testTree(const Data &testing_data, std::shared_ptr<Node> tree) {
+void testTree(const Data &testing_data, const std::unique_ptr<Node> &tree) {
     {
         ClassCounter prediction;
         prediction.insert({"Apple", 8});

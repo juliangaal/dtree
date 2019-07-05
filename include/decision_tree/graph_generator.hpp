@@ -14,7 +14,7 @@ class GraphGenerator {
 public:
     GraphGenerator() = delete;
 
-    GraphGenerator(const Node &root, const std::vector<std::string> labels,
+    GraphGenerator(const std::unique_ptr<Node> &root, const std::vector<std::string> labels,
                    const std::string filepath = "../graph.dot");
 
     ~GraphGenerator() = default;
@@ -22,9 +22,9 @@ public:
 private:
     const std::vector<std::string> labels_;
 
-    void generate(std::shared_ptr<Node> root, const std::string &filepath);
+    void generate(const std::unique_ptr<Node>& root, const std::string &filepath);
 
-    void traverseTree(std::shared_ptr<Node> node, std::ofstream &file);
+    void traverseTree(const std::unique_ptr<Node>& node, std::ofstream &file);
 
 };
 

@@ -13,15 +13,13 @@ namespace elem = decision_tree::graph_element;
 
 using std::string;
 using std::vector;
-using std::make_shared;
-using std::shared_ptr;
 
-GraphGenerator::GraphGenerator(const Node &root, const vector<string> labels, const string filepath) :
+GraphGenerator::GraphGenerator(const std::unique_ptr<Node> &root, const vector<string> labels, const string filepath) :
         labels_(labels) {
-    generate(make_shared<Node>(root), filepath);
+    generate(root, filepath);
 }
 
-void GraphGenerator::generate(shared_ptr<Node> root, const string &filepath) {
+void GraphGenerator::generate(const std::unique_ptr<Node>& root, const string &filepath) {
     std::ofstream myfile;
     myfile.open(filepath);
 
@@ -36,7 +34,7 @@ void GraphGenerator::generate(shared_ptr<Node> root, const string &filepath) {
     myfile.close();
 }
 
-void GraphGenerator::traverseTree(shared_ptr<Node> node, std::ofstream &file) {
+void GraphGenerator::traverseTree(const std::unique_ptr<Node>& node, std::ofstream &file) {
     static const string spacing = "   ";
     static const string connector = " -> ";
     if (node == nullptr)
