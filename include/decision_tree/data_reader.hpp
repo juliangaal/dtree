@@ -7,7 +7,6 @@
 
 #include <decision_tree/dataset.hpp>
 #include <decision_tree/helpers.hpp>
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <boost/algorithm/string.hpp>

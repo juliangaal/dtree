@@ -53,7 +53,7 @@ void DataReader::processFile(const std::string &filename, Data &data, VecS &labe
 
         split(vec, line, boost::is_any_of(delimiter));
 
-//        if (skipdesc == SkipDescription::YES) vec.pop_back();
+        if (skipdesc == SkipDescription::YES) vec.pop_back();
 
         if (line_counter == first_line) {
             if (hasEmptyStrings(vec)) {

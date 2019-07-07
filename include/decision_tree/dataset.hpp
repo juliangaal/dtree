@@ -35,20 +35,6 @@ struct TestingSet {
     std::string delimiter;
 };
 
-struct Train {
-    std::string filename;
-};
-
-struct Test {
-    std::string filename;
-};
-
-struct Dataset {
-    Train train;
-    Test test;
-    std::string result_label;
-};
-
 } // namespace decision_tree
 
 #endif //DECISIONTREE_DATASET_HPP

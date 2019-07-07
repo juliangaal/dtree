@@ -18,14 +18,14 @@ matrix:
             - g++-8
       env:
         - COMPILER=g++-8
-        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install git libboost-all-dev && CC=gcc-8 && CXX=g++-8"
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install git cmake libboost-all-dev && CC=gcc-8 && CXX=g++-8"
 
 before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
   - git clone https://github.com/fmtlib/fmt && mkdir buildfmt && cd buildfmt
-  - make -j10 && sudo make install && cd ..
+  - cmake .. && make -j10 && sudo make install && cd ..
   - mkdir build && cd build
   - cmake ..
   - make -j10

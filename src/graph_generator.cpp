@@ -5,8 +5,8 @@
 #include <decision_tree/graph_elements.hpp>
 #include <decision_tree/graph_generator.hpp>
 #include <decision_tree/helpers.hpp>
-#include <iostream>
 #include <vector>
+#include <fmt/format.h>
 
 using namespace decision_tree;
 namespace elem = decision_tree::graph_element;
@@ -24,7 +24,7 @@ void GraphGenerator::generate(const std::unique_ptr<Node>& root, const string &f
     myfile.open(filepath);
 
     if (!myfile.is_open()) {
-        std::cerr << "Couldn't open " << filepath << ". Can't create Graphviz dot file.\n";
+        fmt::print("Couldn't open {}. Can't create Graphviz dot file.\n", filepath);
         return;
     }
 

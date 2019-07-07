@@ -8,10 +8,10 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-#include <iostream>
 #include <numeric>
 #include <iterator>
 #include <fmt/format.h>
+#include <iostream>
 
 namespace decision_tree {
 

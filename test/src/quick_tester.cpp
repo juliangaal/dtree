@@ -3,7 +3,7 @@
 using namespace decision_tree;
 
 int main() {
-    DecisionTree dt(TrainingSet("../test/data/san_fran_vs_nyc.csv", SkipDescription::NO), TestingSet("../test/data/san_fran_vs_nyc_test.csv"));
+    DecisionTree dt(TrainingSet("../test/data/mpg.csv", SkipDescription::YES), TestingSet("../test/data/mpg_test.csv"));
     dt.test();
     dt.generateGraph("../graph.dot");
     return 0;
