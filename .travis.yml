@@ -24,8 +24,8 @@ before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
-  - git clone https://github.com/fmtlib/fmt && mkdir buildfmt && cd buildfmt
-  - cmake .. && make -j10 && sudo make install && cd ..
+  - git clone https://github.com/fmtlib/fmt && cd fmt && mkdir buildfmt && cd buildfmt
+  - cmake .. && make -j10 && sudo make install && cd ../../
   - mkdir build && cd build
   - cmake ..
   - make -j10
