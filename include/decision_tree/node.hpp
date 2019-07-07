@@ -28,17 +28,17 @@ public:
 
     inline const std::unique_ptr<Node>& falseBranch() const { return false_branch_; }
 
-    inline const std::optional<const Question> &question() const { return question_; }
+    inline const std::optional<Question> &question() const { return question_; }
 
-    inline const std::optional<const decision_tree::ClassCounter> &predictions() const { return predictions_; }
+    inline const std::optional<decision_tree::ClassCounter> &predictions() const { return predictions_; }
 
     inline bool predicts() const { return predictions_ != std::nullopt; }
 
 private:
     std::unique_ptr<Node> true_branch_;
     std::unique_ptr<Node> false_branch_;
-    std::optional<const Question> question_;
-    std::optional<const decision_tree::ClassCounter> predictions_;
+    std::optional<Question> question_;
+    std::optional<decision_tree::ClassCounter> predictions_;
 };
 
 } // namespace decision_tree;

@@ -10,7 +10,7 @@
 
 namespace decision_tree::validation {
 
-using ClassCounterScaled = std::unordered_map<std::string, std::string>;
+using ClassCounterScaled = std::unordered_map<std::string, float>;
 
 ClassCounter testRow(const VecS &row, const std::unique_ptr<Node> &node);
 

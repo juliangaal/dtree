@@ -9,6 +9,7 @@
 #include <tuple>
 #include <fstream>
 #include <memory>
+#include <fmt/format.h>
 
 using namespace decision_tree;
 
@@ -23,7 +24,7 @@ bool lineNumsMatch(const std::string &filename) {
     constexpr long wanted_line_count = 67;
     std::ifstream infile(filename);
     if (!infile.good()) {
-        std::cout << "File " << filename << " doesn't exist\n";
+        fmt::print("File {} doesn't exist\n", filename);
         return false;
     }
 
@@ -174,11 +175,11 @@ void testGenerator(DecisionTree &dtree, const std::string filename) {
     assert(lineNumsMatch(filename));
 }
 
-int main(void) {
+int main() {
     DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO), TestingSet("../test/data/fruit_test.csv"));
     testTree(dt.testingData(), dt.root());
     testGenerator(dt, "../graph.dot");
 
-    std::cout << "Tests successful." << std::endl;
+    fmt::print("Tests successful.\n");
     return EXIT_SUCCESS;
 }

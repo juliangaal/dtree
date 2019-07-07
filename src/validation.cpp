@@ -6,6 +6,7 @@
 #include <cassert>
 #include <algorithm>
 #include <iomanip>
+#include <fmt/format.h>
 
 using namespace decision_tree;
 
@@ -26,19 +27,15 @@ void validation::print_prediction(const ClassCounter &counts) {
     ClassCounterScaled scale;
 
     for (const auto&[key, val]: counts) {
-        scale[key] = std::to_string(val / total * 100) + "%";
+        scale[key] = val / total * 100.0f;
     }
     helpers::print::print_map(scale);
 }
 
 
 void validation::validate(const Data &testing_data, const VecS &labels, const std::unique_ptr<Node> &tree) {
-    auto longest_label_it = std::max_element(testing_data.begin(), testing_data.end(), [](const auto& row1, const auto& row2) {
-        return row1.back().size() < row2.back().size();
-    });
-
     for (const auto &row: testing_data) {
-        std::cout << "> " << std::setw((*longest_label_it).back().size()) << row.back() << "\t\tPrediction: ";
+        fmt::print("> {:<10} -> {:^10}", "label " + row.back(), "prediction: ");
         print_prediction(validation::classify(row, tree));
     }
 }

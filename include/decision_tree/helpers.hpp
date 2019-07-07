@@ -11,6 +11,7 @@
 #include <iostream>
 #include <numeric>
 #include <iterator>
+#include <fmt/format.h>
 
 namespace decision_tree {
 
@@ -48,9 +49,9 @@ void print_vector(const std::vector<T> &vec) {
     if (vec.empty())
         return;
 
-    std::cout << "{ ";
+    fmt::print("{");
     std::copy(begin(vec), std::end(vec), std::ostream_iterator<T>(std::cout, " "));
-    std::cout << "}\n";
+    fmt::print("}\n");
 }
 
 template<typename K, typename V>
@@ -59,11 +60,11 @@ void print_map(const std::unordered_map<K, V> &counter) {
         return;
 
     for (const auto&[key, val]: counter) {
-        std::cout << "label " << key << " - prop. " << val;
-        if (counter.size() > 1) std::cout << " | ";
+        fmt::print("label {:>4}, prob. {:>4}%", key, val);
+        if (counter.size() > 1) fmt::print(" | ");
     }
 
-    std::cout << "\n";
+    fmt::print("\n");
 }
 
 } // namespace print

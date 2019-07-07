@@ -3,6 +3,7 @@
 //
 
 #include <decision_tree/decision_tree.hpp>
+#include <fmt/format.h>
 
 using namespace decision_tree;
 using std::string;
@@ -29,17 +30,17 @@ void DecisionTree::print_tree() const {
 
 void DecisionTree::print_node(const std::unique_ptr<Node> &root, string spacing) const {
     if (root->predicts()) {
-        std::cout << spacing + "Predict: ";
+        fmt::print("{}{}", spacing, "Predict:");
         helpers::print::print_map(root->predictions().value());
         return;
     }
 
-    std::cout << spacing << root->question().value().toString(dr.labels()) << "\n";
+    fmt::print("{}{}\n", spacing, root->question().value().toString(dr.labels()));
 
-    std::cout << spacing << "--> True: " << "\n";
+    fmt::print("{}--> True:\n", spacing);
     print_node(root->trueBranch(), spacing + "   ");
 
-    std::cout << spacing << "--> False: " << "\n";
+    fmt::print("{}--> False:\n", spacing);
     print_node(root->falseBranch(), spacing + "   ");
 }
 
