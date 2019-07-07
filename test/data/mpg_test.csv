@@ -1,0 +1,7 @@
+mpg,cylinders,displacement,horsepower,weight,acceleration,modelyear,origin,description
+0,8,350.0,165.0,4142,11.5,70,1,chevroletchevelleconcours(sw)
+27.0,4,97.00,88.00,2130,14.5,70,3,datsunpl510
+11.0,8,318.0,210.0,4382,13.5,70,1,dodged200
+32.0,4,91.0,67.0,1965,15.7,82,3,hondacivic(auto)
+29.0,4,97.0,78.0,1940,14.5,77,2,volkswagenrabbitcustom
+
