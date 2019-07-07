@@ -34,6 +34,7 @@ const double calculations::gini(const Data &data) {
         double prob_of_lbl = freq / static_cast<double>(data.size());
         impurity -= std::pow(prob_of_lbl, 2);
     }
+
     return impurity;
 }
 

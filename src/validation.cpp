@@ -3,6 +3,7 @@
 //
 
 #include <decision_tree/validation.hpp>
+#include <cassert>
 
 using namespace decision_tree;
 
@@ -31,8 +32,7 @@ void validation::print_prediction(ClassCounter counts) {
 
 void validation::validate(const Data &testing_data, const VecS &labels, const std::unique_ptr<Node> &tree) {
     for (const auto &row: testing_data) {
-        static size_t last = row.size() - 1;
-        std::cout << "Actual: " << labels[last] << " - " << row[last] << "\tPrediction: ";
+        std::cout << "Actual: " << labels.back() << " - " << row.back() << "\tPrediction: ";
         print_prediction(validation::classify(row, tree));
     }
 }

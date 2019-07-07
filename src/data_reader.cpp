@@ -52,7 +52,7 @@ void DataReader::processFile(const std::string &filename, Data &data, VecS &labe
     while (getline(file, line)) {
         std::vector<std::string> vec;
 
-        if (isCommentLine(line))
+        if (isCommentLine(line) || line.empty())
             continue;
 
         split(vec, line, boost::is_any_of(delimeter));
@@ -62,8 +62,10 @@ void DataReader::processFile(const std::string &filename, Data &data, VecS &labe
                 return;
             }
 
+//            vec.pop_back();
             labels = std::move(vec);
         } else {
+//            vec.pop_back();
             trimWhiteSpaces(vec);
 
             if (hasEmptyStrings(vec))
@@ -109,7 +111,7 @@ void DataReader::correctLabels() {
 }
 
 void DataReader::correctMissingValues(const Data &data, VecS &vec) const {
-    const auto &last_line = *(end(data) - 1);
+    const auto &last_line = data.back();
     vec.clear();
     // TODO: replace with stl::copy_if version
     std::copy(std::begin(last_line), std::end(last_line), std::back_inserter(vec));
