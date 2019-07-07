@@ -9,18 +9,30 @@
 
 namespace decision_tree {
 
-struct Train {
-    std::string filename;
+enum SkipDescription {
+    YES,
+    NO
 };
 
-struct Test {
+struct TrainingSet {
+    inline explicit TrainingSet(std::string filename, SkipDescription skipdesc, std::string delimiter = ",") : filename(
+            std::move(filename)), skipdesc(skipdesc), delimiter(std::move(delimiter)) {}
+
+    ~TrainingSet() = default;
+
     std::string filename;
+    SkipDescription skipdesc;
+    std::string delimiter;
 };
 
-struct Dataset {
-    Train train;
-    Test test;
-    std::string result_label;
+struct TestingSet {
+    inline explicit TestingSet(std::string filename, std::string delimiter = ",") : filename(
+            std::move(filename)), delimiter(std::move(delimiter)) {}
+
+    ~TestingSet() = default;
+
+    std::string filename;
+    std::string delimiter;
 };
 
 } // namespace decision_tree

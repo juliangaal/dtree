@@ -19,7 +19,7 @@ class DecisionTree {
 public:
     DecisionTree() = delete;
 
-    explicit DecisionTree(const Dataset &d);
+    explicit DecisionTree(const TrainingSet &trainset, const TestingSet &testset);
 
     void print_tree() const;
 

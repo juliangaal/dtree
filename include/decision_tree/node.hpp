@@ -19,13 +19,9 @@ public:
 
     explicit Node(const decision_tree::Data &data);
 
-    Node(std::unique_ptr<Node> true_branch, std::unique_ptr<Node> false_branch, const Question &question);
+    Node(std::unique_ptr<Node> true_branch, std::unique_ptr<Node> false_branch, Question question);
 
     ~Node() = default;
-
-    Node &operator=(Node &&n);
-
-    Node(Node&& n);
 
 public:
     inline const std::unique_ptr<Node>& trueBranch() const { return true_branch_; }

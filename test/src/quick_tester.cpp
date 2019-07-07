@@ -3,11 +3,7 @@
 using namespace decision_tree;
 
 int main() {
-    Dataset d{};
-    d.train.filename = "../test/data/san_fran_vs_nyc.csv";
-    d.test.filename = "../test/data/san_fran_vs_nyc_test.csv";
-
-    DecisionTree dt(d);
+    DecisionTree dt(TrainingSet("../test/data/mpg.csv", SkipDescription::YES), TestingSet("../test/data/mpg_test.csv"));
     dt.test();
     dt.generateGraph("../graph.dot");
     return 0;

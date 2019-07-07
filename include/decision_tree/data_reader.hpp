@@ -7,7 +7,6 @@
 
 #include <decision_tree/dataset.hpp>
 #include <decision_tree/helpers.hpp>
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <boost/algorithm/string.hpp>
@@ -23,8 +22,6 @@ private:
 
     bool isCommentLine(const std::string &line) const;
 
-    const std::string result_label;
-    const std::string delimeter;
     decision_tree::Data training_data;
     decision_tree::Data testing_data;
     decision_tree::VecS training_labels;
@@ -34,7 +31,7 @@ private:
 public:
     DataReader() = delete;
 
-    DataReader(const Dataset &dataset, std::string delm = ",");
+    DataReader(const TrainingSet &trainset, const TestingSet &testset);
 
     inline const decision_tree::Data &trainingData() const { return training_data; }
 
@@ -46,7 +43,8 @@ public:
      * Parses through csv file line by line and
      * @return the data in vector of vector of strings
      */
-    void processFile(const std::string &strings, decision_tree::Data &data, decision_tree::VecS &labels);
+    void processFile(const std::string &filename, Data &data, VecS &labels, SkipDescription skipdesc,
+                     std::string delimiter);
 
     void swapResultData(decision_tree::VecS &line, const decision_tree::VecS &labels) const;
 

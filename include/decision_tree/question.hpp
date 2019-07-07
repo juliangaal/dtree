@@ -15,7 +15,7 @@ class Question {
 public:
     Question();
 
-    Question(const int column, const std::string value);
+    Question(int column, std::string value);
 
     const bool match(VecS example) const;
 
