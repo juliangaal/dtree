@@ -175,11 +175,7 @@ void testGenerator(DecisionTree &dtree, const std::string filename) {
 }
 
 int main(void) {
-    Dataset d{};
-    d.train.filename = "../test/data/fruit.csv";
-    d.test.filename = "../test/data/fruit_test.csv";
-
-    DecisionTree dt(d);
+    DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO), TestingSet("../test/data/fruit_test.csv"));
     testTree(dt.testingData(), dt.root());
     testGenerator(dt, "../graph.dot");
 

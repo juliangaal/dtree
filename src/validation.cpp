@@ -4,6 +4,8 @@
 
 #include <decision_tree/validation.hpp>
 #include <cassert>
+#include <algorithm>
+#include <iomanip>
 
 using namespace decision_tree;
 
@@ -18,7 +20,7 @@ ClassCounter validation::classify(const VecS &row, const std::unique_ptr<Node> &
         return validation::classify(row, node->falseBranch());
 }
 
-void validation::print_prediction(ClassCounter counts) {
+void validation::print_prediction(const ClassCounter &counts) {
     const float total = static_cast<float>(helpers::tree::mapValueSum(
             counts)); //[](const size_t previous, const auto& p) { return previous+p.second; });
     ClassCounterScaled scale;
@@ -31,8 +33,12 @@ void validation::print_prediction(ClassCounter counts) {
 
 
 void validation::validate(const Data &testing_data, const VecS &labels, const std::unique_ptr<Node> &tree) {
+    auto longest_label_it = std::max_element(testing_data.begin(), testing_data.end(), [](const auto& row1, const auto& row2) {
+        return row1.back().size() < row2.back().size();
+    });
+
     for (const auto &row: testing_data) {
-        std::cout << "Actual: " << labels.back() << " - " << row.back() << "\tPrediction: ";
+        std::cout << "> " << std::setw((*longest_label_it).back().size()) << row.back() << "\t\tPrediction: ";
         print_prediction(validation::classify(row, tree));
     }
 }

@@ -7,12 +7,13 @@
 using namespace decision_tree;
 using std::string;
 
-DecisionTree::DecisionTree(const Dataset &d) : dr(d), root_(buildTree(dr.trainingData())) {}
+DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset)
+        : dr(trainset, testset), root_(buildTree(dr.trainingData())) {}
 
 std::unique_ptr<Node> DecisionTree::buildTree(const Data &rows) {
     auto[gain, question] = calculations::find_best_split(rows);
     if (gain == 0.0) {
-        return std::move(std::make_unique<Node>(rows));
+        return std::make_unique<Node>(rows);
     }
 
     const auto[true_rows, false_rows] = calculations::partition(rows, question);

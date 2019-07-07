@@ -58,11 +58,12 @@ void print_map(const std::unordered_map<K, V> &counter) {
     if (counter.empty())
         return;
 
-    std::cout << "{ ";
     for (const auto&[key, val]: counter) {
-        std::cout << key << ": " << val << " ";
+        std::cout << "label " << key << " - prop. " << val;
+        if (counter.size() > 1) std::cout << " | ";
     }
-    std::cout << "}" << "\n";
+
+    std::cout << "\n";
 }
 
 } // namespace print
