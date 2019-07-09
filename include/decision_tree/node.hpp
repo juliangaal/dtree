@@ -34,6 +34,8 @@ public:
 
     inline bool predicts() const { return predictions_ != std::nullopt; }
 
+    size_t hash(const VecS &labels) const;
+
 private:
     std::unique_ptr<Node> true_branch_;
     std::unique_ptr<Node> false_branch_;

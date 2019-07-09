@@ -4,21 +4,21 @@
 
 #include <decision_tree/graph_elements.hpp>
 #include <decision_tree/helpers.hpp>
+#include <fmt/format.h>
 
 using std::string;
 using namespace decision_tree;
 
 string graph_element::label(const string &label) {
-    return "[label=\"" + label + "\"];\n";
+    return " [label=\"" + label + "\"];\n";
 }
 
-string graph_element::node(const string &question) {
-    return "\"" + question + "\"";
+string graph_element::node(size_t hash) {
+    return fmt::format("\"{}\"", hash);
 }
 
-string graph_element::box(const string &label) {
-    string box = node(label) + " [shape=box];\n   ";
-    return box + node(label);
+string graph_element::box(const string &label, size_t hash) {
+    return fmt::format("\"{}\" [label=\"{}\", shape=box];\n", hash, label);
 }
 
 string graph_element::result(const std::unordered_map<string, int> &data, branch branch) {

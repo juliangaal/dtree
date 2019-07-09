@@ -7,15 +7,16 @@
 
 #include <string>
 #include <unordered_map>
+#include <memory>
 
 using branch = bool;
 namespace decision_tree::graph_element {
 
 std::string label(const std::string &label);
 
-std::string box(const std::string &label);
+std::string box(const std::string &label, size_t hash);
 
-std::string node(const std::string &question);
+std::string node(size_t hash);
 
 std::string result(const std::unordered_map<std::string, int> &data, branch b);
 
