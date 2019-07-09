@@ -2,31 +2,28 @@
 // Created by Julian on 26.06.18.
 //
 
-#include <decision_tree/validation.hpp>
-#include <decision_tree/decision_tree.hpp>
-#include <decision_tree/node.hpp>
+#include <decision_tree/validation.h>
+#include <decision_tree/decision_tree.h>
+#include <decision_tree/node.h>
 #include <cassert>
 #include <tuple>
+#include <filesystem>
 #include <fstream>
 #include <memory>
 #include <fmt/format.h>
 
 using namespace decision_tree;
+namespace fs = std::filesystem;
 
-bool fileExists(const std::string &filename) {
-    std::ifstream infile(filename);
-    bool fileExists = infile.good();
-    infile.close();
-    return fileExists;
-}
-
-bool lineNumsMatch(const std::string &filename) {
+bool lineNumsMatch(const fs::path &file) {
     constexpr long wanted_line_count = 67;
-    std::ifstream infile(filename);
-    if (!infile.good()) {
-        fmt::print("File {} doesn't exist\n", filename);
+
+    if (!fs::is_regular_file(file)) {
+        fmt::print("File {} doesn't exist\n", file.string());
         return false;
     }
+
+    std::ifstream infile(file);
 
     // taken from https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
     // new lines will be skipped unless we stop it from happening:
@@ -166,20 +163,20 @@ void testTree(const Data &testing_data, const std::unique_ptr<Node> &tree) {
 }
 
 void testGenerator(DecisionTree &dtree, const std::string filename) {
-    if (fileExists(filename))
+    if (fs::exists(filename))
         std::remove(filename.c_str());
 
-    dtree.generateGraph(filename);
+    dtree.generate_graph(filename);
 
-    assert(fileExists(filename));
+    assert(fs::exists(filename));
     assert(lineNumsMatch(filename));
 }
 
 int main() {
     DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO), TestingSet("../test/data/fruit_test.csv"));
-    testTree(dt.testingData(), dt.root());
+    testTree(dt.testing_data(), dt.root());
     testGenerator(dt, "../graph.dot");
 
-    fmt::print("Tests successful.\n");
+    fmt::print("> Tests successful.\n");
     return EXIT_SUCCESS;
 }

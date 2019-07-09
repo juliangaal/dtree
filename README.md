@@ -24,3 +24,5 @@ results from [iris.dot](docs/graph.dot) and [this](test/data/iris.csv) dataset.
 * handle missing data in files
 * pruning? 
 * `std::filesystem`
+* `boost::is_any_of` -> `std::any`
+* `split` function from boost function cp?

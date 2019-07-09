@@ -1,8 +1,8 @@
 //
 // Created by Julian on 24.06.18.
 //
-#include <decision_tree/calculations.hpp>
-#include <decision_tree/helpers.hpp>
+#include <decision_tree/calculations.h>
+#include <decision_tree/help.h>
 #include <cmath>
 #include <algorithm>
 #include <omp.h>
@@ -27,7 +27,7 @@ tuple<const Data, const Data> calculations::partition(const Data &data, const Qu
 }
 
 const double calculations::gini(const Data &data) {
-    const auto &counts = classCounts(data);
+    const auto &counts = class_counts(data);
     double impurity = 1.0;
 
     for (const auto&[decision, freq]: counts) {
@@ -47,11 +47,11 @@ tuple<const double, const Question> calculations::find_best_split(const Data &ro
     double best_gain = 0.0;  // keep track of the best information gain
     auto best_question = Question();  //keep train of the feature / value that produced it
     double current_uncertainty = gini(rows);
-    size_t n_features = rows[0].size() - 1;  //number of columns
+    size_t n_features = rows.back().size() - 1;  //number of columns
 
     #pragma omp parallel for num_threads(5)
     for (size_t column = 0; column < n_features; column++) {
-        const auto values = uniqueValues(rows, column);
+        const auto values = unique_values(rows, column);
 
         for (const auto &val: values) {
             const Question q(column, val);
@@ -75,7 +75,7 @@ tuple<const double, const Question> calculations::find_best_split(const Data &ro
     return {best_gain, best_question};
 }
 
-const VecS calculations::uniqueValues(const Data &data, const size_t column) {
+const VecS calculations::unique_values(const Data &data, const size_t column) {
     VecS unique_vals;
 
     ClassCounter counter;
@@ -89,7 +89,7 @@ const VecS calculations::uniqueValues(const Data &data, const size_t column) {
     return unique_vals;
 }
 
-const ClassCounter calculations::classCounts(const Data &data) {
+const ClassCounter calculations::class_counts(const Data &data) {
     ClassCounter counter;
     for (const auto &rows: data) {
         const string decision = rows.back();
