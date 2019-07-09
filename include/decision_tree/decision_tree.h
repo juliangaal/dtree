@@ -12,6 +12,7 @@
 #include <decision_tree/generate.h>
 #include <decision_tree/validation.h>
 #include <decision_tree/help.h>
+#include <c++/8/filesystem>
 
 namespace decision_tree {
 
@@ -25,7 +26,7 @@ public:
 
     void test() const;
 
-    void generate_graph(const std::string filepath) const;
+    void generate_graph(const std::filesystem::path &file) const;
 
     inline const decision_tree::Data &testing_data() { return dr.testing_data(); }
 
@@ -34,9 +35,11 @@ public:
 private:
     decision_tree::DataReader dr;
 
-    std::unique_ptr<Node> build_tree(const decision_tree::Data &rows);
+    std::unique_ptr<Node> build_tree(const Data &rows);
 
-    void print_node(const std::unique_ptr<Node> &root, std::string spacing = "") const;
+    void rec_print_node(const std::unique_ptr<Node> &root, std::string spacing = "") const;
+
+    size_t size_;
 
     std::unique_ptr<Node> root_;
 };

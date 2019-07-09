@@ -47,7 +47,7 @@ tuple<const double, const Question> calculations::find_best_split(const Data &ro
     double best_gain = 0.0;  // keep track of the best information gain
     auto best_question = Question();  //keep train of the feature / value that produced it
     double current_uncertainty = gini(rows);
-    size_t n_features = rows[0].size() - 1;  //number of columns
+    size_t n_features = rows.back().size() - 1;  //number of columns
 
     #pragma omp parallel for num_threads(5)
     for (size_t column = 0; column < n_features; column++) {

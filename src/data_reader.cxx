@@ -2,44 +2,46 @@
 // Created by Julian on 13.06.18.
 //
 #include <thread>
+#include <filesystem>
 #include <decision_tree/data_reader.h>
 
 using namespace decision_tree;
 using boost::algorithm::split;
+namespace fs = std::filesystem;
 
 DataReader::DataReader(const TrainingSet &trainset, const TestingSet &testset) :
         training_data_{},
         testing_data_{},
         training_labels_{},
-        testing_labels_{},
-        missing_labels{false} {
+        testing_labels_{} {
+
+    if (!fs::exists(trainset.file_))
+        throw std::runtime_error(fmt::format("{} doesn't exist", trainset.file_.string()));
+
+    if (fs::is_directory(trainset.file_))
+        throw std::runtime_error(fmt::format("{} is a directory. Need .csv file", trainset.file_.string()));
+
+    if (!fs::exists(testset.file_))
+        throw std::runtime_error(fmt::format("{} doesn't exist", testset.file_.string()));
+
+    if (fs::is_directory(testset.file_))
+        throw std::runtime_error(fmt::format("{} is a directory. Need .csv file", testset.file_.string()));
 
     std::thread readTrainingData([this, &trainset]() {
-        return process_file(trainset.filename, training_data_, training_labels_, trainset.skipdesc, trainset.delimiter);
+        return process_file(trainset.file_, training_data_, training_labels_, trainset.skipdesc_, trainset.delimiter_);
     });
 
     std::thread readTestingData([this, &testset]() {
-        return process_file(testset.filename, testing_data_, testing_labels_, SkipDescription::NO, testset.delimiter);
+        return process_file(testset.file_, testing_data_, testing_labels_, SkipDescription::NO, testset.delimiter_);
     });
 
     readTrainingData.join();
     readTestingData.join();
-
-    if (missing_labels)
-        throw std::runtime_error("Check your labels: Are some missing? Training labels == testing labels?");
-
-    if (training_data_.empty())
-        throw std::runtime_error("Can't open file: " + trainset.filename);
-
-    if (testing_data_.empty())
-        throw std::runtime_error("Can't open file: " + testset.filename);
 }
 
-void DataReader::process_file(const std::string &filename, Data &data, VecS &labels, SkipDescription skipdesc,
+void DataReader::process_file(const fs::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
                               std::string delimiter) {
-    std::ifstream file(filename);
-    if (!file)
-        return;
+    std::ifstream file(filepath);
 
     std::string line;
     int line_counter = 1;
@@ -56,10 +58,8 @@ void DataReader::process_file(const std::string &filename, Data &data, VecS &lab
         if (skipdesc == SkipDescription::YES) vec.pop_back();
 
         if (line_counter == first_line) {
-            if (has_empty_strings(vec)) {
-                missing_labels = true;
-                return;
-            }
+            if (has_empty_strings(vec))
+                throw std::runtime_error("Check your labels: Are some missing? Training labels == testing labels?");
 
             labels = std::move(vec);
         } else {

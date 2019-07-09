@@ -26,7 +26,6 @@ private:
     decision_tree::Data testing_data_;
     decision_tree::VecS training_labels_;
     decision_tree::VecS testing_labels_;
-    bool missing_labels;
 
 public:
     DataReader() = delete;
@@ -43,7 +42,7 @@ public:
      * Parses through csv file line by line and
      * @return the data in vector of vector of strings
      */
-    void process_file(const std::string &filename, Data &data, VecS &labels, SkipDescription skipdesc,
+    void process_file(const std::filesystem::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
                       std::string delimiter);
 
     void time_white_spaces(decision_tree::VecS &line);

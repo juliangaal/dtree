@@ -33,8 +33,9 @@ void validation::print_prediction(const ClassCounter &counts) {
 
 
 void validation::validate(const Data &testing_data, const VecS &labels, const std::unique_ptr<Node> &tree) {
+    fmt::print("> Test set validation results\n");
     for (const auto &row: testing_data) {
-        fmt::print("> label {:<3} -> {:^10}", row.back(), "prediction: ");
+        fmt::print("  - label {:<3} -> {:^10}", row.back(), "prediction: ");
         print_prediction(validation::classify(row, tree));
     }
 }

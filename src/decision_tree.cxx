@@ -4,14 +4,21 @@
 
 #include <decision_tree/decision_tree.h>
 #include <fmt/format.h>
+#include <filesystem>
+#include <tuple>
 
+namespace fs = std::filesystem;
 using namespace decision_tree;
 using std::string;
 
 DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset)
-        : dr(trainset, testset), root_(build_tree(dr.training_data())) {}
+        : dr{trainset, testset},  size_{}, root_{build_tree(dr.training_data())} {
+    fmt::print("> Generated decision tree with {} from {} training data points\n", size_, dr.training_data().size());
+}
 
 std::unique_ptr<Node> DecisionTree::build_tree(const Data &rows) {
+    ++size_;
+
     auto[gain, question] = calculations::find_best_split(rows);
     if (gain == 0.0) {
         return std::make_unique<Node>(rows);
@@ -25,10 +32,10 @@ std::unique_ptr<Node> DecisionTree::build_tree(const Data &rows) {
 }
 
 void DecisionTree::print_tree() const {
-    print_node(root_);
+    rec_print_node(root_);
 }
 
-void DecisionTree::print_node(const std::unique_ptr<Node> &root, string spacing) const {
+void DecisionTree::rec_print_node(const std::unique_ptr<Node> &root, string spacing) const {
     if (root->predicts()) {
         fmt::print("{}{}", spacing, "Predict:");
         help::print::print_map(root->predictions().value());
@@ -38,14 +45,18 @@ void DecisionTree::print_node(const std::unique_ptr<Node> &root, string spacing)
     fmt::print("{}{}\n", spacing, root->question().value().toString(dr.labels()));
 
     fmt::print("{}--> True:\n", spacing);
-    print_node(root->true_branch(), spacing + "   ");
+    rec_print_node(root->true_branch(), spacing + "   ");
 
     fmt::print("{}--> False:\n", spacing);
-    print_node(root->false_branch(), spacing + "   ");
+    rec_print_node(root->false_branch(), spacing + "   ");
 }
 
-void DecisionTree::generate_graph(const string filepath) const {
-    generate::init(root_, dr.labels(), filepath);
+void DecisionTree::generate_graph(const std::filesystem::path &file) const {
+    if (fs::is_directory(file))
+        throw std::runtime_error(fmt::format("Can't generate graph at {}\n", file.string()));
+
+    generate::init(root_, dr.labels(), file);
+    fmt::print("> Generated Graphviz file {}", file.string());
 }
 
 void DecisionTree::test() const {

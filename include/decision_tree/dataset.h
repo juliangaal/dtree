@@ -6,6 +6,7 @@
 #define DECISIONTREE_DATASET_H
 
 #include <string>
+#include <filesystem>
 
 namespace decision_tree {
 
@@ -15,24 +16,24 @@ enum SkipDescription {
 };
 
 struct TrainingSet {
-    inline explicit TrainingSet(std::string filename, SkipDescription skipdesc, std::string delimiter = ",") : filename(
-            std::move(filename)), skipdesc(skipdesc), delimiter(std::move(delimiter)) {}
+    inline explicit TrainingSet(std::string file, SkipDescription skipdesc, std::string delimiter = ",") : file_{
+            std::move(file)}, skipdesc_{skipdesc}, delimiter_{std::move(delimiter)} {}
 
     ~TrainingSet() = default;
 
-    std::string filename;
-    SkipDescription skipdesc;
-    std::string delimiter;
+    std::filesystem::path file_;
+    SkipDescription skipdesc_;
+    std::string delimiter_;
 };
 
 struct TestingSet {
-    inline explicit TestingSet(std::string filename, std::string delimiter = ",") : filename(
-            std::move(filename)), delimiter(std::move(delimiter)) {}
+    inline explicit TestingSet(std::string file, std::string delimiter = ",") : file_{
+            std::move(file)}, delimiter_{std::move(delimiter)} {}
 
     ~TestingSet() = default;
 
-    std::string filename;
-    std::string delimiter;
+    std::filesystem::path file_;
+    std::string delimiter_;
 };
 
 } // namespace decision_tree
