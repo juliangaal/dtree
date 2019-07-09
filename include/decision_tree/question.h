@@ -2,12 +2,12 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_QUESTION_HPP
-#define DECISIONTREE_QUESTION_HPP
+#ifndef DECISIONTREE_QUESTION_H
+#define DECISIONTREE_QUESTION_H
 
 #include <vector>
 #include <string>
-#include <decision_tree/helpers.hpp>
+#include <decision_tree/help.h>
 
 namespace decision_tree {
 
@@ -29,4 +29,4 @@ public:
 
 } // namespace decision_tree
 
-#endif //DECISIONTREE_QUESTION_HPP
+#endif //DECISIONTREE_QUESTION_H

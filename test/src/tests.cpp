@@ -2,9 +2,9 @@
 // Created by Julian on 26.06.18.
 //
 
-#include <decision_tree/validation.hpp>
-#include <decision_tree/decision_tree.hpp>
-#include <decision_tree/node.hpp>
+#include <decision_tree/validation.h>
+#include <decision_tree/decision_tree.h>
+#include <decision_tree/node.h>
 #include <cassert>
 #include <tuple>
 #include <fstream>
@@ -169,7 +169,7 @@ void testGenerator(DecisionTree &dtree, const std::string filename) {
     if (fileExists(filename))
         std::remove(filename.c_str());
 
-    dtree.generateGraph(filename);
+    dtree.generate_graph(filename);
 
     assert(fileExists(filename));
     assert(lineNumsMatch(filename));
@@ -177,7 +177,7 @@ void testGenerator(DecisionTree &dtree, const std::string filename) {
 
 int main() {
     DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO), TestingSet("../test/data/fruit_test.csv"));
-    testTree(dt.testingData(), dt.root());
+    testTree(dt.testing_data(), dt.root());
     testGenerator(dt, "../graph.dot");
 
     fmt::print("Tests successful.\n");

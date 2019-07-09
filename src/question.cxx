@@ -2,8 +2,8 @@
 // Created by Julian on 24.06.18.
 //
 
-#include <decision_tree/question.hpp>
-#include <decision_tree/helpers.hpp>
+#include <decision_tree/question.h>
+#include <decision_tree/help.h>
 #include <cassert>
 
 using namespace decision_tree;

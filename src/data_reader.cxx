@@ -2,24 +2,24 @@
 // Created by Julian on 13.06.18.
 //
 #include <thread>
-#include <decision_tree/data_reader.hpp>
+#include <decision_tree/data_reader.h>
 
 using namespace decision_tree;
 using boost::algorithm::split;
 
 DataReader::DataReader(const TrainingSet &trainset, const TestingSet &testset) :
-        training_data{},
-        testing_data{},
-        training_labels{},
-        testing_labels{},
+        training_data_{},
+        testing_data_{},
+        training_labels_{},
+        testing_labels_{},
         missing_labels{false} {
 
     std::thread readTrainingData([this, &trainset]() {
-        return processFile(trainset.filename, training_data, training_labels, trainset.skipdesc, trainset.delimiter);
+        return process_file(trainset.filename, training_data_, training_labels_, trainset.skipdesc, trainset.delimiter);
     });
 
     std::thread readTestingData([this, &testset]() {
-        return processFile(testset.filename, testing_data, testing_labels, SkipDescription::NO, testset.delimiter);
+        return process_file(testset.filename, testing_data_, testing_labels_, SkipDescription::NO, testset.delimiter);
     });
 
     readTrainingData.join();
@@ -28,15 +28,15 @@ DataReader::DataReader(const TrainingSet &trainset, const TestingSet &testset) :
     if (missing_labels)
         throw std::runtime_error("Check your labels: Are some missing? Training labels == testing labels?");
 
-    if (training_data.empty())
+    if (training_data_.empty())
         throw std::runtime_error("Can't open file: " + trainset.filename);
 
-    if (testing_data.empty())
+    if (testing_data_.empty())
         throw std::runtime_error("Can't open file: " + testset.filename);
 }
 
-void DataReader::processFile(const std::string &filename, Data &data, VecS &labels, SkipDescription skipdesc,
-                             std::string delimiter) {
+void DataReader::process_file(const std::string &filename, Data &data, VecS &labels, SkipDescription skipdesc,
+                              std::string delimiter) {
     std::ifstream file(filename);
     if (!file)
         return;
@@ -48,7 +48,7 @@ void DataReader::processFile(const std::string &filename, Data &data, VecS &labe
     while (getline(file, line)) {
         std::vector<std::string> vec(labels.size());
 
-        if (isCommentLine(line) || line.empty())
+        if (is_comment_line(line) || line.empty())
             continue;
 
         split(vec, line, boost::is_any_of(delimiter));
@@ -56,17 +56,17 @@ void DataReader::processFile(const std::string &filename, Data &data, VecS &labe
         if (skipdesc == SkipDescription::YES) vec.pop_back();
 
         if (line_counter == first_line) {
-            if (hasEmptyStrings(vec)) {
+            if (has_empty_strings(vec)) {
                 missing_labels = true;
                 return;
             }
 
             labels = std::move(vec);
         } else {
-            trimWhiteSpaces(vec);
+            time_white_spaces(vec);
 
-            if (hasEmptyStrings(vec))
-                correctMissingValues(data, vec);
+            if (has_empty_strings(vec))
+                correct_missing_values(data, vec);
 
             data.emplace_back(std::move(vec));
         }
@@ -75,21 +75,21 @@ void DataReader::processFile(const std::string &filename, Data &data, VecS &labe
     file.close();
 }
 
-bool DataReader::hasEmptyStrings(const std::vector<std::string> &strings) const {
+bool DataReader::has_empty_strings(const std::vector<std::string> &strings) const {
     return std::any_of(std::begin(strings), std::end(strings), [](const auto &v) { return v.empty(); });
 }
 
-bool DataReader::isCommentLine(const std::string &line) const {
+bool DataReader::is_comment_line(const std::string &line) const {
     return line.find('#') != std::string::npos;
 }
 
-void DataReader::correctMissingValues(const Data &data, VecS &vec) const {
+void DataReader::correct_missing_values(const Data &data, VecS &vec) const {
     const auto &last_line = data.back();
     vec.clear();
     // TODO: replace with stl::copy_if version
     std::copy(std::begin(last_line), std::end(last_line), std::back_inserter(vec));
 }
 
-void DataReader::trimWhiteSpaces(VecS &line) {
+void DataReader::time_white_spaces(VecS &line) {
     for (auto &val: line) boost::trim(val);
 }
