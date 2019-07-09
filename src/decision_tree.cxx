@@ -56,7 +56,7 @@ void DecisionTree::generate_graph(const std::filesystem::path &file) const {
         throw std::runtime_error(fmt::format("Can't generate graph at {}\n", file.string()));
 
     generate::init(root_, dr.labels(), file);
-    fmt::print("> Generated Graphviz file {}", file.string());
+    fmt::print("> Generated Graphviz file {}\n", file.string());
 }
 
 void DecisionTree::test() const {
