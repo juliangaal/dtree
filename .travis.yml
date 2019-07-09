@@ -19,6 +19,17 @@ matrix:
       env:
         - COMPILER=g++-8
         - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install git cmake libboost-all-dev && CC=gcc-8 && CXX=g++-8"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-9
+            - g++-9
+      env:
+        - COMPILER=g++-9
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install git cmake libboost-all-dev && CC=gcc-9 && CXX=g++-9"
 
 before_install:
   - eval "${MATRIX_EVAL}"
