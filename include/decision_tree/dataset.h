@@ -2,8 +2,8 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_DATASET_HPP
-#define DECISIONTREE_DATASET_HPP
+#ifndef DECISIONTREE_DATASET_H
+#define DECISIONTREE_DATASET_H
 
 #include <string>
 
@@ -37,4 +37,4 @@ struct TestingSet {
 
 } // namespace decision_tree
 
-#endif //DECISIONTREE_DATASET_HPP
+#endif //DECISIONTREE_DATASET_H

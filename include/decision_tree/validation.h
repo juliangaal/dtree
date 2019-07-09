@@ -5,8 +5,8 @@
 #ifndef DECISIONTREE_TREETEST_HPP
 #define DECISIONTREE_TREETEST_HPP
 
-#include <decision_tree/node.hpp>
-#include <decision_tree/helpers.hpp>
+#include <decision_tree/node.h>
+#include <decision_tree/help.h>
 
 namespace decision_tree::validation {
 

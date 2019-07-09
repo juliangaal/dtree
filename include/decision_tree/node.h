@@ -2,14 +2,14 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_NODE_HPP
-#define DECISIONTREE_NODE_HPP
+#ifndef DECISIONTREE_NODE_H
+#define DECISIONTREE_NODE_H
 
-#include <decision_tree/question.hpp>
+#include <decision_tree/question.h>
 #include <memory>
 #include <optional>
 #include <unordered_map>
-#include <decision_tree/helpers.hpp>
+#include <decision_tree/help.h>
 
 namespace decision_tree {
 
@@ -24,9 +24,9 @@ public:
     ~Node() = default;
 
 public:
-    inline const std::unique_ptr<Node>& trueBranch() const { return true_branch_; }
+    inline const std::unique_ptr<Node> &true_branch() const { return true_branch_; }
 
-    inline const std::unique_ptr<Node>& falseBranch() const { return false_branch_; }
+    inline const std::unique_ptr<Node> &false_branch() const { return false_branch_; }
 
     inline const std::optional<Question> &question() const { return question_; }
 
@@ -45,4 +45,4 @@ private:
 
 } // namespace decision_tree;
 
-#endif //DECISIONTREE_NODE_HPP
+#endif //DECISIONTREE_NODE_H

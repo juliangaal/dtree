@@ -5,13 +5,13 @@
 #ifndef DECISIONTREE_DECISIONTREE_HPP
 #define DECISIONTREE_DECISIONTREE_HPP
 
-#include <decision_tree/dataset.hpp>
-#include <decision_tree/node.hpp>
-#include <decision_tree/calculations.hpp>
-#include <decision_tree/data_reader.hpp>
-#include <decision_tree/graph_generator.hpp>
-#include <decision_tree/validation.hpp>
-#include <decision_tree/helpers.hpp>
+#include <decision_tree/dataset.h>
+#include <decision_tree/node.h>
+#include <decision_tree/calculations.h>
+#include <decision_tree/data_reader.h>
+#include <decision_tree/generate.h>
+#include <decision_tree/validation.h>
+#include <decision_tree/help.h>
 
 namespace decision_tree {
 
@@ -25,16 +25,16 @@ public:
 
     void test() const;
 
-    void generateGraph(const std::string filepath) const;
+    void generate_graph(const std::string filepath) const;
 
-    inline const decision_tree::Data &testingData() { return dr.testingData(); }
+    inline const decision_tree::Data &testing_data() { return dr.testing_data(); }
 
     inline const std::unique_ptr<Node> &root() { return root_; }
 
 private:
     decision_tree::DataReader dr;
 
-    std::unique_ptr<Node> buildTree(const decision_tree::Data &rows);
+    std::unique_ptr<Node> build_tree(const decision_tree::Data &rows);
 
     void print_node(const std::unique_ptr<Node> &root, std::string spacing = "") const;
 
