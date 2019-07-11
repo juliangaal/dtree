@@ -1,8 +1,8 @@
 # DecisionTree
 # gcc >= 7 is required
-# Ubuntu 14.04
+# Ubuntu 18.04
 sudo: required
-dist: trusty
+dist: bionic
 
 language: cpp
 

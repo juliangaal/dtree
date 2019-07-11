@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.9) # 3.9 saves us from a lot of openmp headaches
 project(DecisionTree VERSION 0.2)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -6,13 +6,29 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
+if(NOT CMAKE_EXPORT_COMPILE_COMMANDS) # for clang tidy
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+endif()
+
 message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
 
 find_package(Boost REQUIRED)
 find_package(OpenMP REQUIRED)
+find_package(Threads REQUIRED)
 find_package(fmt REQUIRED)
 
 set(CLANG_DEFAULT_CXX_STDLIB  "libc++")
+
+#if(NOT TARGET OpenMP::OpenMP_CXX)
+#    find_package(Threads REQUIRED)
+#    add_library(OpenMP::OpenMP_CXX IMPORTED INTERFACE)
+#    set_property(TARGET OpenMP::OpenMP_CXX
+#                 PROPERTY INTERFACE_COMPILE_OPTIONS ${OpenMP_CXX_FLAGS})
+#    # Only works if the same flag is passed to the linker; use CMake 3.9+ otherwise (Intel, AppleClang)
+#    set_property(TARGET OpenMP::OpenMP_CXX
+#                 PROPERTY INTERFACE_LINK_LIBRARIES ${OpenMP_CXX_FLAGS} Threads::Threads)
+#
+#endif()
 
 AUX_SOURCE_DIRECTORY(src SOURCES)
 AUX_SOURCE_DIRECTORY(include HEADERS)

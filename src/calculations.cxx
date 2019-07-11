@@ -1,11 +1,11 @@
 //
 // Created by Julian on 24.06.18.
 //
-#include <decision_tree/calculations.h>
-#include <decision_tree/help.h>
 #include <cmath>
 #include <algorithm>
 #include <omp.h>
+#include <decision_tree/calculations.h>
+#include <decision_tree/help.h>
 
 using namespace decision_tree;
 
