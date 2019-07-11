@@ -14,17 +14,17 @@
 
 namespace decision_tree::calculations {
 
-std::tuple<const Data, const Data> partition(const Data &data, const Question &q);
+std::tuple <Data, Data> partition(const Data &data, const Question &q);
 
-const double gini(const Data &data);
+float gini(const Data &data);
 
-const double info_gain(const Data &left, const Data &right, double current_uncertainty);
+float info_gain(const Data &left, const Data &right, float current_uncertainty);
 
-std::tuple<const double, const Question> find_best_split(const Data &rows);
+std::tuple<float, Question> find_best_split(const Data &rows);
 
-const VecS unique_values(const decision_tree::Data &data, const size_t column);
+VecS unique_values(const decision_tree::Data &data, const size_t column);
 
-const ClassCounter class_counts(const Data &data);
+ClassCounter class_counts(const Data &data);
 
 } // namespace Calculations
 

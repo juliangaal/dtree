@@ -43,32 +43,32 @@ void testTree(const Data &testing_data, const std::unique_ptr<Node> &tree) {
     {
         ClassCounter prediction;
         prediction.insert({"Apple", 8});
-        const auto &test_row = testing_data.at(0);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(0);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Apple", 2});
-        const auto &test_row = testing_data.at(1);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(1);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Grape", 14});
-        const auto &test_row = testing_data.at(2);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(2);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Grape", 14});
-        const auto &test_row = testing_data.at(3);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(3);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
@@ -76,88 +76,88 @@ void testTree(const Data &testing_data, const std::unique_ptr<Node> &tree) {
         ClassCounter prediction;
         prediction.insert({"Apple", 1});
         prediction.insert({"Lemon", 4});
-        const auto &test_row = testing_data.at(4);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(4);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Lime", 4});
-        const auto &test_row = testing_data.at(5);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(5);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Pepper", 11});
-        const auto &test_row = testing_data.at(6);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(6);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Pepper", 11});
-        const auto &test_row = testing_data.at(7);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(7);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Pepper", 11});
-        const auto &test_row = testing_data.at(8);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(8);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Radish", 5});
-        const auto &test_row = testing_data.at(9);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(9);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Grape", 14});
-        const auto &test_row = testing_data.at(10);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(10);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Pepper", 11});
-        const auto &test_row = testing_data.at(11);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(11);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Grape", 14});
-        const auto &test_row = testing_data.at(12);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(12);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Pepper", 11});
-        const auto &test_row = testing_data.at(13);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(13);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 
     {
         ClassCounter prediction;
         prediction.insert({"Eggplant", 6});
-        const auto &test_row = testing_data.at(14);
-        const auto &result = validation::testRow(test_row, tree);
+        auto test_row = testing_data.at(14);
+        auto result = validation::testRow(test_row, tree);
         assert(prediction == result);
     }
 }

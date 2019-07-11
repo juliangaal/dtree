@@ -3,6 +3,7 @@
 //
 #include <thread>
 #include <filesystem>
+#include <future>
 #include <decision_tree/data_reader.h>
 
 using namespace decision_tree;
@@ -27,16 +28,21 @@ DataReader::DataReader(const TrainingSet &trainset, const TestingSet &testset) :
     if (fs::is_directory(testset.file_))
         throw std::runtime_error(fmt::format("{} is a directory. Need .csv file", testset.file_.string()));
 
-    std::thread readTrainingData([this, &trainset]() {
-        return process_file(trainset.file_, training_data_, training_labels_, trainset.skipdesc_, trainset.delimiter_);
-    });
+    auto read_training_data = std::async(std::launch::async, &DataReader::process_file, this,
+                                         std::cref(trainset.file_),
+                                         std::ref(training_data_),
+                                         std::ref(training_labels_),
+                                         trainset.skipdesc_,
+                                         trainset.delimiter_);
 
-    std::thread readTestingData([this, &testset]() {
-        return process_file(testset.file_, testing_data_, testing_labels_, SkipDescription::NO, testset.delimiter_);
-    });
-
-    readTrainingData.join();
-    readTestingData.join();
+    auto read_testing_data = std::async(std::launch::async, &DataReader::process_file, this,
+                                        std::cref(testset.file_),
+                                        std::ref(testing_data_),
+                                        std::ref(testing_labels_),
+                                        SkipDescription::NO,
+                                        testset.delimiter_);
+    read_testing_data.wait();
+    read_training_data.wait();
 }
 
 void DataReader::process_file(const fs::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
@@ -76,7 +82,7 @@ void DataReader::process_file(const fs::path &filepath, Data &data, VecS &labels
 }
 
 bool DataReader::has_empty_strings(const std::vector<std::string> &strings) const {
-    return std::any_of(std::begin(strings), std::end(strings), [](const auto &v) { return v.empty(); });
+    return std::any_of(std::begin(strings), std::end(strings), [](const auto &v) { return v.empty() || v == "NA"; });
 }
 
 bool DataReader::is_comment_line(const std::string &line) const {

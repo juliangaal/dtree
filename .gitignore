@@ -41,5 +41,7 @@
 cmake-*/
 *build/
 
+# project specific stuff
+*.dot
 
 # End of https://www.gitignore.io/api/c++

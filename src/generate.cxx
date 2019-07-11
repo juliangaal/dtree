@@ -96,7 +96,7 @@ string graph_element::result(const std::unordered_map<string, int> &data, bool b
 
     result += values;
 
-    string result_id = fmt::format("\\nid: {}", id++);
+    string result_id = fmt::format(" ({})", id++);
     result += result_id;
 
     string result_box = fmt::format("   {}\" {};\n", result, "[shape=box]");

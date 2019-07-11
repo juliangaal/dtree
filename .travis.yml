@@ -30,6 +30,59 @@ matrix:
       env:
         - COMPILER=g++-9
         - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install git cmake libboost-all-dev && CC=gcc-9 && CXX=g++-9"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - libstdc++-7-dev
+      env:
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-5.0 && CXX=clang++-5.0"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+          packages:
+            - clang-6.0
+            - libstdc++-7-dev
+      env:
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-6.0 && CXX=clang++-6.0"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-7
+            - ubuntu-toolchain-r-test
+          packages:
+            - clang-7
+            - libstdc++-7-dev
+      env:
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-7 && CXX=clang++-7"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-8
+            - ubuntu-toolchain-r-test
+          packages:
+            - clang-8
+            - libstdc++-8-dev
+      env:
+        - MATRIX_EVAL="sudo apt-get update -qq && sudo apt-get install libboost-all-dev && CC=clang-8 && CXX=clang++-8"
+    - os: osx
+      osx_image: xcode9.4
+      compiler: clang
+    - os: osx
+      osx_image: xcode10
+      compiler: clang
+    - os: osx
+      osx_image: xcode11
+      compiler: clang
 
 before_install:
   - eval "${MATRIX_EVAL}"
