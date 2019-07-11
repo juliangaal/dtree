@@ -2,7 +2,7 @@
 # gcc >= 7 is required
 # Ubuntu 18.04
 sudo: required
-dist: bionic
+dist: trusty
 
 language: cpp
 
