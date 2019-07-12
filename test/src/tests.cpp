@@ -2,9 +2,9 @@
 // Created by Julian on 26.06.18.
 //
 
-#include <decision_tree/validation.h>
-#include <decision_tree/decision_tree.h>
-#include <decision_tree/node.h>
+//#include <dtree/validation.h>
+#include <dtree/decision_tree.h>
+#include <dtree/node.h>
 #include <cassert>
 #include <tuple>
 #include <filesystem>
@@ -12,7 +12,7 @@
 #include <memory>
 #include <fmt/format.h>
 
-using namespace decision_tree;
+using namespace dtree;
 namespace fs = std::filesystem;
 
 bool lineNumsMatch(const fs::path &file) {

@@ -2,10 +2,10 @@
 // Created by Julian on 24.06.18.
 //
 
-#include <decision_tree/question.h>
-#include <decision_tree/help.h>
+#include <dtree/question.h>
+#include <dtree/help.h>
 
-using namespace decision_tree;
+using namespace dtree;
 using std::string;
 
 Question::Question() : column_{}, value_{} {}

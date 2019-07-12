@@ -1,13 +1,13 @@
 //
 // Created by Julian on 24.06.18.
 //
-#include <decision_tree/calculations.h>
-#include <decision_tree/help.h>
+#include <dtree/calculations.h>
+#include <dtree/help.h>
 #include <cmath>
 #include <algorithm>
 #include <omp.h>
 
-using namespace decision_tree;
+using namespace dtree;
 
 using std::tuple;
 using std::string;

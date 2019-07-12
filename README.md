@@ -1,4 +1,4 @@
-# Decision Tree
+# dtree
 
 [![Build Status](https://travis-ci.org/juliangaal/DecisionTree.svg?branch=master)](https://travis-ci.org/juliangaal/DecisionTree) 
 

@@ -2,13 +2,13 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_QUESTION_H
-#define DECISIONTREE_QUESTION_H
+#ifndef DTREE_QUESTION_H
+#define DTREE_QUESTION_H
 
 #include <string>
-#include <decision_tree/help.h>
+#include <dtree/help.h>
 
-namespace decision_tree {
+namespace dtree {
 
 class Question {
 public:
@@ -29,6 +29,6 @@ public:
     std::string value_;
 };
 
-} // namespace decision_tree
+} // namespace dtree
 
-#endif //DECISIONTREE_QUESTION_H
+#endif //DTREE_QUESTION_H

@@ -2,13 +2,13 @@
 // Created by Julian on 25.06.18.
 //
 
-#include <decision_tree/validation.h>
+#include <dtree/validation.h>
 #include <cassert>
 #include <algorithm>
 #include <iomanip>
 #include <fmt/format.h>
 
-using namespace decision_tree;
+using namespace dtree;
 
 ClassCounter validation::classify(const VecS &row, const std::unique_ptr<Node> &node) {
     if (node->predicts()) {

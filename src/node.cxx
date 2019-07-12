@@ -2,12 +2,12 @@
 // Created by Julian on 24.06.18.
 //
 
-#include <decision_tree/node.h>
-#include <decision_tree/calculations.h>
+#include <dtree/node.h>
+#include <dtree/calculations.h>
 #include <utility>
 #include <chrono>
 
-using namespace decision_tree;
+using namespace dtree;
 
 Node::Node(const Data &data)
         : true_branch_{}, false_branch_{}, question_{}, predictions_{calculations::class_counts(data)} {}

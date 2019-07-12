@@ -2,13 +2,13 @@
 // Created by Julian on 25.06.18.
 //
 
-#include <decision_tree/generate.h>
-#include <decision_tree/help.h>
+#include <dtree/generate.h>
+#include <dtree/help.h>
 #include <algorithm>
 #include <fmt/format.h>
 
-using namespace decision_tree;
-namespace elem = decision_tree::graph_element;
+using namespace dtree;
+namespace elem = dtree::graph_element;
 namespace fs = std::filesystem;
 
 using std::string;

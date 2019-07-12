@@ -2,8 +2,8 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_HELPER_HPP
-#define DECISIONTREE_HELPER_HPP
+#ifndef DTREE_HELPER_HPP
+#define DTREE_HELPER_HPP
 
 #include <vector>
 #include <string>
@@ -13,7 +13,7 @@
 #include <fmt/format.h>
 #include <iostream>
 
-namespace decision_tree {
+namespace dtree {
 
 using ClassCounter = std::unordered_map<std::string, int>;
 using Data = std::vector<std::vector<std::string>>;
@@ -44,8 +44,8 @@ void print_map(const std::unordered_map<K, V> &counter) {
     fmt::print(" ]\n");
 }
 
-} // namespace decision_tree::help::print
+} // namespace dtree::help::print
 
-} // namespace decision_tree
+} // namespace dtree
 
-#endif //DECISIONTREE_HELPER_HPP
+#endif //DTREE_HELPER_HPP

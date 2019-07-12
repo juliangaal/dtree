@@ -2,22 +2,22 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_NODE_H
-#define DECISIONTREE_NODE_H
+#ifndef DTREE_NODE_H
+#define DTREE_NODE_H
 
-#include <decision_tree/question.h>
+#include <dtree/question.h>
 #include <memory>
 #include <optional>
 #include <unordered_map>
-#include <decision_tree/help.h>
+#include <dtree/help.h>
 
-namespace decision_tree {
+namespace dtree {
 
 class Node {
 public:
     Node() = delete;
 
-    explicit Node(const decision_tree::Data &data);
+    explicit Node(const dtree::Data &data);
 
     Node(std::unique_ptr<Node> true_branch, std::unique_ptr<Node> false_branch, Question question);
 
@@ -30,7 +30,7 @@ public:
 
     inline const std::optional<Question> &question() const { return question_; }
 
-    inline const std::optional<decision_tree::ClassCounter> &predictions() const { return predictions_; }
+    inline const std::optional<dtree::ClassCounter> &predictions() const { return predictions_; }
 
     inline bool predicts() const { return predictions_ != std::nullopt; }
 
@@ -40,9 +40,9 @@ private:
     std::unique_ptr<Node> true_branch_;
     std::unique_ptr<Node> false_branch_;
     std::optional<Question> question_;
-    std::optional<decision_tree::ClassCounter> predictions_;
+    std::optional<dtree::ClassCounter> predictions_;
 };
 
-} // namespace decision_tree;
+} // namespace dtree;
 
-#endif //DECISIONTREE_NODE_H
+#endif //DTREE_NODE_H

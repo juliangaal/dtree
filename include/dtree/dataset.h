@@ -2,13 +2,13 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_DATASET_H
-#define DECISIONTREE_DATASET_H
+#ifndef DTREE_DATASET_H
+#define DTREE_DATASET_H
 
 #include <string>
 #include <filesystem>
 
-namespace decision_tree {
+namespace dtree {
 
 enum SkipDescription {
     YES,
@@ -36,6 +36,6 @@ struct TestingSet {
     std::string delimiter_;
 };
 
-} // namespace decision_tree
+} // namespace dtree
 
-#endif //DECISIONTREE_DATASET_H
+#endif //DTREE_DATASET_H

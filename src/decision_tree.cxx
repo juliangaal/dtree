@@ -2,13 +2,13 @@
 // Created by Julian on 24.06.18.
 //
 
-#include <decision_tree/decision_tree.h>
+#include <dtree/decision_tree.h>
 #include <fmt/format.h>
 #include <filesystem>
 #include <tuple>
 
 namespace fs = std::filesystem;
-using namespace decision_tree;
+using namespace dtree;
 using std::string;
 
 DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset)

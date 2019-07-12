@@ -5,8 +5,8 @@
 #ifndef TREE_CSVREADER_HPP
 #define TREE_CSVREADER_HPP
 
-#include <decision_tree/dataset.h>
-#include <decision_tree/help.h>
+#include <dtree/dataset.h>
+#include <dtree/help.h>
 #include <fstream>
 #include <vector>
 #include <boost/algorithm/string.hpp>
@@ -14,19 +14,19 @@
 /*
  * A class to read data from a csv file. Based on http://thispointer.com/how-to-read-data-from-a-csv-file-in-c/
  */
-namespace decision_tree {
+namespace dtree {
 
 class DataReader {
 private:
     [[nodiscard]]
-    bool has_empty_strings(const decision_tree::VecS &strings) const;
+    bool has_empty_strings(const dtree::VecS &strings) const;
     [[nodiscard]]
     bool is_comment_line(const std::string &line) const;
 
-    decision_tree::Data training_data_;
-    decision_tree::Data testing_data_;
-    decision_tree::VecS training_labels_;
-    decision_tree::VecS testing_labels_;
+    dtree::Data training_data_;
+    dtree::Data testing_data_;
+    dtree::VecS training_labels_;
+    dtree::VecS testing_labels_;
 
 public:
     DataReader() = delete;
@@ -34,11 +34,11 @@ public:
     DataReader(const TrainingSet &trainset, const TestingSet &testset);
 
     [[nodiscard]]
-    inline const decision_tree::Data &training_data() const { return training_data_; }
+    inline const dtree::Data &training_data() const { return training_data_; }
     [[nodiscard]]
-    inline const decision_tree::Data &testing_data() const { return testing_data_; }
+    inline const dtree::Data &testing_data() const { return testing_data_; }
     [[nodiscard]]
-    inline const decision_tree::VecS &labels() const { return training_labels_; }
+    inline const dtree::VecS &labels() const { return training_labels_; }
 
     /**
      * Parses through csv file line by line and
@@ -47,11 +47,11 @@ public:
     void process_file(const std::filesystem::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
                       const std::string &delimiter);
 
-    void time_white_spaces(decision_tree::VecS &line);
+    void time_white_spaces(dtree::VecS &line);
 
-    void correct_missing_values(const decision_tree::Data &data, decision_tree::VecS &vec) const;
+    void correct_missing_values(const dtree::Data &data, dtree::VecS &vec) const;
 };
 
-} // namespace decision_tree
+} // namespace dtree
 
 #endif //TREE_CSVREADER_HPP

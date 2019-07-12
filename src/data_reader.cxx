@@ -3,9 +3,9 @@
 //
 #include <thread>
 #include <filesystem>
-#include <decision_tree/data_reader.h>
+#include <dtree/data_reader.h>
 
-using namespace decision_tree;
+using namespace dtree;
 using boost::algorithm::split;
 namespace fs = std::filesystem;
 

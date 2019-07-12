@@ -2,13 +2,13 @@
 // Created by Julian on 25.06.18.
 //
 
-#ifndef DECISIONTREE_TREETEST_HPP
-#define DECISIONTREE_TREETEST_HPP
+#ifndef DTREE_TREETEST_HPP
+#define DTREE_TREETEST_HPP
 
-#include <decision_tree/node.h>
-#include <decision_tree/help.h>
+#include <dtree/node.h>
+#include <dtree/help.h>
 
-namespace decision_tree::validation {
+namespace dtree::validation {
 
 using ClassCounterScaled = std::unordered_map<std::string, float>;
 
@@ -22,4 +22,4 @@ void validate(const Data &testing_data, const VecS &labels, const std::unique_pt
 
 } // namespace validation
 
-#endif //DECISIONTREE_TREETEST_HPP
+#endif //DTREE_TREETEST_HPP

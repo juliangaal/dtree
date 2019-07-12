@@ -2,18 +2,18 @@
 // Created by Julian on 24.06.18.
 //
 
-#ifndef DECISIONTREE_DECISIONTREE_HPP
-#define DECISIONTREE_DECISIONTREE_HPP
+#ifndef DTREE_DTREE_HPP
+#define DTREE_DTREE_HPP
 
-#include <decision_tree/dataset.h>
-#include <decision_tree/node.h>
-#include <decision_tree/calculations.h>
-#include <decision_tree/data_reader.h>
-#include <decision_tree/generate.h>
-#include <decision_tree/validation.h>
-#include <decision_tree/help.h>
+#include <dtree/dataset.h>
+#include <dtree/node.h>
+#include <dtree/calculations.h>
+#include <dtree/data_reader.h>
+#include <dtree/generate.h>
+#include <dtree/validation.h>
+#include <dtree/help.h>
 
-namespace decision_tree {
+namespace dtree {
 
 class DecisionTree {
 public:
@@ -27,12 +27,12 @@ public:
 
     void generate_graph(const std::filesystem::path &file) const;
 
-    inline const decision_tree::Data &testing_data() { return dr.testing_data(); }
+    inline const dtree::Data &testing_data() { return dr.testing_data(); }
 
     inline const std::unique_ptr<Node> &root() { return root_; }
 
 private:
-    decision_tree::DataReader dr;
+    dtree::DataReader dr;
 
     std::unique_ptr<Node> build_tree(const Data &rows);
 
@@ -43,6 +43,6 @@ private:
     std::unique_ptr<Node> root_;
 };
 
-} // namespace decision_tree
+} // namespace dtree
 
-#endif //DECISIONTREE_DECISIONTREE_HPP
+#endif //DTREE_DTREE_HPP

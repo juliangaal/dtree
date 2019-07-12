@@ -1,8 +1,8 @@
-#include <decision_tree/decision_tree.h>
+#include <dtree/decision_tree.h>
 #include <cassert>
 #include <fmt/format.h>
 
-using namespace decision_tree;
+using namespace dtree;
 
 int main(int argc, char *argv[]) {
     auto trainfile = fmt::format("{}{}.csv", "../test/data/", argv[1]);
