@@ -5,7 +5,6 @@
 #ifndef DECISIONTREE_QUESTION_H
 #define DECISIONTREE_QUESTION_H
 
-#include <vector>
 #include <string>
 #include <decision_tree/help.h>
 
@@ -17,11 +16,14 @@ public:
 
     Question(int column, std::string value);
 
-    const bool match(VecS example) const;
+    [[nodiscard]]
+    bool match(const VecS &example) const;
 
-    const bool isNumeric(std::string value) const;
+    [[nodiscard]]
+    const bool isNumeric(const std::string &value) const;
 
-    const std::string toString(const VecS &labels) const;
+    [[nodiscard]]
+    std::string toString(const VecS &labels) const;
 
     int column_;
     std::string value_;

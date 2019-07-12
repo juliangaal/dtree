@@ -18,8 +18,9 @@ namespace decision_tree {
 
 class DataReader {
 private:
+    [[nodiscard]]
     bool has_empty_strings(const decision_tree::VecS &strings) const;
-
+    [[nodiscard]]
     bool is_comment_line(const std::string &line) const;
 
     decision_tree::Data training_data_;
@@ -32,10 +33,11 @@ public:
 
     DataReader(const TrainingSet &trainset, const TestingSet &testset);
 
+    [[nodiscard]]
     inline const decision_tree::Data &training_data() const { return training_data_; }
-
+    [[nodiscard]]
     inline const decision_tree::Data &testing_data() const { return testing_data_; }
-
+    [[nodiscard]]
     inline const decision_tree::VecS &labels() const { return training_labels_; }
 
     /**
@@ -43,7 +45,7 @@ public:
      * @return the data in vector of vector of strings
      */
     void process_file(const std::filesystem::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
-                      std::string delimiter);
+                      const std::string &delimiter);
 
     void time_white_spaces(decision_tree::VecS &line);
 

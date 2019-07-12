@@ -4,16 +4,15 @@
 
 #include <decision_tree/question.h>
 #include <decision_tree/help.h>
-#include <cassert>
 
 using namespace decision_tree;
 using std::string;
 
-Question::Question() : column_{0}, value_{} {}
+Question::Question() : column_{}, value_{} {}
 
-Question::Question(const int column, string value) : column_{column}, value_{std::move(value)} {}
+Question::Question(int column, string value) : column_{column}, value_{std::move(value)} {}
 
-const bool Question::match(VecS example) const {
+bool Question::match(const VecS &example) const {
     const string &val = example[column_];
 
     try {
@@ -24,14 +23,14 @@ const bool Question::match(VecS example) const {
     }
 }
 
-const string Question::toString(const VecS &labels) const {
+string Question::toString(const VecS &labels) const {
     string condition = "==";
     if (isNumeric(value_))
         condition = ">=";
     return "Is " + labels[column_] + " " + condition + " " + value_ + "?";
 }
 
-const bool Question::isNumeric(std::string value) const {
+const bool Question::isNumeric(const string &value) const {
     try {
         std::stod(value);
         return true;

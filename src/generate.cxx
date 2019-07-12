@@ -9,30 +9,27 @@
 
 using namespace decision_tree;
 namespace elem = decision_tree::graph_element;
+namespace fs = std::filesystem;
 
 using std::string;
 
-void generate::init(const std::unique_ptr<Node> &root, const VecS &labels, string filepath) {
+void generate::init(const std::unique_ptr<Node> &root, const VecS &labels, const std::filesystem::path &filepath) {
+    if (fs::is_directory(filepath))
+        throw std::runtime_error(fmt::format("Can't generate graph at {}\n", filepath.string()));
+
     std::ofstream myfile;
     myfile.open(filepath);
-
-    if (!myfile.is_open()) {
-        fmt::print("Couldn't open {}. Can't create Graphviz dot file.\n", filepath);
-        return;
-    }
 
     myfile << "digraph {\n";
     traverse_generate(root, labels, myfile);
     myfile << "}";
     myfile.close();
-
-//    traverseTreeBFS(root, myfile);
 }
 
 void generate::traverse_generate(const std::unique_ptr<Node> &node, const VecS &labels, std::ofstream &file) {
     static const string spacing = "   ";
     static const string connector = " -> ";
-    if (node == nullptr)
+    if (!node)
         return;
 
     if (node->predicts())

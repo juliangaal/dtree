@@ -39,8 +39,8 @@ DataReader::DataReader(const TrainingSet &trainset, const TestingSet &testset) :
     readTestingData.join();
 }
 
-void DataReader::process_file(const fs::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
-                              std::string delimiter) {
+void DataReader::process_file(const std::filesystem::path &filepath, Data &data, VecS &labels, SkipDescription skipdesc,
+                              const std::string &delimiter) {
     std::ifstream file(filepath);
 
     std::string line;

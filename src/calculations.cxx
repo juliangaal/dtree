@@ -13,9 +13,11 @@ using std::tuple;
 using std::string;
 using std::unordered_map;
 
-tuple<const Data, const Data> calculations::partition(const Data &data, const Question &q) {
+tuple<Data, Data> calculations::partition(const Data &data, const Question &q) {
     Data true_rows;
     Data false_rows;
+    true_rows.reserve(data.size()/2);
+    false_rows.reserve(data.size()/2);
 
     for (const auto &row: data) {
         if (q.match(row))
@@ -23,30 +25,31 @@ tuple<const Data, const Data> calculations::partition(const Data &data, const Qu
         else
             false_rows.push_back(row);
     }
+
     return {true_rows, false_rows};
 }
 
-const double calculations::gini(const Data &data) {
+float calculations::gini(const Data &data) {
     const auto &counts = class_counts(data);
-    double impurity = 1.0;
+    float impurity = 1.0f;
 
     for (const auto&[decision, freq]: counts) {
-        double prob_of_lbl = freq / static_cast<double>(data.size());
-        impurity -= std::pow(prob_of_lbl, 2);
+        double prob_of_lbl = freq / static_cast<float>(data.size());
+        impurity -= std::pow(prob_of_lbl, 2.0f);
     }
 
     return impurity;
 }
 
-const double calculations::info_gain(const Data &left, const Data &right, double current_uncertainty) {
-    const auto &p = static_cast<double>(left.size()) / (left.size() + right.size());
+float calculations::info_gain(const Data &left, const Data &right, float current_uncertainty) {
+    const float p = static_cast<float>(left.size()) / (left.size() + right.size());
     return current_uncertainty - p * gini(left) - (1 - p) * gini(right);
 }
 
-tuple<const double, const Question> calculations::find_best_split(const Data &rows) {
-    double best_gain = 0.0;  // keep track of the best information gain
+tuple<double, Question> calculations::find_best_split(const Data &rows) {
+    float best_gain = 0.0;  // keep track of the best information gain
     auto best_question = Question();  //keep train of the feature / value that produced it
-    double current_uncertainty = gini(rows);
+    const float current_uncertainty = gini(rows);
     size_t n_features = rows.back().size() - 1;  //number of columns
 
     #pragma omp parallel for num_threads(5)
@@ -75,7 +78,7 @@ tuple<const double, const Question> calculations::find_best_split(const Data &ro
     return {best_gain, best_question};
 }
 
-const VecS calculations::unique_values(const Data &data, const size_t column) {
+VecS calculations::unique_values(const Data &data, size_t column) {
     VecS unique_vals;
 
     ClassCounter counter;
@@ -84,13 +87,16 @@ const VecS calculations::unique_values(const Data &data, const size_t column) {
         counter[decision] += 0;
     }
 
+    unique_vals.reserve(counter.size());
+
     std::transform(begin(counter), std::end(counter), std::back_inserter(unique_vals),
                    [](const auto &kv) { return kv.first; });
     return unique_vals;
 }
 
-const ClassCounter calculations::class_counts(const Data &data) {
+ClassCounter calculations::class_counts(const Data &data) {
     ClassCounter counter;
+    counter.reserve(data.size()/3);
     for (const auto &rows: data) {
         const string decision = rows.back();
         counter[decision] += 1;

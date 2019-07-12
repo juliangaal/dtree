@@ -6,12 +6,14 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(Boost REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(fmt REQUIRED)
 
 # for future clang support, clang seems to not like openmp
-# set(CLANG_DEFAULT_CXX_STDLIB "libc++")
+set(CLANG_DEFAULT_CXX_STDLIB "libc++")
 
 AUX_SOURCE_DIRECTORY(src SOURCES)
 AUX_SOURCE_DIRECTORY(include HEADERS)

@@ -26,7 +26,7 @@ void validation::print_prediction(const ClassCounter &counts) {
     ClassCounterScaled scale;
 
     for (const auto&[key, val]: counts) {
-        scale[key] = val / total * 100.0f;
+        scale[key] = val / total * 100.0F;
     }
     help::print::print_map(scale);
 }

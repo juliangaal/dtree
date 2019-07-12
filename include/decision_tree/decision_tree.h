@@ -36,7 +36,7 @@ private:
 
     std::unique_ptr<Node> build_tree(const Data &rows);
 
-    void rec_print_node(const std::unique_ptr<Node> &root, std::string spacing = "") const;
+    void rec_print_node(const std::unique_ptr<Node> &root, std::string &spacing) const;
 
     size_t size_;
 
