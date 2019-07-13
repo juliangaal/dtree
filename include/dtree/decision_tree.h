@@ -44,11 +44,13 @@ public:
 
     explicit DecisionTree(const TrainingSet &trainset, const TestingSet &testset);
 
+    void build();
+
     void print_tree() const;
 
     void test() const;
 
-    void generate_graph(const std::filesystem::path &file) const;
+    void generate_graph(const std::string &file) const;
 
     inline const dtree::Data &testing_data() { return dr.testing_data(); }
 
@@ -57,7 +59,7 @@ public:
 private:
     dtree::DataReader dr;
 
-    std::unique_ptr<Node> build_tree(const Data &rows);
+    std::unique_ptr<Node> build_rec(const Data &rows);
 
     void rec_print_node(const std::unique_ptr<Node> &root, std::string &spacing) const;
 
