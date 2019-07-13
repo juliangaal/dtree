@@ -6,11 +6,10 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(PY_LIB dtree_py)
 option(COMPILE_TEST "Compiles Tests" OFF)
-option(PY_BINDINGS "Enable Pyhton bindings generation" OFF)
+option(PY_BINDINGS "Enable Python bindings generation" OFF)
 
+message(STATUS "CMake Version ${CMAKE_VERSION}")
 message(STATUS "Build Type ${CMAKE_BUILD_TYPE}")
 
 find_package(Boost REQUIRED)
@@ -20,10 +19,16 @@ find_package(fmt REQUIRED)
 # for future clang support, clang seems to not like openmp
 set(CLANG_DEFAULT_CXX_STDLIB "libc++")
 
-AUX_SOURCE_DIRECTORY(src SOURCES)
+set(SOURCES src/calculations.cxx
+            src/data_reader.cxx
+            src/validation.cxx
+            src/question.cxx
+            src/node.cxx
+            src/generate.cxx
+            src/decision_tree.cxx)
 AUX_SOURCE_DIRECTORY(include HEADERS)
 
-add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${Boost_INCLUDE_DIRS}
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -44,55 +49,17 @@ target_compile_options(quick_tester PRIVATE -Wall -Weffc++ -Wpedantic)
 target_include_directories(quick_tester PUBLIC ../include ${Boost_INCLUDE_DIRS})
 target_link_libraries(quick_tester OpenMP::OpenMP_CXX dtree fmt::fmt)
 
+# pybind11
 message(STATUS "PY_BINDINGS set to ${PY_BINDINGS}")
 if(PY_BINDINGS)
-    # Update submodules as needed
-    if(NOT EXISTS "${CMAKE_SOURCE_DIR}/pybind11")
-        message(STATUS "Submodule update")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-                        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-                        RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif()
-    endif()
-
-    if(NOT EXISTS "${CMAKE_SOURCE_DIR}/pybind11/CMakeLists.txt")
-        message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-    endif()
-
-    # pybind11 bindings
-    add_subdirectory(pybind11)
-    pybind11_add_module(${PY_LIB} src/bindings.cxx)
-#    target_link_libraries(${PY_LIB} PRIVATE ${LIB})
-    set_target_properties(${PY_LIB}
+    find_package(pybind11 REQUIRED)
+    pybind11_add_module(dtree_py src/bindings.cxx)
+    target_include_directories(dtree_py PRIVATE include)
+    target_link_libraries(dtree_py PRIVATE dtree)
+    set_target_properties(dtree_py
                           PROPERTIES
                           LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/scripts)
 endif()
-
-# enable tests compilation when COMPILE_TEST=ON
-#message(STATUS "COMPILE_TEST set to ${COMPILE_TEST}")
-#if(COMPILE_TEST)
-#    find_package(Catch2 REQUIRED)
-#    enable_testing()
-#
-#    add_executable(unit_test tests/test.cpp)
-#    add_test(NAME unit_test COMMAND unit_test)
-#    target_include_directories(unit_test PRIVATE include)
-#    target_compile_options(unit_test PRIVATE -Wall -Wextra -pedantic -Werror)
-#    target_link_libraries(unit_test PRIVATE
-#                          ${OpenCV_LIBS}
-#                          Catch2::Catch2
-#                          notqrcode)
-#
-#    add_executable(main src/main.cpp)
-#    target_include_directories(main PRIVATE include)
-#    target_compile_options(main PRIVATE -Wall -Wextra -Weffc++ -pedantic -Werror)
-#    target_link_libraries(main PRIVATE
-#                          ${OpenCV_LIBS}
-#                          fmt::fmt
-#                          notqrcode)
-#endif()
 
 # generate docs
 add_custom_target(doc)

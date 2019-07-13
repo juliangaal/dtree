@@ -35,11 +35,14 @@ using namespace dtree;
 using std::string;
 
 DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset)
-        : dr{trainset, testset},  size_{}, root_{build_tree(dr.training_data())} {
+        : dr{trainset, testset},  size_{}, root_{} {}
+
+void DecisionTree::build() {
+    root_ = build_rec(dr.training_data());
     fmt::print("> Generated decision tree with {} from {} training data points\n", size_, dr.training_data().size());
 }
 
-std::unique_ptr<Node> DecisionTree::build_tree(const Data &rows) {
+std::unique_ptr<Node> DecisionTree::build_rec(const Data &rows) {
     ++size_;
 
     auto[gain, question] = calculations::find_best_split(rows);
@@ -48,8 +51,8 @@ std::unique_ptr<Node> DecisionTree::build_tree(const Data &rows) {
     }
 
     const auto[true_rows, false_rows] = calculations::partition(rows, question);
-    auto true_branch = build_tree(true_rows);
-    auto false_branch = build_tree(false_rows);
+    auto true_branch = build_rec(true_rows);
+    auto false_branch = build_rec(false_rows);
 
     return std::make_unique<Node>(std::move(true_branch), std::move(false_branch), question);
 }
@@ -77,9 +80,9 @@ void DecisionTree::rec_print_node(const std::unique_ptr<Node> &root, string &spa
     rec_print_node(root->false_branch(), spacing);
 }
 
-void DecisionTree::generate_graph(const fs::path &file) const {
+void DecisionTree::generate_graph(const string &file) const {
     generate::init(root_, dr.labels(), file);
-    fmt::print("> Generated Graphviz file {}\n", file.string());
+    fmt::print("> Generated Graphviz file {}\n", file);
 }
 
 void DecisionTree::test() const {
