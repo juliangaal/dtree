@@ -56,6 +56,7 @@ if(PY_BINDINGS)
     pybind11_add_module(dtree_py src/bindings.cxx)
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # additional clang fixes, see https://github.com/pybind/pybind11/issues/1604
         target_compile_options(dtree_py INTERFACE -fsized-deallocation)
+        message(STATUS "Compiling python bindings with clang")
     endif()
     target_include_directories(dtree_py PRIVATE include)
     target_link_libraries(dtree_py PRIVATE dtree)
