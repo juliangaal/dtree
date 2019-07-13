@@ -24,13 +24,48 @@
  *
  *For more information, please refer to <http://unlicense.org>
 */
-#include <DecisionTree/DecisionTree.hpp>
 
-int main(void) {
-    Dataset d;
-    d.train.filename = "../data/play_tennis.csv";
-    d.test.filename = "../data/play_tennis_test.csv";
+#ifndef DTREE_DTREE_HPP
+#define DTREE_DTREE_HPP
 
-    DecisionTree dt(d);
-    return 0;
-}
+#include <dtree/dataset.h>
+#include <dtree/node.h>
+#include <dtree/calculations.h>
+#include <dtree/data_reader.h>
+#include <dtree/generate.h>
+#include <dtree/validation.h>
+#include <dtree/help.h>
+
+namespace dtree {
+
+class DecisionTree {
+public:
+    DecisionTree() = delete;
+
+    explicit DecisionTree(const TrainingSet &trainset, const TestingSet &testset);
+
+    void print_tree() const;
+
+    void test() const;
+
+    void generate_graph(const std::filesystem::path &file) const;
+
+    inline const dtree::Data &testing_data() { return dr.testing_data(); }
+
+    inline const std::unique_ptr<Node> &root() { return root_; }
+
+private:
+    dtree::DataReader dr;
+
+    std::unique_ptr<Node> build_tree(const Data &rows);
+
+    void rec_print_node(const std::unique_ptr<Node> &root, std::string &spacing) const;
+
+    size_t size_;
+
+    std::unique_ptr<Node> root_;
+};
+
+} // namespace dtree
+
+#endif //DTREE_DTREE_HPP

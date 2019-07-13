@@ -24,13 +24,34 @@
  *
  *For more information, please refer to <http://unlicense.org>
 */
-#include <DecisionTree/DecisionTree.hpp>
 
-int main(void) {
-    Dataset d;
-    d.train.filename = "../data/play_tennis.csv";
-    d.test.filename = "../data/play_tennis_test.csv";
+#ifndef DTREE_QUESTION_H
+#define DTREE_QUESTION_H
 
-    DecisionTree dt(d);
-    return 0;
-}
+#include <string>
+#include <dtree/help.h>
+
+namespace dtree {
+
+class Question {
+public:
+    Question();
+
+    Question(int column, std::string value);
+
+    [[nodiscard]]
+    bool match(const VecS &example) const;
+
+    [[nodiscard]]
+    const bool isNumeric(const std::string &value) const;
+
+    [[nodiscard]]
+    std::string toString(const VecS &labels) const;
+
+    int column_;
+    std::string value_;
+};
+
+} // namespace dtree
+
+#endif //DTREE_QUESTION_H

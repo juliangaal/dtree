@@ -24,13 +24,41 @@
  *
  *For more information, please refer to <http://unlicense.org>
 */
-#include <DecisionTree/DecisionTree.hpp>
 
-int main(void) {
-    Dataset d;
-    d.train.filename = "../data/play_tennis.csv";
-    d.test.filename = "../data/play_tennis_test.csv";
+#ifndef DTREE_DATASET_H
+#define DTREE_DATASET_H
 
-    DecisionTree dt(d);
-    return 0;
-}
+#include <string>
+#include <filesystem>
+
+namespace dtree {
+
+enum SkipDescription {
+    YES,
+    NO
+};
+
+struct TrainingSet {
+    inline explicit TrainingSet(std::string file, SkipDescription skipdesc, std::string delimiter = ",") : file_{
+            std::move(file)}, skipdesc_{skipdesc}, delimiter_{std::move(delimiter)} {}
+
+    ~TrainingSet() = default;
+
+    std::filesystem::path file_;
+    SkipDescription skipdesc_;
+    std::string delimiter_;
+};
+
+struct TestingSet {
+    inline explicit TestingSet(std::string file, std::string delimiter = ",") : file_{
+            std::move(file)}, delimiter_{std::move(delimiter)} {}
+
+    ~TestingSet() = default;
+
+    std::filesystem::path file_;
+    std::string delimiter_;
+};
+
+} // namespace dtree
+
+#endif //DTREE_DATASET_H

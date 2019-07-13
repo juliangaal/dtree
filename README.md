@@ -1,10 +1,8 @@
-# Decision Tree
-
-[![Build Status](https://travis-ci.org/juliangaal/DecisionTree.svg?branch=master)](https://travis-ci.org/juliangaal/DecisionTree) 
+# dtree [![Build Status](https://img.shields.io/circleci/build/github/juliangaal/dtree/master.svg?style=flat-square)](https://travis-ci.org/juliangaal/DecisionTree) 
 
 Decision Tree implementation in C++ based on Gini uncertainty and [this](https://github.com/random-forests/tutorials/blob/master/decision_tree.py) great example.
 
-## Graphviz File Generator
+### Graphviz File Generator
 use built-in [Graphviz](https://www.graphviz.org) dot file generator to export decision tree to `.dot` file, that you can visualize with [xdot](https://github.com/jrfonseca/xdot.py) or an online viewer. Example graph:
 
 <p align="center">
@@ -13,16 +11,13 @@ use built-in [Graphviz](https://www.graphviz.org) dot file generator to export d
 
 results from [iris.dot](docs/graph.dot) and [this](test/data/iris.csv) dataset.
 
-## Requirements
+### Requirements
 * Boost (algorithm header)
 * {fmt}
-* gcc >= 8
+* gcc >= 8, clang tested for >= 7
 * cmake >= 3.9
-* Catch (for testing)
+* Catch2 (for testing)
 
-## TODO
+### TODO
 * handle missing data in files
 * pruning? 
-* `std::filesystem`
-* `boost::is_any_of` -> `std::any`
-* `split` function from boost function cp?

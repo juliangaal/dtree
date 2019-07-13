@@ -1,38 +1,57 @@
-//
-// Created by Julian on 25.06.18.
-//
-
-#include <decision_tree/generate.h>
-#include <decision_tree/help.h>
+/*
+ * This is free and unencumbered software released into the public domain.
+ *
+ * Anyone is free to copy, modify, publish, use, compile, sell, or
+ * distribute this software, either in source code form or as a compiled
+ * binary, for any purpose, commercial or non-commercial, and by any
+ * means.
+ *
+ * In jurisdictions that recognize copyright laws, the author or authors
+ * of this software dedicate any and all copyright interest in the
+ * software to the public domain. We make this dedication for the benefit
+ * of the public at large and to the detriment of our heirs and
+ * successors. We intend this dedication to be an overt act of
+ * relinquishment in perpetuity of all present and future rights to this
+ * software under copyright law.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ *For more information, please refer to <http://unlicense.org>
+*/
+#include <dtree/generate.h>
+#include <dtree/help.h>
 #include <algorithm>
 #include <fmt/format.h>
 
-using namespace decision_tree;
-namespace elem = decision_tree::graph_element;
+using namespace dtree;
+namespace elem = dtree::graph_element;
+namespace fs = std::filesystem;
 
 using std::string;
 
-void generate::init(const std::unique_ptr<Node> &root, const VecS &labels, string filepath) {
+void generate::init(const std::unique_ptr<Node> &root, const VecS &labels, const std::filesystem::path &filepath) {
+    if (fs::is_directory(filepath))
+        throw std::runtime_error(fmt::format("Can't generate graph at {}\n", filepath.string()));
+
     std::ofstream myfile;
     myfile.open(filepath);
-
-    if (!myfile.is_open()) {
-        fmt::print("Couldn't open {}. Can't create Graphviz dot file.\n", filepath);
-        return;
-    }
 
     myfile << "digraph {\n";
     traverse_generate(root, labels, myfile);
     myfile << "}";
     myfile.close();
-
-//    traverseTreeBFS(root, myfile);
 }
 
 void generate::traverse_generate(const std::unique_ptr<Node> &node, const VecS &labels, std::ofstream &file) {
     static const string spacing = "   ";
     static const string connector = " -> ";
-    if (node == nullptr)
+    if (!node)
         return;
 
     if (node->predicts())

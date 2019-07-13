@@ -24,13 +24,51 @@
  *
  *For more information, please refer to <http://unlicense.org>
 */
-#include <DecisionTree/DecisionTree.hpp>
 
-int main(void) {
-    Dataset d;
-    d.train.filename = "../data/play_tennis.csv";
-    d.test.filename = "../data/play_tennis_test.csv";
+#ifndef DTREE_HELPER_HPP
+#define DTREE_HELPER_HPP
 
-    DecisionTree dt(d);
-    return 0;
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <numeric>
+#include <iterator>
+#include <fmt/format.h>
+#include <iostream>
+
+namespace dtree {
+
+using ClassCounter = std::unordered_map<std::string, int>;
+using Data = std::vector<std::vector<std::string>>;
+using VecS = std::vector<std::string>;
+
+namespace help::print {
+
+template<typename T>
+void print_vector(const std::vector<T> &vec) {
+    if (vec.empty())
+        return;
+
+    fmt::print("[ ");
+    std::copy(begin(vec), std::end(vec), std::ostream_iterator<T>(std::cout, " "));
+    fmt::print(" ]\n");
 }
+
+template<typename K, typename V>
+void print_map(const std::unordered_map<K, V> &counter) {
+    if (counter.empty())
+        return;
+
+    for (const auto&[key, val]: counter) {
+        fmt::print("[{:>3}, {:0.1f}%", key, val);
+        if (counter.size() > 1) fmt::print(" | ");
+    }
+
+    fmt::print(" ]\n");
+}
+
+} // namespace dtree::help::print
+
+} // namespace dtree
+
+#endif //DTREE_HELPER_HPP
