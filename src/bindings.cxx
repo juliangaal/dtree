@@ -24,4 +24,32 @@
  *
  *For more information, please refer to <http://unlicense.org>
 */
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h> // for std::optional<T>
+#include <dtree/decision_tree.h>
+#include <dtree/data_reader.h>
+
+namespace py = pybind11;
+
+PYBIND11_MODULE(dtree_py, m) {
+    m.doc() = "pybind11 bindings for dtree";
+
+    py::enum_<dtree::SkipDescription >(m, "SkipDescription", py::arithmetic())
+        .value("YES", dtree::SkipDescription::YES)
+        .value("NO", dtree::SkipDescription::NO)
+        .export_values();
+
+    py::class_<dtree::TrainingSet>(m, "TrainingSet")
+            .def(py::init<std::string, dtree::SkipDescription, std::string>());
+
+    py::class_<dtree::TestingSet>(m, "TestingSet")
+            .def(py::init<std::string, std::string>());
+
+    py::class_<dtree::DecisionTree>(m, "DecisionTree")
+            .def(py::init<dtree::TrainingSet, dtree::TestingSet>())
+            .def("build", &dtree::DecisionTree::build)
+            .def("test", &dtree::DecisionTree::test)
+            .def("generate_graph", &dtree::DecisionTree::generate_graph);
+}
+
 
