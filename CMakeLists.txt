@@ -53,10 +53,10 @@ target_link_libraries(quick_tester OpenMP::OpenMP_CXX dtree fmt::fmt)
 message(STATUS "PY_BINDINGS set to ${PY_BINDINGS}")
 if(PY_BINDINGS)
     find_package(pybind11 REQUIRED)
-    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # additional clang fixes, see https://github.com/pybind/pybind11/issues/1604
-        target_compile_options(pybind11 INTERFACE -fsized-deallocation)
-    endif()
     pybind11_add_module(dtree_py src/bindings.cxx)
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # additional clang fixes, see https://github.com/pybind/pybind11/issues/1604
+        target_compile_options(dtree_py INTERFACE -fsized-deallocation)
+    endif()
     target_include_directories(dtree_py PRIVATE include)
     target_link_libraries(dtree_py PRIVATE dtree)
     set_target_properties(dtree_py
