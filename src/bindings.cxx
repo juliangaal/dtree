@@ -47,9 +47,6 @@ PYBIND11_MODULE(dtree_py, m) {
 
     py::class_<dtree::DecisionTree>(m, "DecisionTree")
             .def(py::init<dtree::TrainingSet, dtree::TestingSet>())
-            .def("build", &dtree::DecisionTree::build)
             .def("test", &dtree::DecisionTree::test)
             .def("generate_graph", &dtree::DecisionTree::generate_graph);
 }
-
-

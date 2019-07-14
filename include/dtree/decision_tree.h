@@ -44,8 +44,6 @@ public:
 
     explicit DecisionTree(const TrainingSet &trainset, const TestingSet &testset);
 
-    void build();
-
     void print_tree() const;
 
     void test() const;

@@ -15,6 +15,7 @@ message(STATUS "Build Type ${CMAKE_BUILD_TYPE}")
 find_package(Boost REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(fmt REQUIRED)
+find_package(Catch2 REQUIRED)
 
 # for future clang support, clang seems to not like openmp
 set(CLANG_DEFAULT_CXX_STDLIB "libc++")
@@ -26,9 +27,8 @@ set(SOURCES src/calculations.cxx
             src/node.cxx
             src/generate.cxx
             src/decision_tree.cxx)
-AUX_SOURCE_DIRECTORY(include HEADERS)
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${Boost_INCLUDE_DIRS}
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -38,13 +38,13 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Weffc++ -Wpedantic)
 
 enable_testing()
 
-add_executable(dtree_test test/src/tests.cpp ${HEADERS})
+add_executable(dtree_test test/tests.cxx ${HEADERS})
 add_test(NAME dtree_test COMMAND dtree_test)
 target_include_directories(dtree_test PRIVATE ${Boost_INCLUDE_DIRS})
 target_compile_options(dtree_test PRIVATE -Wall -Weffc++ -Wpedantic)
-target_link_libraries(dtree_test dtree fmt::fmt stdc++fs)
+target_link_libraries(dtree_test dtree fmt::fmt stdc++fs Catch2::Catch2)
 
-add_executable(quick_tester test/src/quick_tester.cpp)
+add_executable(quick_tester test/quick_tester.cxx)
 target_compile_options(quick_tester PRIVATE -Wall -Weffc++ -Wpedantic)
 target_include_directories(quick_tester PUBLIC ../include ${Boost_INCLUDE_DIRS})
 target_link_libraries(quick_tester OpenMP::OpenMP_CXX dtree fmt::fmt)
@@ -55,7 +55,7 @@ if(PY_BINDINGS)
     find_package(pybind11 REQUIRED)
     pybind11_add_module(dtree_py src/bindings.cxx)
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # additional clang fixes needed, see https://github.com/pybind/pybind11/issues/1604
-        message(FATAL "Python bindings are currently only supported with g++")
+        message(FATAL_ERROR "Python bindings are currently only supported with g++")
     endif()
     target_include_directories(dtree_py PRIVATE include)
     target_link_libraries(dtree_py PRIVATE dtree)
