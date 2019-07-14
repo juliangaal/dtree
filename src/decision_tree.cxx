@@ -28,18 +28,44 @@
 #include <dtree/decision_tree.h>
 #include <fmt/format.h>
 #include <filesystem>
+#include <future>
 #include <tuple>
 
 namespace fs = std::filesystem;
 using namespace dtree;
 using std::string;
 
-DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset)
-        : dr{trainset, testset},  size_{}, root_{build_rec(dr.training_data())} {
-    fmt::print("> Generated decision tree with {} from {} training data points\n", size_, dr.training_data().size());
+DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset, LaunchType launch_type)
+        : dr{trainset, testset},  size_{}, root_{} {
+    switch (launch_type) {
+        case LaunchType::ASYNC:
+            root_ = async_build_rec(dr.training_data());
+            fmt::print("> Generated decision tree (async) with {} nodes from {} training data points\n",
+                    size_, dr.training_data().size());
+            break;
+        case LaunchType::BLOCKING:
+        default:
+            root_ = blocking_build_rec(dr.training_data());
+            fmt::print("> Generated decision tree (blocking) with {} nodes from {} training data points\n",
+                    size_, dr.training_data().size());
+            break;
+    }
 }
 
-std::unique_ptr<Node> DecisionTree::build_rec(const Data &rows) {
+std::unique_ptr<Node> DecisionTree::async_build_rec(const Data &rows) {
+    auto[gain, question] = calculations::find_best_split(rows);
+    if (gain == 0.0) {
+        return std::make_unique<Node>(rows);
+    }
+
+    const auto[true_rows, false_rows] = calculations::partition(rows, question);
+    auto true_branch = std::async(std::launch::async, &DecisionTree::blocking_build_rec, this, std::cref(true_rows));
+    auto false_branch = std::async(std::launch::async, &DecisionTree::blocking_build_rec, this, std::cref(false_rows));
+
+    return std::make_unique<Node>(std::move(true_branch.get()), std::move(false_branch.get()), question);
+}
+
+std::unique_ptr<Node> DecisionTree::blocking_build_rec(const Data &rows) {
     ++size_;
 
     auto[gain, question] = calculations::find_best_split(rows);
@@ -48,8 +74,8 @@ std::unique_ptr<Node> DecisionTree::build_rec(const Data &rows) {
     }
 
     const auto[true_rows, false_rows] = calculations::partition(rows, question);
-    auto true_branch = build_rec(true_rows);
-    auto false_branch = build_rec(false_rows);
+    auto true_branch = blocking_build_rec(true_rows);
+    auto false_branch = blocking_build_rec(false_rows);
 
     return std::make_unique<Node>(std::move(true_branch), std::move(false_branch), question);
 }

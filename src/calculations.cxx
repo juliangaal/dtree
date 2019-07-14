@@ -43,7 +43,7 @@ tuple<Data, Data> calculations::partition(const Data &data, const Question &q) {
     false_rows.reserve(data.size()/2);
 
     for (const auto &row: data)
-        q.match(row) ?true_rows.push_back(row) : false_rows.push_back(row);
+        q.match(row) ? true_rows.push_back(row) : false_rows.push_back(row);
 
     return {true_rows, false_rows};
 }

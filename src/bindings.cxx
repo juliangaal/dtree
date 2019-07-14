@@ -34,10 +34,15 @@ namespace py = pybind11;
 PYBIND11_MODULE(dtree_py, m) {
     m.doc() = "pybind11 bindings for dtree";
 
-    py::enum_<dtree::SkipDescription >(m, "SkipDescription", py::arithmetic())
-        .value("YES", dtree::SkipDescription::YES)
-        .value("NO", dtree::SkipDescription::NO)
-        .export_values();
+    py::enum_<dtree::SkipDescription>(m, "SkipDescription", py::arithmetic())
+            .value("YES", dtree::SkipDescription::YES)
+            .value("NO", dtree::SkipDescription::NO)
+            .export_values();
+
+    py::enum_<dtree::LaunchType>(m, "LaunchType")
+            .value("ASYNC", dtree::LaunchType::ASYNC)
+            .value("BLOCKING", dtree::LaunchType::BLOCKING)
+            .export_values();
 
     py::class_<dtree::TrainingSet>(m, "TrainingSet")
             .def(py::init<std::string, dtree::SkipDescription, std::string>());
@@ -46,7 +51,7 @@ PYBIND11_MODULE(dtree_py, m) {
             .def(py::init<std::string, std::string>());
 
     py::class_<dtree::DecisionTree>(m, "DecisionTree")
-            .def(py::init<dtree::TrainingSet, dtree::TestingSet>())
+            .def(py::init<dtree::TrainingSet, dtree::TestingSet, dtree::LaunchType>())
             .def("test", &dtree::DecisionTree::test)
             .def("generate_graph", &dtree::DecisionTree::generate_graph);
 }
