@@ -36,7 +36,7 @@ Question::Question() : column_{}, value_{} {}
 Question::Question(int column, string value) : column_{column}, value_{std::move(value)} {}
 
 bool Question::match(const VecS &example) const {
-    const string &val = example[column_];
+    const string &val = example.at(column_);
 
     try {
         // faster than calling isNumeric on both!
@@ -50,7 +50,7 @@ string Question::toString(const VecS &labels) const {
     string condition = "==";
     if (isNumeric(value_))
         condition = ">=";
-    return "Is " + labels[column_] + " " + condition + " " + value_ + "?";
+    return "Is " + labels.at(column_) + " " + condition + " " + value_ + "?";
 }
 
 const bool Question::isNumeric(const string &value) const {

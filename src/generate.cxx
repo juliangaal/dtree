@@ -101,7 +101,7 @@ string graph_element::result(const std::unordered_map<string, int> &data, bool b
     size_t counter = 1;
 
     string classification{};
-    for (const auto&[k, v]: data) {
+    for (const auto& [k, v]: data) {
         classification += fmt::format("{}: {:0.1f}%", k , v / sum * 100);
         if (counter++ < map_size)
             classification += "\\n ";
@@ -109,7 +109,7 @@ string graph_element::result(const std::unordered_map<string, int> &data, bool b
     result += classification;
 
     string values = "\\nvalues: ";
-    for (const auto&[k, v]: data) {
+    for (const auto& [k, v]: data) {
         values += fmt::format("{} ", v);
     }
 
@@ -125,4 +125,3 @@ string graph_element::result(const std::unordered_map<string, int> &data, bool b
     result += result_box;
     return result;
 }
-

@@ -41,7 +41,7 @@ std::tuple <Data, Data> partition(const Data &data, const Question &q);
 
 float gini(const Data &data);
 
-float info_gain(const Data &left, const Data &right, float current_uncertainty);
+float info_gain(const Data &true_rows, const Data &false_rows, float current_uncertainty);
 
 std::tuple<double, Question> find_best_split(const Data &rows);
 

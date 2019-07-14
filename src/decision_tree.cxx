@@ -35,10 +35,7 @@ using namespace dtree;
 using std::string;
 
 DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testset)
-        : dr{trainset, testset},  size_{}, root_{} {}
-
-void DecisionTree::build() {
-    root_ = build_rec(dr.training_data());
+        : dr{trainset, testset},  size_{}, root_{build_rec(dr.training_data())} {
     fmt::print("> Generated decision tree with {} from {} training data points\n", size_, dr.training_data().size());
 }
 

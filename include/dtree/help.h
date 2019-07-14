@@ -59,7 +59,7 @@ void print_map(const std::unordered_map<K, V> &counter) {
     if (counter.empty())
         return;
 
-    for (const auto&[key, val]: counter) {
+    for (const auto& [key, val]: counter) {
         fmt::print("[{:>3}, {:0.1f}%", key, val);
         if (counter.size() > 1) fmt::print(" | ");
     }

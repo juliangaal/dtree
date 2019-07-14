@@ -48,7 +48,7 @@ void validation::print_prediction(const ClassCounter &counts) {
     const float total = std::accumulate(counts.begin(), counts.end(), 0, [](auto curr, const auto& entry) { return curr + entry.second; });
     ClassCounterScaled scale;
 
-    for (const auto&[key, val]: counts) {
+    for (const auto& [key, val]: counts) {
         scale[key] = val / total * 100.0F;
     }
     help::print::print_map(scale);

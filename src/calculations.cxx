@@ -42,21 +42,17 @@ tuple<Data, Data> calculations::partition(const Data &data, const Question &q) {
     true_rows.reserve(data.size()/2);
     false_rows.reserve(data.size()/2);
 
-    for (const auto &row: data) {
-        if (q.match(row))
-            true_rows.push_back(row);
-        else
-            false_rows.push_back(row);
-    }
+    for (const auto &row: data)
+        q.match(row) ?true_rows.push_back(row) : false_rows.push_back(row);
 
     return {true_rows, false_rows};
 }
 
 float calculations::gini(const Data &data) {
     const auto &counts = class_counts(data);
-    float impurity = 1.0f;
 
-    for (const auto&[decision, freq]: counts) {
+    float impurity = 1.0f;
+    for (const auto& [decision, freq]: counts) {
         double prob_of_lbl = freq / static_cast<float>(data.size());
         impurity -= std::pow(prob_of_lbl, 2.0f);
     }
@@ -64,9 +60,9 @@ float calculations::gini(const Data &data) {
     return impurity;
 }
 
-float calculations::info_gain(const Data &left, const Data &right, float current_uncertainty) {
-    const float p = static_cast<float>(left.size()) / (left.size() + right.size());
-    return current_uncertainty - p * gini(left) - (1 - p) * gini(right);
+float calculations::info_gain(const Data &true_rows, const Data &false_rows, float current_uncertainty) {
+    const float p = static_cast<float>(true_rows.size()) / (true_rows.size() + false_rows.size());
+    return current_uncertainty - p * gini(true_rows) - (1 - p) * gini(false_rows);
 }
 
 tuple<double, Question> calculations::find_best_split(const Data &rows) {
@@ -79,10 +75,11 @@ tuple<double, Question> calculations::find_best_split(const Data &rows) {
     for (size_t column = 0; column < n_features; column++) {
         const auto values = unique_values(rows, column);
 
+
         for (const auto &val: values) {
             const Question q(column, val);
 
-            const auto&[true_rows, false_rows] = partition(rows, q);
+            const auto& [true_rows, false_rows] = partition(rows, q);
 
             if (true_rows.empty() || false_rows.empty())
                 continue;
@@ -106,7 +103,7 @@ VecS calculations::unique_values(const Data &data, size_t column) {
 
     ClassCounter counter;
     for (const auto &rows: data) {
-        const string &decision = rows[column];
+        const string &decision = rows.at(column);
         counter[decision] += 0;
     }
 
