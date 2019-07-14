@@ -11,7 +11,7 @@ jobs:
           command: |
             cd build
             $CMAKE_LATEST -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/g++-9 -DPY_BINDINGS=ON ..
-            make -j8 && ctest --verbose
+            make -j8 && make test
             rm -rf *
       - run:
           name: cmake 3.14.0 g++-8
@@ -25,12 +25,12 @@ jobs:
           command: |
             cd build
             $CMAKE_LATEST -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/clang++-8 -DPY_BINDINGS=OFF ..
-            make -j8 && ctest --verbose
+            make -j8 && make test
             rm -rf *
       - run:
           name: cmake 3.14.0 clang++-7
           command: |
             cd build
             $CMAKE_LATEST -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 -DPY_BINDINGS=OFF ..
-            make -j8 && ctest --verbose
+            make -j8 && make test
             rm -rf *
