@@ -62,7 +62,7 @@ std::unique_ptr<Node> DecisionTree::async_build_rec(const Data &rows) {
     auto true_branch = std::async(std::launch::async, &DecisionTree::blocking_build_rec, this, std::cref(true_rows));
     auto false_branch = std::async(std::launch::async, &DecisionTree::blocking_build_rec, this, std::cref(false_rows));
 
-    return std::make_unique<Node>(std::move(true_branch.get()), std::move(false_branch.get()), question);
+    return std::make_unique<Node>(true_branch.get(), false_branch.get(), question);
 }
 
 std::unique_ptr<Node> DecisionTree::blocking_build_rec(const Data &rows) {
