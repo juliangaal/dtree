@@ -35,7 +35,12 @@ namespace dtree {
 
 enum SkipDescription {
     YES,
-    NO
+    NO,
+};
+
+enum LaunchType {
+    ASYNC,
+    BLOCKING,
 };
 
 struct TrainingSet {

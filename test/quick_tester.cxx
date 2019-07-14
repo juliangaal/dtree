@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     auto testfile = fmt::format("{}{}_test.csv", "../test/data/", argv[1]);
     auto skipdesc = argc == 3 ? SkipDescription::YES : SkipDescription::NO;
 
-    DecisionTree dt(TrainingSet(trainfile, skipdesc), TestingSet(testfile));
+    DecisionTree dt(TrainingSet(trainfile, skipdesc), TestingSet(testfile), ASYNC);
     dt.test();
     dt.generate_graph(fmt::format("../{}.dot", argv[1]));
     return 0;

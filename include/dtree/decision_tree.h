@@ -35,6 +35,7 @@
 #include <dtree/generate.h>
 #include <dtree/validation.h>
 #include <dtree/help.h>
+#include <atomic>
 
 namespace dtree {
 
@@ -42,7 +43,7 @@ class DecisionTree {
 public:
     DecisionTree() = delete;
 
-    explicit DecisionTree(const TrainingSet &trainset, const TestingSet &testset);
+    explicit DecisionTree(const TrainingSet &trainset, const TestingSet &testset, LaunchType launch_type = BLOCKING);
 
     void print_tree() const;
 
@@ -57,11 +58,13 @@ public:
 private:
     dtree::DataReader dr;
 
-    std::unique_ptr<Node> build_rec(const Data &rows);
+    std::unique_ptr<Node> blocking_build_rec(const Data &rows);
+
+    std::unique_ptr<Node> async_build_rec(const Data &rows);
 
     void rec_print_node(const std::unique_ptr<Node> &root, std::string &spacing) const;
 
-    size_t size_;
+    std::atomic<size_t> size_;
 
     std::unique_ptr<Node> root_;
 };

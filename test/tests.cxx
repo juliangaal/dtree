@@ -40,7 +40,8 @@ using namespace dtree;
 namespace fs = std::filesystem;
 
 TEST_CASE("Integration Tests") {
-    DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO), TestingSet("../test/data/fruit_test.csv"));
+    DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO),
+                    TestingSet("../test/data/fruit_test.csv"), ASYNC);
     const auto& tree = dt.root();
     const auto& testing_data = dt.testing_data();
 
