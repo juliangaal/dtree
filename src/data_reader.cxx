@@ -89,7 +89,7 @@ void DataReader::process_file(const std::filesystem::path &filepath, Data &data,
             time_white_spaces(vec);
 
             if (has_empty_strings(vec))
-                correct_missing_values(data, vec);
+                continue;
 
             data.emplace_back(std::move(vec));
         }

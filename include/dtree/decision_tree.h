@@ -55,6 +55,8 @@ public:
 
     inline const std::unique_ptr<Node> &root() { return root_; }
 
+    inline size_t size() { return size_; }
+
 private:
     dtree::DataReader dr;
 

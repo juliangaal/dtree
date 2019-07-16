@@ -33,15 +33,15 @@
 
 using namespace dtree;
 
-ClassCounter validation::classify(const VecS &row, const std::unique_ptr<Node> &node) {
+ClassCounter validation::classify_instance(const VecS &row, const std::unique_ptr<Node> &node) {
     if (node->predicts()) {
         return node->predictions().value();
     }
 
     if (node->question().value().match(row))
-        return validation::classify(row, node->true_branch());
+        return validation::classify_instance(row, node->true_branch());
     else
-        return validation::classify(row, node->false_branch());
+        return validation::classify_instance(row, node->false_branch());
 }
 
 void validation::print_prediction(const ClassCounter &counts) {
@@ -59,10 +59,6 @@ void validation::validate(const Data &testing_data, const VecS &labels, const st
     fmt::print("> Test set validation results\n");
     for (const auto &row: testing_data) {
         fmt::print("  - label {:<3} -> {:^10}", row.back(), "prediction: ");
-        print_prediction(validation::classify(row, tree));
+        print_prediction(validation::classify_instance(row, tree));
     }
-}
-
-ClassCounter validation::testRow(const VecS &row, const std::unique_ptr<Node> &node) {
-    return validation::classify(row, node);
 }

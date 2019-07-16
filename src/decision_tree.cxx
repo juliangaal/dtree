@@ -53,6 +53,7 @@ DecisionTree::DecisionTree(const TrainingSet &trainset, const TestingSet &testse
 }
 
 std::unique_ptr<Node> DecisionTree::async_build_rec(const Data &rows) {
+    ++size_;
     auto[gain, question] = calculations::find_best_split(rows);
     if (gain == 0.0) {
         return std::make_unique<Node>(rows);

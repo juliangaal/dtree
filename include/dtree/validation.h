@@ -35,9 +35,7 @@ namespace dtree::validation {
 
 using ClassCounterScaled = std::unordered_map<std::string, float>;
 
-ClassCounter testRow(const VecS &row, const std::unique_ptr<Node> &node);
-
-ClassCounter classify(const VecS &row, const std::unique_ptr<Node> &node);
+ClassCounter classify_instance(const VecS &row, const std::unique_ptr<Node> &node);
 
 void print_prediction(const ClassCounter &counts);
 

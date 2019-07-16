@@ -49,7 +49,7 @@ std::string box(const std::string &label, size_t hash);
 
 std::string node(size_t hash);
 
-std::string result(const std::unordered_map<std::string, int> &data, bool b);
+std::string result(const ClassCounter &data, bool b);
 
 } // namespace dtree::graph_element
 

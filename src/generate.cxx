@@ -82,7 +82,7 @@ void generate::traverse_generate(const std::unique_ptr<Node> &node, const VecS &
 }
 
 string graph_element::label(const string &label) {
-    return " [label=\"" + label + "\"];\n";
+    return fmt::format(" [label=\"{}\"];\n",label);
 }
 
 string graph_element::node(size_t hash) {
@@ -93,7 +93,7 @@ string graph_element::box(const string &label, size_t hash) {
     return fmt::format("\"{}\" [label=\"{}\", shape=box];\n", hash, label);
 }
 
-string graph_element::result(const std::unordered_map<string, int> &data, bool branch) {
+string graph_element::result(const ClassCounter &data, bool branch) {
     static int id = 0;
     string result = "\"";
     double sum = std::accumulate(data.begin(), data.end(), 0, [](auto curr, const auto& entry) { return curr + entry.second; });

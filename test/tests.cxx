@@ -39,42 +39,44 @@
 using namespace dtree;
 namespace fs = std::filesystem;
 
-TEST_CASE("Integration Tests") {
+TEST_CASE("Integration Tests BLOCKING") {
     DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO),
-                    TestingSet("../test/data/fruit_test.csv"), ASYNC);
+                    TestingSet("../test/data/fruit_test.csv"), LaunchType::BLOCKING);
     const auto& tree = dt.root();
     const auto& testing_data = dt.testing_data();
+
+    REQUIRE(dt.size() == 33);
 
     SECTION("Test Tree predictions") {
         {
             ClassCounter prediction;
             prediction.insert({"Apple", 8});
-            const auto &test_row = testing_data.at(0);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(0);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Apple", 2});
-            const auto &test_row = testing_data.at(1);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(1);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
-            prediction.insert({"Grape", 14});
-            const auto &test_row = testing_data.at(2);
-            const auto &result = validation::testRow(test_row, tree);
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(2);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
-            prediction.insert({"Grape", 14});
-            const auto &test_row = testing_data.at(3);
-            const auto &result = validation::testRow(test_row, tree);
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(3);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
@@ -82,88 +84,246 @@ TEST_CASE("Integration Tests") {
             ClassCounter prediction;
             prediction.insert({"Apple", 1});
             prediction.insert({"Lemon", 4});
-            const auto &test_row = testing_data.at(4);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(4);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Lime", 4});
-            const auto &test_row = testing_data.at(5);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(5);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Pepper", 11});
-            const auto &test_row = testing_data.at(6);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(6);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Pepper", 11});
-            const auto &test_row = testing_data.at(7);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(7);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Pepper", 11});
-            const auto &test_row = testing_data.at(8);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(8);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Radish", 5});
-            const auto &test_row = testing_data.at(9);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(9);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
-            prediction.insert({"Grape", 14});
-            const auto &test_row = testing_data.at(10);
-            const auto &result = validation::testRow(test_row, tree);
-            REQUIRE(prediction == result);
-        }
-
-        {
-            ClassCounter prediction;
-            prediction.insert({"Pepper", 11});
-            const auto &test_row = testing_data.at(11);
-            const auto &result = validation::testRow(test_row, tree);
-            REQUIRE(prediction == result);
-        }
-
-        {
-            ClassCounter prediction;
-            prediction.insert({"Grape", 14});
-            const auto &test_row = testing_data.at(12);
-            const auto &result = validation::testRow(test_row, tree);
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(10);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Pepper", 11});
-            const auto &test_row = testing_data.at(13);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(11);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(12);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Pepper", 11});
+            const auto test_row = testing_data.at(13);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
 
         {
             ClassCounter prediction;
             prediction.insert({"Eggplant", 6});
-            const auto &test_row = testing_data.at(14);
-            const auto &result = validation::testRow(test_row, tree);
+            const auto test_row = testing_data.at(14);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+    }
+
+    SECTION("Test generator") {
+        constexpr long wanted_line_count = 67;
+        const fs::path file = "../graph.dot";
+
+        if (fs::exists(file))
+            std::remove(file.c_str());
+
+        dt.generate_graph(file);
+
+        REQUIRE(fs::exists(file));
+        REQUIRE(fs::is_regular_file(file));
+
+        // taken from https://stackoverflow.com/questions/3482064/counting-the-number-of-lines-in-a-text-file
+        // new lines will be skipped unless we stop it from happening:
+        std::ifstream infile(file);
+        infile.unsetf(std::ios_base::skipws);
+
+        unsigned long line_count = std::count(
+                std::istreambuf_iterator<char>(infile),
+                std::istreambuf_iterator<char>(),
+                '\n');
+        // ++ because last line in file doesn't break with '\n'
+        REQUIRE(++line_count == wanted_line_count);
+        infile.close();
+    }
+}
+
+TEST_CASE("Integration Tests ASYNC") {
+    DecisionTree dt(TrainingSet("../test/data/fruit.csv", SkipDescription::NO),
+                    TestingSet("../test/data/fruit_test.csv"), LaunchType::ASYNC);
+    const auto& tree = dt.root();
+    const auto& testing_data = dt.testing_data();
+
+    REQUIRE(dt.size() == 33);
+
+    SECTION("Test Tree predictions") {
+        {
+            ClassCounter prediction;
+            prediction.insert({"Apple", 8});
+            const auto test_row = testing_data.at(0);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Apple", 2});
+            const auto test_row = testing_data.at(1);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(2);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(3);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Apple", 1});
+            prediction.insert({"Lemon", 4});
+            const auto test_row = testing_data.at(4);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Lime", 4});
+            const auto test_row = testing_data.at(5);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Pepper", 11});
+            const auto test_row = testing_data.at(6);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Pepper", 11});
+            const auto test_row = testing_data.at(7);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Pepper", 11});
+            const auto test_row = testing_data.at(8);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Radish", 5});
+            const auto test_row = testing_data.at(9);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(10);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Pepper", 11});
+            const auto test_row = testing_data.at(11);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Grape", 13});
+            const auto test_row = testing_data.at(12);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Pepper", 11});
+            const auto test_row = testing_data.at(13);
+            const auto result = validation::classify_instance(test_row, tree);
+            REQUIRE(prediction == result);
+        }
+
+        {
+            ClassCounter prediction;
+            prediction.insert({"Eggplant", 6});
+            const auto test_row = testing_data.at(14);
+            const auto result = validation::classify_instance(test_row, tree);
             REQUIRE(prediction == result);
         }
     }

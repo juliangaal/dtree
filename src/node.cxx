@@ -28,7 +28,6 @@
 #include <dtree/node.h>
 #include <dtree/calculations.h>
 #include <utility>
-#include <chrono>
 
 using namespace dtree;
 
@@ -44,9 +43,15 @@ Node::Node(std::unique_ptr<Node> true_branch, std::unique_ptr<Node> false_branch
 size_t Node::hash(const VecS &labels) const {
     if (predicts()) return 0;
     size_t hash = 0;
+
     if (true_branch_ && !true_branch_->predicts()) {
         hash += true_branch_->hash(labels);
     }
+
+    if (false_branch_ && !false_branch_->predicts()) {
+        hash+= false_branch_->hash(labels);
+    }
+
     return (hash +
             std::hash<std::unique_ptr<Node>>{}(true_branch_) +
             std::hash<std::unique_ptr<Node>>{}(false_branch_));

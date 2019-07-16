@@ -43,7 +43,7 @@ tuple<Data, Data> calculations::partition(const Data &data, const Question &q) {
     false_rows.reserve(data.size()/2);
 
     for (const auto &row: data)
-        q.match(row) ? true_rows.push_back(row) : false_rows.push_back(row);
+        q.match(row) ? true_rows.emplace_back(row) : false_rows.emplace_back(row);
 
     return {true_rows, false_rows};
 }
@@ -79,12 +79,12 @@ tuple<double, Question> calculations::find_best_split(const Data &rows) {
         for (const auto &val: values) {
             const Question q(column, val);
 
-            const auto& [true_rows, false_rows] = partition(rows, q);
+            const auto [true_rows, false_rows] = std::move(partition(rows, q));
 
             if (true_rows.empty() || false_rows.empty())
                 continue;
 
-            const auto &gain = info_gain(true_rows, false_rows, current_uncertainty);
+            const float gain = info_gain(true_rows, false_rows, current_uncertainty);
 
             #pragma omp critical
             {
